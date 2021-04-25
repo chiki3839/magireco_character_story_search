@@ -1,0 +1,3556 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <base target="_top" />
+    <link rel="icon" type="image/x-icon" href="./img/ファビコン.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/apple_fabicon.png">
+    <title>マギレコキャラクタストーリー検索</title>
+
+    <!-- キャラクタ追加指針 -----------------------------------------------------
+    ・girlboxで検索し、魔法少女を追加する。
+    ・★チェックで検索し、ver違い魔法少女を追加する。
+    ・myfile内のcharaAt.jsをデータ追加する。
+    ・myfile内のcharaBox.cssをデータ追加する。
+    ・searchフォルダ以下を圧縮し、日付をファイル名にしてドライブにバックアップする。
+  --------------------------------------------------------------------------->
+
+    <!-- javascriptはすべて末尾に持っていった -->
+    <!-- cssを読み出す -->
+    <link
+      rel="stylesheet"
+      href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"
+    />
+    <link rel="stylesheet" href="./myfile/mycss.css" />
+    <link rel="stylesheet" href="./myfile/charaBox.css" />
+
+    <!-- 上に進む、下に進むボタンの設置 -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="./myfile/jquery.blockUI.js"></script>
+  </head>
+  <!-- ヘッダ終わり-------------------------------------------------------------------------------------------------->
+
+  <body>
+    <!-- 頂いたヘッダバナー入る↓ -->
+    <div id="headerBanner"></div>
+    <span class="headerExpl2">(クリックで関係ページにジャンプします)</span
+    ><br />
+
+    <span class="returnlink"
+      ><a href="./gachasim.html">ガチャシミュレーター</a></span
+    >
+    &nbsp;<span class="returnlink"
+      ><a href="./call.html">マギレコキャラ呼びかけ検索</a></span
+    >
+
+    <br /><span class="returnlink"
+      ><a href="https://app.the-timeline.jp/2PACX-1vTYF8Mj66tnTEhK2jPwzJzwKWJgtC0Y2-PQGIUwVbkO9csvt1IofUzv0LO0X_bjVpVgKCDyel4_jEry?start=20190302202436&end=20220821151125">
+        マギレコサービス年表</a></span
+    >
+
+    &nbsp;<span class="returnlink"
+      ><a href="./json_open.html" target="_blank">JSONデータ公開</a></span
+    >
+
+    <br /><span class="returnlink"
+      ><a href="https://twitter.com/chiki3839">Made by Chiki</a></span
+    >
+    <br />
+    <!--TOP絵募集ダイアログの設定開始----------------------------------------------------------------------------->
+    <div class="topdialoglink" id="topdialogopen">
+      <i class="fa fa-pencil-square-o fa-2x"></i><span>TOP絵募集</span>
+    </div>
+
+    <!--TOP絵募集ダイアログの中身-->
+    <div id="topdialogdata">
+      当サイトではトップ絵を募集しております。頂けたイラストは当サイトのTOPに飾らせていただきます。<br />
+      <ul>
+        <li>画像サイズは横が750px, 縦が100～500px程度でお願いします。</li>
+        <li>
+          画像上に「マギレコキャラクタストーリー検索」という文言を載せて頂きたいのですが、邪魔ならなくてもOKです。
+        </li>
+        <li>作成者のお名前(PN)をご連絡下さい。</li>
+        <li>
+          クリックした時のリンク先としてpixivやbooth等のURLをあわせてお知らせ下さい。
+        </li>
+        <li>トップ絵はランダムに表示されますのでご了承下さい。</li>
+        <li>
+          投稿は<a
+            href="https://twitter.com/messages/compose?recipient_id=2923254810&ref_src=twsrc%5Etfw"
+            >ChikiのツイッターのDM</a
+          >か
+          <a href="https://twitter.com/chiki3839">@chiki3839に直接ツイート</a
+          >下さい。
+        </li>
+      </ul>
+    </div>
+    <!-- TOP絵ダイアログの中身終わり-->
+
+    <script>
+      $("#topdialogdata").dialog({
+        dialogClass: "topTitleClass",
+        autoOpen: false,
+        title: "TOP絵を募集しております",
+        width: "auto",
+        height: "auto",
+        closeOnEscape: false,
+        modal: true,
+        buttons: [
+          {
+            text: "OK",
+            click: function () {
+              $(this).dialog("close");
+            },
+          },
+        ],
+      });
+    </script>
+    <script>
+      $("#topdialogopen").click(function () {
+        $("#topdialogdata").dialog("open");
+      });
+    </script>
+    <!--TOP絵募集ダイアログの設定終わり--------------------------------------------------------------->
+
+    <!--使い方ダイアログの設定開始----------------------------------------------------------------------------->
+    <div class="dialoglink" id="dialogopen">
+      <i class="fa fa-window-maximize fa-2x"></i><span>使い方</span>
+    </div>
+
+    <!--使い方ダイアログの中身-->
+    <div id="dialogdata">
+      <h3 style="margin: 0; color: deeppink">検索オプション</h3>
+      <span style="font-weight: bold">・対象ストーリー</span><br />
+      　検索対象のストーリーを指定します。<br />
+      <span style="font-weight: bold; ">・ネタバレを表示する</span><br />
+      　チェックすると各話の概要も表示します。<br />
+      <span style="font-weight: bold">・複数選択オプション</span><br />
+      <table style="border-collapse: collapse">
+        <tr style="line-height: 1">
+          <td style="text-align: right">AND：</td>
+          <td>選んだキャラが全員登場するストーリーを表示します。</td>
+        </tr>
+        <tr style="line-height: 1">
+          <td style="text-align: right">OR：</td>
+          <td>選んだキャラのいずれかが登場するストーリーを表示します。</td>
+        </tr>
+        <tr style="line-height: 1">
+          <td style="text-align: right">EXCLUSIVE：</td>
+          <td>選んだキャラが互いに単独で登場するストーリーを表示します。</td>
+        </tr>
+        <tr style="line-height: 1">
+          <td style="text-align: right">ONLY：</td>
+          <td>選んだキャラだけが登場するストーリーを表示します。</td>
+        </tr>
+      </table>
+      <span style="font-weight: bold">・★印の魔法少女を選択したとき…</span
+      ><br />
+      　★印の魔法少女を選んだ時ver違いキャラ(水着verやマギレポキャラ等)も検索対象に含みます。<BR>
+      <span style="font-weight: bold">・ネタバレワード検索</span
+        ><br />
+        　任意の単語でネタバレを検索します。半/全角スペースで区切るとAND検索になります。<BR>
+        　魔法少女を選択しなくてもOKです。選択した場合はそちらともAND検索になります。<BR>
+        　不要な場合は何も入力しないでください。なお自動的にネタバレが表示されます。<BR>
+
+      <h3 style="margin: 10px 0px 0px 0px; color: deeppink">検索方法</h3>
+      魔法少女を1人以上選択し各種オプションを設定して<br />
+      「検索する」ボタンを押すと、画面下に結果が表示されます。<br />
+      (自動的に移動します)
+
+      <h3 style="margin: 10px 0px 0px 0px; color: deeppink">右下のアイコン</h3>
+      <i
+        class="fa fa-arrow-circle-o-up fa-2x"
+        style="color: #ff8ec6; vertical-align: middle"
+      ></i>
+      ページトップに移動します。<br />
+      <i
+        class="fa fa-address-book-o fa-2x"
+        style="color: #ff8ec6; vertical-align: middle"
+      ></i>
+      魔法少女一覧のトップに移動します。<br />
+      <i
+        class="fa fa-search fa-2x"
+        style="color: #ff8ec6; vertical-align: middle"
+      ></i>
+      指定の設定で検索を実行します。<br />
+
+      <i
+        class="fa fa-address-book fa-2x"
+        style="color: #ff8ec6; vertical-align: middle"
+      ></i>
+      魔法少女一覧の最後に移動します。<br />
+      <i
+        class="fa fa-table fa-2x"
+        style="color: #ff8ec6; vertical-align: middle"
+      ></i>
+      検索結果に移動します。<br />
+      <i
+        class="fa fa-arrow-circle-o-down fa-2x"
+        style="color: #ff8ec6; vertical-align: middle"
+      ></i>
+      ページの一番最後に移動します。
+    </div>
+    <!-- 使い方ダイアログの中身終わり-->
+
+    <script>
+      $("#dialogdata").dialog({
+        dialogClass: "useTitleClass",
+        autoOpen: false,
+        title: "キャラクタストーリー検索の使い方",
+        width: "auto",
+        height: "auto",
+        closeOnEscape: false,
+        modal: true,
+        buttons: [
+          {
+            text: "OK",
+            click: function () {
+              $(this).dialog("close");
+            },
+          },
+        ],
+      });
+    </script>
+    <script>
+      $("#dialogopen").click(function () {
+        $("#dialogdata").dialog("open");
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+      });
+    </script>
+    <!--使い方ダイアログの設定終わり--------------------------------------------------------------->
+
+    <span id="index" name="index"
+      >魔法少女をクリック(タップ)して選択してください。<br />(複数選択可)</span
+    ><br />
+    <form id="myForm" name="myForm" accept-charset="utf-8" action="">
+      <fieldset>
+        <legend>検索オプション</legend>
+        <ul class="option">
+          <li>対象ストーリー</li>
+          <table class="storytable">
+            <tr>
+              <td colspan="2">
+                <label
+                  ><input
+                    type="checkbox"
+                    id="strycheckall"
+                  />すべて(設定/解除)</label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="メイン【第1部】"
+                    value="メイン【第1部】"
+                  />メイン【第1部】</label
+                >
+              </td>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="メイン【第2部】"
+                    value="メイン【第2部】"
+                  />メイン【第2部】</label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="アナザー【第1部】"
+                    value="アナザー【第1部】"
+                  />アナザー【第1部】</label
+                >
+              </td>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="アナザー【第2部】"
+                    value="アナザー【第2部】"
+                  />アナザー【第2部】</label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="魔法少女ストーリー"
+                    value="魔法少女ストーリー"
+                  />魔法少女</label
+                >
+              </td>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="衣装ストーリー"
+                    value="衣装ストーリー"
+                  />衣装</label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="ミラーズストーリー"
+                    value="ミラーズストーリー"
+                  />ミラーズ</label
+                >
+              </td>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="イベントストーリー"
+                    value="イベントストーリー"
+                  />イベント</label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="スペシャル"
+                    value="スペシャル"
+                  />スペシャル</label
+                >
+              </td>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="EDムービー"
+                    value="EDムービー"
+                  />EDムービー</label
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label
+                  ><input
+                    type="checkbox"
+                    class="story"
+                    name="story"
+                    id="アニメ"
+                    value="アニメ"
+                  />アニメ</label
+                >
+              </td>
+            </tr>
+          </table>
+
+          <li>
+            <label
+              ><input
+                type="checkbox"
+                class="netabare"
+                name="netabare"
+                id="netabare"
+                value="on"
+              />ネタバレを表示する</label
+            >
+          </li>
+
+          <li>複数選択オプション</li>
+        </ul>
+        <div class="selectBoxSet">
+          <div class="selectBox">
+            <label
+              ><input
+                type="radio"
+                class="and_or"
+                name="and_or"
+                value="AND"
+                checked="checked"
+                required />AND<br />
+              <img class="selectBoxImg" src="./img/AND.png" alt="AND"
+            /></label>
+          </div>
+
+          <div class="selectBox">
+            <label
+              ><input
+                type="radio"
+                class="and_or"
+                name="and_or"
+                value="OR" />OR<br />
+              <img class="selectBoxImg" src="./img/OR.png" alt="OR"
+            /></label>
+          </div>
+
+          <div class="selectBox">
+            <label
+              ><input
+                type="radio"
+                class="and_or"
+                name="and_or"
+                value="EXCLUSIVE" />EXCLUSIVE<br />
+              <img
+                class="selectBoxImg"
+                src="./img/EXCUTIVE.png"
+                alt="EXCLUSIVE"
+            /></label>
+          </div>
+
+          <div class="selectBox">
+            <label
+              ><input
+                type="radio"
+                class="and_or"
+                name="and_or"
+                value="ONLY" />ONLY<br />
+              <img class="selectBoxImg" src="./img/ONLY.png" alt="ONLY"
+            /></label>
+          </div>
+        </div>
+        <ul class="option">
+          <li>
+            <label
+              ><input
+                type="checkbox"
+                class="star"
+                name="star"
+                id="star"
+                value="on"
+              />★印の魔法少女を選択したときVer違いキャラも含める</label
+            >
+          </li>
+          <li>ネタバレワード検索<div style="font-size: smaller;">(半/全角スペース区切りでAND検索。キャラ選択はなくてもOK)<BR>(不要な場合は空にしてください)</div>
+            <input type="text" spellcheck="false" id="keyword" name="keyword" style="background-color:#ffebef; width: 95%; display:block;"></input>
+            <input type="button" value ="検索ワードリセット" id="keyreset" onClick="document.getElementById('keyword').value='';"></input>
+          </li>
+
+        </ul>
+      </fieldset>
+
+      <p>
+        <button
+          type="button"
+          name="search"
+          class="mgr-10"
+          onClick="return isCheck()"
+        >
+          検索する</button
+        ><input type="reset" value="全リセット" /><br />
+        <button
+          type="button"
+          name="mgreset"
+          id="mgreset"
+          onClick="return girlReset()"
+        >
+          魔法少女の選択をすべて解除
+        </button>
+      </p>
+
+      <!-- 魔法少女のboxを実装 ---------------------------------------------------------------------------------------------------->
+      <div class="magicalgirl" id="girltop">
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="環いろは"
+              value="環いろは"
+            /><br />環いろは★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="七海やちよ"
+              value="七海やちよ"
+            /><br />七海やちよ★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="由比鶴乃"
+              value="由比鶴乃"
+            /><br />由比鶴乃★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="二葉さな"
+              value="二葉さな"
+            /><br />二葉さな★</label
+          >
+        </div>
+        <div class="girlbox umeColor" id="feri">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="深月フェリシア"
+              value="深月フェリシア"
+            /><br />深月<br />フェリシア★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="梓みふゆ"
+              value="梓みふゆ"
+            /><br />梓みふゆ★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="里見灯花"
+              value="里見灯花"
+            /><br />里見灯花★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="アリナ・グレイ"
+              value="アリナ・グレイ"
+            /><br />アリナ・<br />グレイ★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="水波レナ"
+              value="水波レナ"
+            /><br />水波レナ★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="十咎ももこ"
+              value="十咎ももこ"
+            /><br />十咎ももこ★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="秋野かえで"
+              value="秋野かえで"
+            /><br />秋野かえで★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="御園かりん"
+              value="御園かりん"
+            /><br />御園かりん</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="竜城明日香"
+              value="竜城明日香"
+            /><br />竜城明日香</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="柊ねむ"
+              value="柊ねむ"
+            /><br />柊ねむ★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="環うい"
+              value="環うい"
+            /><br />環うい</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="和泉十七夜"
+              value="和泉十七夜"
+            /><br />和泉十七夜★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="八雲みたま"
+              value="八雲みたま"
+            /><br />八雲<br />みたま★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="天音月夜"
+              value="天音月夜"
+            /><br />天音月夜★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="天音月咲"
+              value="天音月咲"
+            /><br />天音月咲★</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="煌里ひかる"
+              value="煌里ひかる"
+            /><br />煌里ひかる</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="笠音アオ"
+              value="笠音アオ"
+            /><br />笠音アオ</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="大庭樹里"
+              value="大庭樹里"
+            /><br />大庭樹里</label
+          >
+        </div>
+
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="時女静香"
+              value="時女静香"
+            /><br />時女静香</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="広江ちはる"
+              value="広江ちはる"
+            /><br />広江ちはる</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="土岐すなお"
+              value="土岐すなお"
+            /><br />土岐すなお</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="宮尾時雨"
+              value="宮尾時雨"
+            /><br />宮尾時雨</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="安積はぐむ"
+              value="安積はぐむ"
+            /><br />安積はぐむ</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="栗栖アレクサンドラ"
+              value="栗栖アレクサンドラ"
+            /><br />栗栖アレクサンドラ</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="八雲みかげ"
+              value="八雲みかげ"
+            /><br />八雲みかげ</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="佐和月出里"
+              value="佐和月出里"
+            /><br />佐和月出里</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="篠目ヨヅル"
+              value="篠目ヨヅル"
+            /><br />篠目ヨヅル</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="リヴィア・メディロス"
+              value="リヴィア・メディロス"
+            /><br />リヴィア・メディロス</label
+          >
+        </div>
+        <div class="girlbox umeColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="小さなキュゥべえ"
+              value="小さなキュゥべえ"
+            /><br />小さなキュゥべえ</label
+          >
+        </div>
+
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="環いろは(水着ver)"
+              value="環いろは(水着ver)"
+            /><br />環いろは<br />(水着ver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="やちよ・みふゆ(始まりver)"
+              value="やちよ・みふゆ(始まりver)"
+            /><br />やちよ・みふゆ<br />(始まりver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ウワサの鶴乃"
+              value="ウワサの鶴乃"
+            /><br />ウワサの<br />鶴乃</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ウワサのさな"
+              value="ウワサのさな"
+            /><br />ウワサの<br />さな</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="フェリシアちゃん"
+              value="フェリシアちゃん"
+            /><br />フェリシア<br />ちゃん</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="灯花・ねむ(聖夜ver)"
+              value="灯花・ねむ(聖夜ver)"
+            /><br />灯花・ねむ<br />(聖夜ver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ホーリーアリナ"
+              value="ホーリーアリナ"
+            /><br />ホーリー<br />アリナ</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="レナちゃん(アイドルver)"
+              value="レナちゃん(アイドルver)"
+            /><br />レナちゃん<br />(アイドルver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="十咎ももこ(シスターver)"
+              value="十咎ももこ(シスターver)"
+            /><br />十咎ももこ<br />(シスターver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="和泉十七夜(ヴァンパイアver)"
+              value="和泉十七夜(ヴァンパイアver)"
+            /><br />和泉十七夜<br />(ヴァンパイアver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="八雲みたま(晴着ver)"
+              value="八雲みたま(晴着ver)"
+            /><br />八雲みたま<br />(晴着ver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="天音姉妹(水着ver)"
+              value="天音姉妹(水着ver)"
+            /><br />天音姉妹<br />(水着ver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="いろはちゃん"
+              value="いろはちゃん"
+            /><br />いろは<br />ちゃん</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="鶴乃・フェリシア(宅配ver)"
+              value="鶴乃・フェリシア(宅配ver)"
+            /><br />鶴乃・フェリシア<br />(宅配ver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="レナ・かえで(水着ver)"
+              value="レナ・かえで(水着ver)"
+            /><br />レナ・かえで<br />(水着ver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="いろは・やちよ(決戦ver)"
+              value="いろは・やちよ(決戦ver)"
+            /><br />いろは・やちよ<br />(決戦ver)</label
+          >
+        </div>
+        <div class="girlbox umeOtherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="いろは・うい(巫女ver)"
+              value="いろは・うい(巫女ver)"
+            /><br />いろは・うい<BR />(巫女ver)</label
+          >
+        </div>
+
+        <div class="girlbox PMHQColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="鹿目まどか"
+              value="鹿目まどか"
+            /><br />鹿目<br />まどか★</label
+          >
+        </div>
+        <div class="girlbox PMHQColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="暁美ほむら"
+              value="暁美ほむら"
+            /><br />暁美<br />ほむら★</label
+          >
+        </div>
+        <div class="girlbox PMHQColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="暁美ほむら(眼鏡ver)"
+              value="暁美ほむら(眼鏡ver)"
+            /><br />暁美ほむら<br />(眼鏡ver)</label
+          >
+        </div>
+        <div class="girlbox PMHQColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="美樹さやか"
+              value="美樹さやか"
+            /><br />美樹さやか★</label
+          >
+        </div>
+        <div class="girlbox PMHQColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="巴マミ"
+              value="巴マミ"
+            /><br />巴マミ★</label
+          >
+        </div>
+        <div class="girlbox PMHQColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="佐倉杏子"
+              value="佐倉杏子"
+            /><br />佐倉杏子★</label
+          >
+        </div>
+        <div class="girlbox PMHQColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="百江なぎさ"
+              value="百江なぎさ"
+            /><br />百江なぎさ★</label
+          >
+        </div>
+
+        <div class="girlbox PMHQotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="鹿目まどか(晴着ver)"
+              value="鹿目まどか(晴着ver)"
+            /><br />鹿目まどか<br />(晴着ver)</label
+          >
+        </div>
+        <div class="girlbox PMHQotherColor" id="arumado">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="アルティメットまどか"
+              value="アルティメットまどか"
+            /><br />アルティメットまどか</label
+          >
+        </div>
+        <div class="girlbox PMHQotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="まどか先輩"
+              value="まどか先輩"
+            /><br />まどか先輩</label
+          >
+        </div>
+        <div class="girlbox PMHQotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="究極まどか先輩"
+              value="究極まどか先輩"
+            /><br />究極まどか先輩</label
+          >
+        </div>
+        <div class="girlbox PMHQotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="暁美ほむら(水着ver)"
+              value="暁美ほむら(水着ver)"
+            /><br />暁美ほむら<br />(水着ver)</label
+          >
+        </div>
+        <div class="girlbox PMHQotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="美樹さやか(晴着ver)"
+              value="美樹さやか(晴着ver)"
+            /><br />美樹さやか<br />(晴着ver)</label
+          >
+        </div>
+        <div class="girlbox PMHQotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ホーリーマミ"
+              value="ホーリーマミ"
+            /><br />ホーリー<br />マミ</label
+          >
+        </div>
+        <div class="girlbox PMHQotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="巴マミ(水着ver)"
+              value="巴マミ(水着ver)"
+            /><br />巴マミ<br />(水着ver)</label
+          >
+        </div>
+        <div class="girlbox PMHQotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="佐倉杏子(水着ver)"
+              value="佐倉杏子(水着ver)"
+            /><br />佐倉杏子<br />(水着ver)</label
+          >
+        </div>
+        <div class="girlbox PMHQotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="百江なぎさ(バレンタインver)"
+              value="百江なぎさ(バレンタインver)"
+            /><br />百江なぎさ<br />(バレンタインver)</label
+          >
+        </div>
+
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="矢宵かのこ"
+              value="矢宵かのこ"
+            /><br />矢宵かのこ</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="空穂夏希"
+              value="空穂夏希"
+            /><br />空穂夏希</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="都ひなの"
+              value="都ひなの"
+            /><br />都ひなの</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="美凪ささら"
+              value="美凪ささら"
+            /><br />美凪ささら</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="常盤ななか"
+              value="常盤ななか"
+            /><br />常盤ななか</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="木崎衣美里"
+              value="木崎衣美里"
+            /><br />木崎衣美里</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="保澄雫"
+              value="保澄雫"
+            /><br />保澄雫</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="志伸あきら"
+              value="志伸あきら"
+            /><br />志伸あきら</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="胡桃まなか"
+              value="胡桃まなか"
+            /><br />胡桃まなか</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="阿見莉愛"
+              value="阿見莉愛"
+            /><br />阿見莉愛</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="夏目かこ"
+              value="夏目かこ"
+            /><br />夏目かこ</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="純美雨"
+              value="純美雨"
+            /><br />純美雨</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="伊吹れいら"
+              value="伊吹れいら"
+            /><br />伊吹れいら</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="桑水せいか"
+              value="桑水せいか"
+            /><br />桑水せいか</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="相野みと"
+              value="相野みと"
+            /><br />相野みと</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="粟根こころ"
+              value="粟根こころ"
+            /><br />粟根こころ</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="七瀬ゆきか"
+              value="七瀬ゆきか"
+            /><br />七瀬ゆきか</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="更紗帆奈"
+              value="更紗帆奈"
+            /><br />更紗帆奈</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="毬子あやか"
+              value="毬子あやか"
+            /><br />毬子あやか</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="眞尾ひみか"
+              value="眞尾ひみか"
+            /><br />眞尾ひみか</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="鈴鹿さくや"
+              value="鈴鹿さくや"
+            /><br />鈴鹿さくや</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="江利あいみ"
+              value="江利あいみ"
+            /><br />江利あいみ</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="若菜つむぎ"
+              value="若菜つむぎ"
+            /><br />若菜つむぎ</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="五十鈴れん"
+              value="五十鈴れん"
+            /><br />五十鈴れん★</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="静海このは"
+              value="静海このは"
+            /><br />静海このは</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="遊佐葉月"
+              value="遊佐葉月"
+            /><br />遊佐葉月</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="三栗あやめ"
+              value="三栗あやめ"
+            /><br />三栗あやめ</label
+          >
+        </div>
+        <div class="girlbox otherColor" id="masara">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="加賀見まさら"
+              value="加賀見まさら"
+            /><br />加賀見まさら</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="春名このみ"
+              value="春名このみ"
+            /><br />春名このみ</label
+          >
+        </div>
+        <div class="girlbox otherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="綾野梨花"
+              value="綾野梨花"
+            /><br />綾野梨花★</label
+          >
+        </div>
+
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="梢麻友"
+              value="梢麻友"
+            /><br />梢麻友</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="史乃沙優希"
+              value="史乃沙優希"
+            /><br />史乃沙優希</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="恵萌花"
+              value="恵萌花"
+            /><br />恵萌花</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="千秋理子"
+              value="千秋理子"
+            /><br />千秋理子</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="由貴真里愛"
+              value="由貴真里愛"
+            /><br />由貴真里愛</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="安名メル"
+              value="安名メル"
+            /><br />安名メル</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="古町みくら"
+              value="古町みくら"
+            /><br />古町みくら</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="三穂野せいら"
+              value="三穂野せいら"
+            /><br />三穂野せいら</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="吉良てまり"
+              value="吉良てまり"
+            /><br />吉良てまり</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="柚希ほとり"
+              value="柚希ほとり"
+            /><br />柚希ほとり</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="枇々木めぐる"
+              value="枇々木めぐる"
+            /><br />枇々木めぐる</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="万年桜のウワサ"
+              value="万年桜のウワサ"
+            /><br />万年桜の<br />ウワサ★</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="智珠らんか"
+              value="智珠らんか"
+            /><br />智珠らんか</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="観鳥令"
+              value="観鳥令"
+            /><br />観鳥令</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="青葉ちか"
+              value="青葉ちか"
+            /><br />青葉ちか</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="柚希りおん"
+              value="柚希りおん"
+            /><br />柚希りおん</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="雪野かなえ"
+              value="雪野かなえ"
+            /><br />雪野かなえ</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="香春ゆうな"
+              value="香春ゆうな"
+            /><br />香春ゆうな</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="飾利潤"
+              value="飾利潤"
+            /><br />飾利潤</label
+          >
+        </div>
+        <div class="girlbox otherColor2" id="ash">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="アシュリー・テイラー"
+              value="アシュリー・テイラー"
+            /><br />アシュリー・テイラー</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="牧野郁美"
+              value="牧野郁美"
+            /><br />牧野郁美</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="三輪みつね"
+              value="三輪みつね"
+            /><br />三輪みつね</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="水樹塁"
+              value="水樹塁"
+            /><br />水樹塁</label
+          >
+        </div>
+        <div class="girlbox otherColor2">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="南津涼子"
+              value="南津涼子"
+            /><br />南津涼子</label
+          >
+        </div>
+
+        <div class="girlbox otherotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="梨花・れん(クリスマスver)"
+              value="梨花・れん(クリスマスver)"
+            /><br />梨花・れん<br />(クリスマスver)</label
+          >
+        </div>
+        <div class="girlbox otherotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="万年桜のウワサ(水着ver)"
+              value="万年桜のウワサ(水着ver)"
+            /><br />万年桜のウワサ<br />(水着ver)</label
+          >
+        </div>
+        <div class="girlbox otherotherColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="黒"
+              value="黒"
+            /><br />黒</label
+          >
+        </div>
+
+        <!-- ここから外伝キャラ -->
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="美国織莉子"
+              value="美国織莉子"
+            /><br />美国織莉子</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="呉キリカ"
+              value="呉キリカ"
+            /><br />呉キリカ</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="千歳ゆま"
+              value="千歳ゆま"
+            /><br />千歳ゆま</label
+          >
+        </div>
+
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="かずみ"
+              value="かずみ"
+            /><br />かずみ</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="御崎海香"
+              value="御崎海香"
+            /><br />御崎海香</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="牧カオル"
+              value="牧カオル"
+            /><br />牧カオル</label
+          >
+        </div>
+
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="タルト"
+              value="タルト"
+            /><br />タルト★</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="リズ"
+              value="リズ"
+            /><br />リズ</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="メリッサ"
+              value="メリッサ"
+            /><br />メリッサ</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="コルボー"
+              value="コルボー"
+            /><br />コルボー</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="エリザ"
+              value="エリザ"
+            /><br />エリザ</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ラピヌ"
+              value="ラピヌ"
+            /><br />ラピヌ</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="タルト(ver.Final)"
+              value="タルト(ver.Final)"
+            /><br />タルト(ver.Final)</label
+          >
+        </div>
+
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="天乃鈴音"
+              value="天乃鈴音"
+            /><br />天乃鈴音</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="日向茉莉"
+              value="日向茉莉"
+            /><br />日向茉莉</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="成見亜里紗"
+              value="成見亜里紗"
+            /><br />成見亜里紗</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="詩音千里"
+              value="詩音千里"
+            /><br />詩音千里</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="奏遥香"
+              value="奏遥香"
+            /><br />奏遥香</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="美琴椿"
+              value="美琴椿"
+            /><br />美琴椿</label
+          >
+        </div>
+        <div class="girlbox gaidenColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="日向華々莉"
+              value="日向華々莉"
+            /><br />日向華々莉</label
+          >
+        </div>
+
+        <div class="girlbox collaboColor" id="hitagi">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="戦場ヶ原ひたぎ"
+              value="戦場ヶ原ひたぎ"
+            /><br />戦場ヶ原ひたぎ</label
+          >
+        </div>
+        <div class="girlbox collaboColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="八九寺真宵"
+              value="八九寺真宵"
+            /><br />八九寺真宵</label
+          >
+        </div>
+        <div class="girlbox collaboColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="神原駿河"
+              value="神原駿河"
+            /><br />神原駿河</label
+          >
+        </div>
+        <div class="girlbox collaboColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="千石撫子"
+              value="千石撫子"
+            /><br />千石撫子</label
+          >
+        </div>
+        <div class="girlbox collaboColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="羽川翼"
+              value="羽川翼"
+            /><br />羽川翼</label
+          >
+        </div>
+        <div class="girlbox collaboColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="忍野忍"
+              value="忍野忍"
+            /><br />忍野忍</label
+          >
+        </div>
+
+        <div class="girlbox collaboColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="高町なのは"
+              value="高町なのは"
+            /><br />高町なのは</label
+          >
+        </div>
+        <div class="girlbox collaboColor" id="fate_t">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="フェイト・T・ハラオウン"
+              value="フェイト・T・ハラオウン"
+            /><br />フェイト・T<br />・ハラオウン</label
+          >
+        </div>
+        <div class="girlbox collaboColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="八神はやて"
+              value="八神はやて"
+            /><br />八神はやて</label
+          >
+        </div>
+
+        <!-- ここから魔法少女以外 -->
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="キュゥべえ"
+              value="キュゥべえ"
+            /><br />キュゥべえ★</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ピンクのキュゥべえ"
+              value="ピンクのキュゥべえ"
+            /><br />ピンクのキュゥべえ</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ウワサさん"
+              value="ウワサさん"
+            /><br />ウワサさん</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="夏希の兄"
+              value="夏希の兄"
+            /><br />夏希の兄</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="タケさん"
+              value="タケさん"
+            /><br />タケさん</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="おネェさま"
+              value="おネェさま"
+            /><br />おネェさま</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="伊津見尹縫"
+              value="伊津見尹縫"
+            /><br />伊津見尹縫</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ユゥ"
+              value="ユゥ"
+            /><br />ユゥ</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="アイ"
+              value="アイ"
+            /><br />アイ</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ちはるの母"
+              value="ちはるの母"
+            /><br />ちはるの母</label
+          >
+        </div>
+        <div class="girlbox mobColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="静香の母"
+              value="静香の母"
+            /><br />静香の母</label
+          >
+        </div>
+
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="紅晴結菜"
+              value="紅晴結菜"
+            /><br />紅晴結菜</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="有愛うらら"
+              value="有愛うらら"
+            /><br />有愛うらら</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="佐鳥かごめ"
+              value="佐鳥かごめ"
+            /><br />佐鳥かごめ</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="三浦旭"
+              value="三浦旭"
+            /><br />三浦旭</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="藍家ひめな"
+              value="藍家ひめな"
+            /><br />藍家ひめな</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="神楽燦"
+              value="神楽燦"
+            /><br />神楽燦</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="遊狩ミユリ"
+              value="遊狩ミユリ"
+            /><br />遊狩ミユリ</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="氷室ラビ"
+              value="氷室ラビ"
+            /><br />氷室ラビ</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="里見那由他"
+              value="里見那由他"
+            /><br />里見那由他</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="入名クシュ"
+              value="入名クシュ"
+            /><br />入名クシュ</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="水名の先輩"
+              value="水名の先輩"
+            /><br />水名の先輩</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="黒江"
+              value="黒江"
+            /><br />黒江</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="愛生まばゆ"
+              value="愛生まばゆ"
+            /><br />愛生まばゆ</label
+          >
+        </div>
+         <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ミヌゥ"
+              value="ミヌゥ"
+            /><br />ミヌゥ</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="ペレネル"
+              value="ペレネル"
+            /><br />ペレネル</label
+          >
+        </div>
+        <div class="girlbox unimpColor">
+          <label
+            ><input
+              type="checkbox"
+              class="MagicalChk"
+              name="chara"
+              id="イザボー"
+              value="イザボー"
+            /><br />イザボー</label
+          >
+        </div>
+      </div>
+      <div id="girlend"></div>
+
+      <!-- 魔法少女のbox実装終わり ---------------------------------------------------------------------------------------------------->
+
+      <p>
+        <button
+          type="button"
+          name="mgreset"
+          id="mgreset"
+          onClick="return girlReset()"
+        >
+          魔法少女の選択をすべて解除</button
+        ><br />
+        <button
+          type="button"
+          name="search"
+          class="mgr-10"
+          onClick="return isCheck()"
+        >
+          検索する</button
+        ><input type="reset" value="全リセット" />
+      </p>
+    </form>
+
+    <fieldset>
+      <legend>魔法少女を属性で選ぶ</legend>
+      <form id="at_form">
+        <label class="at"
+          ><input
+            type="radio"
+            class="at_and_or"
+            name="at_and_or"
+            value="AND"
+            checked="checked"
+            required
+          />AND</label
+        >
+        <label class="at"
+          ><input
+            type="radio"
+            class="at_and_or"
+            name="at_and_or"
+            value="OR"
+          />OR</label
+        >
+        &emsp;&emsp;<input
+          type="reset"
+          value="属性リセット"
+          onClick="magicalGirlAttributeSearch()"
+        /><br />
+
+        <!--魔法少女属性一覧 -->
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ペア"
+          />ペア</label
+        >
+        &emsp;
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="水着"
+          />水着あり</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="着物"
+          />着物あり</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="私服"
+          />私服(冬服含む)あり</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="冬服"
+          />冬服あり</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="クリスマス"
+          />クリスマス衣装あり</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ハロウィン"
+          />ハロウィン衣装あり</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="メイド服"
+          />メイド服あり</label
+        >
+        &emsp;
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="神浜市立大附属"
+          />神浜市立大附属</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="水名女学園"
+          />水名女学園</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="参京院教育学園"
+          />参京院教育学園</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="栄総合学園"
+          />栄総合学園</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="中央学園"
+          />中央学園</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="南凪自由学園"
+          />南凪自由学園</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="工匠学舎"
+          />工匠学舎</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="大東学園"
+          />大東学園</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="聖リリアンナ学園"
+          />聖リリアンナ学園</label
+        >
+
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="松宮市立第一中学校"
+          />松宮市立第一中学校</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="霧峰村立霧峰中学校"
+          />霧峰村立霧峰中学校</label
+        >
+
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="虎屋町学園"
+          />虎屋町学園</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="蛇の宮中学・高等学校"
+          />蛇の宮中学・高等学校</label
+        >
+
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="見滝原中学校"
+          />見滝原中学校</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="白羽女学院"
+          />白羽女学院</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="あすなろ市立南部中学校"
+          />あすなろ市立南部中学校</label
+        >
+        <label class="at"
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="茜ヶ咲中学校"
+          />茜ヶ咲中学校</label
+        >
+        &emsp;
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="精神強化"
+          />精神強化有り</label
+        >
+        &emsp;
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="☆45"
+          />☆4→☆5</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="☆35"
+          />☆3→☆5</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="☆25"
+          />☆1,2→☆5</label
+        >
+
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="☆34"
+          />☆3→☆4</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="☆24"
+          />☆2→☆4</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="☆1"
+          />☆1</label
+        >
+        &emsp;
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="フレイム"
+          />フレイム</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="アクア"
+          />アクア</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="フォレスト"
+          />フォレスト</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ライト"
+          />ライト</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ダーク"
+          />ダーク</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="無"
+          />無</label
+        >
+        &emsp;
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="アタック"
+          />アタック</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ディフェンス"
+          />ディフェンス</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="マギア"
+          />マギア</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ヒール"
+          />ヒール</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="サポート"
+          />サポート</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="バランス"
+          />バランス</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="アルティメット"
+          />アルティメット</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="エクシード"
+          />エクシード</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="あるてぃめっと"
+          />あるてぃめっと</label
+        >
+        &emsp;
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="AAABC"
+          />AAABC</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="AABBC"
+          />AABBC</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="AABCC"
+          />AABCC</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ABBBC"
+          />ABBBC</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ABBBB"
+          />ABBBB</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ABBCC"
+          />ABBCC</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            class="at_attribute"
+            name="at_attribute"
+            onchange="magicalGirlAttributeSearch()"
+            value="ABCCC"
+          />ABCCC</label
+        >
+      </form>
+    </fieldset>
+
+    <!-- 検索結果を表示する部分 -->
+    <div class="result" id="mytable"></div>
+    <div class="result" id="mytable2"></div>
+
+    <!-- 表示用HTML終わり。以下javasript ------------------------------------------------------------------------------------------------------>
+    <script>
+      //ページトップへ戻る矢印実装
+      $(function () {
+        /** ページトップ処理 **/
+        $("#sty_pagetop").fadeIn("slow");
+        // クリックした場合
+        $("#sty_pagetop").click(function () {
+          // ページトップへスクロール
+          $("html, body").animate(
+            {
+              scrollTop: 0,
+            },
+            "slow"
+          );
+          return false;
+        });
+      })(jQuery);
+    </script>
+
+    <script>
+      //キャラ選択のトップへ進む
+      $(function () {
+        $("#sty_pagecharatop").fadeIn("slow");
+        // クリックした場合
+        $("#sty_pagecharatop").click(function () {
+          $("html, body").animate(
+            {
+              scrollTop: $("#girltop").offset().top,
+            },
+            "slow"
+          );
+          return false;
+        });
+      })(jQuery);
+    </script>
+
+    <script>
+      //検索するボタン
+      $(function () {
+        $("#sty_seach").fadeIn("slow");
+        return false;
+      })(jQuery);
+    </script>
+
+    <script>
+      //キャラ選択の最後へ進む
+      $(function () {
+        $("#sty_pagecharaend").fadeIn("slow");
+        // クリックした場合
+        $("#sty_pagecharaend").click(function () {
+          $("html, body").animate(
+            {
+              scrollTop: $("#girlend").offset().top - $(window).height(),
+            },
+            "slow"
+          );
+          return false;
+        });
+      })(jQuery);
+    </script>
+
+    <script>
+      //結果のトップへ進む
+      $(function () {
+        $("#sty_pagetbl").fadeIn("slow");
+        // クリックした場合
+        $("#sty_pagetbl").click(function () {
+          // ページボトムへスクロール
+          $("html, body").animate(
+            {
+              scrollTop: $("#mytable").offset().top,
+            },
+            "slow"
+          );
+          return false;
+        });
+      })(jQuery);
+    </script>
+
+    <script>
+      //ページボトムへ進む
+      $(function () {
+        /** ページボトム処理 **/
+        $("#sty_pagebtm").fadeIn("slow");
+        // クリックした場合
+        $("#sty_pagebtm").click(function () {
+          // ページボトムへスクロール
+          $("html, body").animate(
+            {
+              scrollTop: $(document).height(),
+            },
+            "slow"
+          );
+          return false;
+        });
+      })(jQuery);
+    </script>
+    <!-- トップアイコンの設定 -->
+    <a id="sty_pagetop" href="#top" class="page_top" style="display: none"
+      ><i class="fa fa-arrow-circle-o-up fa-3x"></i
+    ></a>
+
+    <!-- 魔法少女topの設定 -->
+    <a
+      id="sty_pagecharatop"
+      href="#girltop"
+      class="page_mdl"
+      style="display: none"
+      ><i class="fa fa-address-book-o fa-3x"></i
+    ></a>
+
+    <!-- 検索ボタンの設定 -->
+    <a
+      id="sty_seach"
+      href="#"
+      onclick="isCheck()"
+      class="page_seach"
+      style="display: none"
+      ><i class="fa fa-search fa-3x"></i
+    ></a>
+
+    <!-- 魔法少女endの設定 -->
+    <a
+      id="sty_pagecharaend"
+      href="#girlenl"
+      class="page_mdl"
+      style="display: none"
+      ><i class="fa fa-address-book fa-3x"></i
+    ></a>
+
+    <!-- テーブルアイコンの設定 -->
+    <a id="sty_pagetbl" href="#tbl" class="girl_top" style="display: none"
+      ><i class="fa fa-table fa-3x"></i
+    ></a>
+
+    <!-- ボトムアイコンの設定 -->
+    <a id="sty_pagebtm" href="#btm" class="page_btm" style="display: none"
+      ><i class="fa fa-arrow-circle-o-down fa-3x"></i
+    ></a>
+    <!-- 矢印実装終わり----------------------------------------------------------------------------------------------------->
+
+    <script type="text/javascript">
+      //バナーをランダムに表示する。バナーを頂いたら以下の情報を追加する。
+      //バナー表示を早くするために一番最初に処理する。
+      var images = {
+        0: {
+          imgID: "愛川.png",
+          height: "100",
+          name: "愛川",
+          linkUrl: "https://www.pixiv.net/users/41044900",
+        },
+        1: {
+          imgID: "粉くずff.png",
+          height: "150",
+          name: "こな",
+          linkUrl: "https://twitter.com/kona_kuzu",
+        },
+      };
+      var num = Math.floor(Math.random() * 2); //バナー数に合わせる。
+      var bannerTag =
+        '<a href="' +
+        images[num].linkUrl +
+        '" target="_blank"><img class="headerBanner" src="./banner/' +
+        images[num].imgID +
+        '"></a><BR><span class="headerExpl">↑<a href="' +
+        images[num].linkUrl +
+        '" target="_blank">' +
+        images[num].name +
+        "</a>様より頂きました!<BR>";
+      document.getElementById("headerBanner").innerHTML = bannerTag;
+    </script>
+
+    <!-- 時間がかかるのでここで外部ファイルを読む -->
+    <!--キャラの属性設定ファイル(javascriptのオブジェクト)を読む -->
+    <script src="./myfile/charaAt.js" type="text/javascript"></script>
+
+    <!-- javascript本文まとめ -->
+    <script type="text/javascript">
+      // 以下htmlのロードが終わったときの処理。
+      document.addEventListener("DOMContentLoaded", function () {
+        //ローカルストレージに記憶していたチェックボックスを設定する。
+        //AND_ORのラジオボックスを設定
+        if (localStorage.getItem("and_or") == "OR") {
+          document.getElementById("myForm").and_or[1].checked = true;
+        } else if (localStorage.getItem("and_or") == "XOR") {
+          document.getElementById("myForm").and_or[2].checked = true;
+        } else if (localStorage.getItem("and_or") == "ONLY") {
+          document.getElementById("myForm").and_or[3].checked = true;
+        }
+
+        //ネタバレのチェックボックスを設定
+        if (localStorage.getItem("netabare") === "true") {
+          document.getElementById("netabare").checked = true;
+        } else {
+          document.getElementById("netabare").checked = false;
+        }
+
+        //★のチェックボックスを設定
+        if (localStorage.getItem("star") === "true") {
+          document.getElementById("star").checked = true;
+        } else {
+          document.getElementById("star").checked = false;
+        }
+
+        //ストーリー選択のチェックボックスを設定
+        var storyArr = localStorage.getItem("storyChice").split(",");
+        storyArr.forEach(function (setstory) {
+          document.getElementById(setstory).checked = true;
+        });
+
+        //魔法少女のチェックボックスを設定
+        var magicalGirlArr = localStorage
+          .getItem("magicalGirlChoice")
+          .split(",");
+        magicalGirlArr.forEach(function (setgirl) {
+          document.getElementById(setgirl).checked = true;
+        });
+      });
+
+      // ストーリーのチェックボタンを一括でオンオフするイベント処理。
+      var strycheckall = document.getElementById("strycheckall");
+      strycheckall.addEventListener("click", function () {
+        var checkboxes = document.getElementsByName("story");
+        for (i in checkboxes) {
+          checkboxes[i].checked = this.checked;
+        }
+      });
+
+      //魔法少女の選択をリセットする。
+      function girlReset() {
+        var checkboxes = document.getElementsByName("chara");
+        for (i in checkboxes) {
+          checkboxes[i].checked = false;
+        }
+      }
+
+      function magicalGirlAttributeSearch() {
+        //魔法少女選択を一旦リセット
+        girlReset();
+
+        //属性でチェックされた値だけを配列に入れる。配列attributeに選択した値が入る。
+        const elFavorites = document.querySelectorAll(
+          '#at_form [name="at_attribute"]'
+        );
+        const attribute = [...elFavorites]
+          .filter((el) => el.checked)
+          .map((el) => el.value);
+
+        //もし属性チェックが設定が空の場合は何もせずに（魔法少女選択をリセットしただけで）終わり。
+        if (attribute.length === 0) {
+          return;
+        }
+
+        //キャラ全員の属性値オブジェクトの配列を回す。
+        charaAttribute.forEach(function (charaObj) {
+          var muchCnt = 0;
+          attribute.forEach(function (set_at_data) {
+            var cnfflag = charaObj["attribute"].some(function (
+              chara_attribute
+            ) {
+              return chara_attribute === set_at_data;
+            });
+            if (cnfflag) {
+              muchCnt++;
+            }
+          });
+
+          //alert(muchCnt + "+" +document.getElementById("at_form").at_and_or.value);
+          //該当キャラの属性が設定値と一致した個数がmuchCntに入っている。
+          if (
+            (document.getElementById("at_form").at_and_or.value === "AND" &&
+              attribute.length === muchCnt) ||
+            (document.getElementById("at_form").at_and_or.value === "OR" &&
+              muchCnt > 0)
+          ) {
+            //属性検索がandで、設定値とマッチした個数が一致したとき、または属性絵検索がorでマッチした個数が1個以上のときキャラをチェックする。
+            document.getElementById(charaObj["name"]).checked = true;
+          }
+        });
+      }
+
+      //検索ボタンが押された時の処理。////////////////////////////////////////////////////////////////////////////////////////////////////
+      //ストーリーと魔法少女の選択チェックを行い、結果を出力する。
+      function isCheck() {
+        // ローカルストレージをリセットする。
+        localStorage.clear();
+
+        var storyChoice = []; //ストーリーの指定の配列
+        var magicalGirlChoice = []; //選択した魔法少女の配列
+        var arr_checkBoxes = document.getElementsByClassName("story");
+        var keywordtext = document.getElementById('keyword').value.replace(/　/g, ' '); //ネタバレ検索ワード。全角スペースを半角スペースに置換
+        keywordtext = keywordtext.replace(/ +/g, ' '); //連続半角スペースを1文字に置換
+        if(keywordtext === " "){keywordtext = "";} //検索ワードがスペースだけのときはブランクに置換
+
+        var count = 0;
+        for (var i = 0; i < arr_checkBoxes.length; i++) {
+          if (arr_checkBoxes[i].checked) {
+            count++;
+            storyChoice.push(arr_checkBoxes[i].value);
+          }
+        }
+        if (count == 0) {
+          window.alert("ストーリーを1つ以上選択してください。");
+          return false;
+        }
+
+        arr_checkBoxes = document.getElementsByClassName("MagicalChk");
+        count = 0;
+        for (var i = 0; i < arr_checkBoxes.length; i++) {
+          if (arr_checkBoxes[i].checked) {
+            count++;
+            magicalGirlChoice.push(arr_checkBoxes[i].value);
+          }
+        }
+
+        if (count === 0 && !keywordtext) {
+          window.alert("魔法少女を1人以上選択するか、ネタバレ検索ワードを入力してください。");
+          return false;
+        }
+
+        //ワード検索に値が入力されているときはネタバレにチェックを入れる
+        if(keywordtext){
+          document.getElementById("netabare").checked = true;
+        }
+
+        //問題なければローカルストレージに設定データを保存する。
+        //AND, OR設定を保存
+        localStorage.setItem(
+          "and_or",
+          document.getElementById("myForm").and_or.value
+        );
+        //ネタバレを保存
+        localStorage.setItem(
+          "netabare",
+          document.getElementById("netabare").checked
+        );
+        //★印を保存
+        localStorage.setItem("star", document.getElementById("star").checked);
+        //ストーリー選択を保存
+        localStorage.setItem("storyChice", storyChoice);
+        //魔法少女選択を保存
+        localStorage.setItem("magicalGirlChoice", magicalGirlChoice);
+
+        const and_or = document.getElementById("myForm").and_or.value;
+        const netabare = document.getElementById("netabare").checked; //ネタバレ(true/false)
+        const story_csv = storyChoice.join(",");
+        const chara_csv = magicalGirlChoice.join(",");
+        const star = document.getElementById("star").checked;
+        const searchWord = keywordtext;
+
+        // 結果のヘッダを作る。
+        var resultHeader = '<H3 class="seachResult">検索結果</H3>';
+
+        //魔法少女が選択されている場合
+        if(count){
+          magicalGirlChoice.forEach((girlname) => {
+            resultHeader +=
+              '<span class="resultGirl" style="position:relative;"><img src="./img/' +
+              girlname +
+              '.png" alt="' +
+              girlname +
+              '"><span class="girlName">' +
+              girlname +
+              "</span></span>";
+          });
+          resultHeader += "が登場するストーリー（" + and_or + "検索";
+          if (netabare) {
+            resultHeader += "・ネタバレあり";
+          }
+          if (star) {
+            resultHeader += "・ver違いキャラを含む";
+          }
+          resultHeader += "）";
+        }
+        //検索ワードが設定されている場合
+        if(keywordtext){
+          resultHeader += "<BR>ネタバレワード検索：「" + keywordtext + "」";
+
+        }
+
+        resultHeader += " を検索しました。<BR>";
+        document.getElementById("mytable").innerHTML = resultHeader;
+        document.getElementById("mytable2").innerHTML =
+          '<img border="0" src="./img/loading.gif" width="100" height="100" alt="loading...">';
+
+        //結果TOPに移動する。
+        $("html, body").animate(
+          {
+            scrollTop: $("#mytable").offset().top,
+          },
+          "slow"
+        );
+        //  alert(and_or + " " + story_csv + " " + netabare + " " + chara_csv + " " + star + " " + keywordtext );
+       //   return;
+
+        /* インプットされたデータの整理
+                                      storyChoice : 選択ストーリーの配列
+                                magicalGirlChoice : 選択魔法少女の配列
+                                           and_or : AND,OR,EXE,ONLYの選択
+                                         netabare : ネタバレの選択(true/false)
+          document.getElementById("star").checked : ★の選択(true/false)
+                                      keywordtext : ネタバレ検索のワード
+        */
+        const DataUrl = "https://script.google.com/macros/s/AKfycbwAw5WI-mrno_rpKtyZ3ABOl9AsH4TWuTNlAnvXdZh8AnHI8elnYt70SiWSmEQxkYO9/exec";
+         $.ajax({
+          type: "GET",
+          url: DataUrl,
+          dataType: "json",
+          data: {
+            and_or: and_or,
+            story_csv: story_csv,
+            netabare: netabare,
+            chara_csv: chara_csv,
+            star: star,
+            keywordtext: keywordtext,
+          }
+        })
+        .then ( outdata => { //Ajax通信に成功したときの処理
+            //alert(JSON.stringify(outdata));
+            var allCnt = 0; //全hit数をカウントする。
+
+            //outputdataにデータオブジェクトが入っているので出力テーブルを作る
+            var outTable =
+              '<BR><span class="resultLinkCaution">↓ストーリー名をクリックすると検索エンジンを開きます。</span><BR>';
+            outTable += "<table><tr><th>ストーリー</th><th>登場人物</th>";
+            if (netabare) {
+              outTable += "<th>ネタバレ</th>";
+            } //ネタバレありの場合
+            outTable += "</tr>";
+
+            /*
+            //テスト用変数////////////////////////////////////////////////////
+            var storyChoice = ["メイン【第1部】", "メイン【第2部】"];
+            var netabare = false;
+            var magicalGirlChoice = ['八雲みたま', '七海やちよ', '十咎ももこ'];
+            var and_or = "AND";
+            var star = false;
+            */
+            storyChoice.forEach((storyName) => {
+              var storyCnt = outdata[storyName].length;
+              allCnt += storyCnt;
+              var colspanNum = netabare ? 3 : 2;
+
+              outTable +=
+                '<tr class="' +
+                storyName +
+                '"><td colspan="' +
+                colspanNum +
+                '">' +
+                storyName +
+                "（ヒット数：" +
+                storyCnt +
+                "）</td></tr>";
+              if (storyCnt === 0) {
+                outTable +=
+                  '<tr><td colspan="' +
+                  colspanNum +
+                  '" style="text-align:center;">条件に合うデータがありません。</td></tr>';
+              } else {
+                outdata[storyName].forEach((storyLine) => {
+                  var searchWord = storyLine[0].split("<BR>");
+                  var searchtag =
+                    '<a href="https://www.google.com/search?q=マギアレコード+' +
+                    searchWord[0] +
+                    '&tbm=vid" target="_blank">';
+
+                  outTable +=
+                    '<tr><td class="resultStory">' +
+                    searchtag +
+                    storyLine[0] +
+                    '</a></td><td class="resultGirlTd">';
+                  var girlArray = storyLine[1];
+                  girlArray.forEach((girlname) => {
+                    outTable +=
+                      '<span class="resultGirl" style="position:relative;"><img src="./img/' +
+                      girlname +
+                      '.png" alt="' +
+                      girlname +
+                      '"><span class="girlName">' +
+                      girlname +
+                      "</span></span>";
+                  });
+                  outTable += "</td>";
+                  if (netabare) {
+                    outTable +=
+                      '<td class="resultNetabare">' + storyLine[2] + "</td>";
+                  }
+                  outTable += "</tr>";
+                });
+              }
+            });
+            outTable += "</table>";
+
+            var resultHeader2 =
+              "ヒットしたストーリー数は " + allCnt + " 件です。<BR>";
+
+            document.getElementById("mytable2").innerHTML =
+              resultHeader2 + outTable;
+            //結果TOPに移動する。
+            $("html, body").animate(
+              {
+                scrollTop: $("#mytable").offset().top,
+              },
+              "slow"
+            );
+          },
+          error => { //Ajax通信に失敗したときの処理
+            document.getElementById("mytable2").innerHTML =
+            "<BR>データ取得に失敗しました。しばらく時間をおいてから再検索をお願いします。";
+          }
+        );
+      }
+    </script>
+  </body>
+</html>

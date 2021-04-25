@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base target="_top">
+  <link rel="icon" type="image/x-icon" href="./img/ファビコン.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./img/apple_fabicon.png">
+
+  <title>マギレコ魔法少女関係図…</title>
+
+  <!-- CSSファイル読み出し -->
+  <link rel="stylesheet" href="./myfile/mycss.css">
+  <link rel="stylesheet" href="./myfile/charaBox.css">
+  <!-- このページだけのスタイル -->
+  <style type="text/css">
+  /* ネットワーク図のスタイル */
+  #mynetwork {
+    /* width : 350px; */
+    width : 1500px;
+    height: 1500px;
+    border: 1px solid lightgray;
+    display: block;
+    background:rgba(0,0,0,1);
+    margin:0 auto;
+  }
+  </style>
+
+  <!-- 上に進む、下に進むボタンの設置 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <H2>マギレコ魔法少女関係図…</H2>
+
+  <span class="returnlink"><a href="index.html">
+  マギレコキャラクタストーリー検索</a></span>&ensp;
+  <span class="returnlink"><a href="./gachasim.html">
+  マギレコガチャシミュレーター</a></span>&ensp;
+  <span class="returnlink"><a href="https://app.the-timeline.jp/2PACX-1vTYF8Mj66tnTEhK2jPwzJzwKWJgtC0Y2-PQGIUwVbkO9csvt1IofUzv0LO0X_bjVpVgKCDyel4_jEry?start=20160518090156&end=20220411205803">
+  マギレコサービス年表</a></span>
+  <BR>
+
+  <div class = "caution" >※アイコンドラッグ：アイコンの移動　ホイールスライド：拡大/縮小　ドラッグ：全体の移動<BR>
+  アイコン・矢印クリック：強調　アイコンダブルクリック：中央に移動＆強調</div>
+
+  <!-- ネットワーク図表示 -->
+  <div id="mynetwork"></div>
+  <BR>
+  <!-- 表示部分終わり。以下処理用javascriptなど ----------------------------------------------------------------------->
+
+  <script>
+  <!-- ページトップへ戻る矢印実装 -->
+  $(function () {
+     /** ページトップ処理 **/
+   $('#pagetop').fadeIn("slow");
+   // クリックした場合
+   $('#pagetop').click(function() {
+       // ページトップへスクロール
+       $('html, body').animate({
+           scrollTop: $("#startbutton").offset().top
+       },"slow");
+       return false;
+    });
+  })(jQuery);
+  </script>
+
+  <script>
+  <!-- ページボトムへ進む -->
+  $(function () {
+     /** ページボトム処理 **/
+     $('#pagebtm').fadeIn("slow");
+  // クリックした場合
+    $('#pagebtm').click(function() {
+       // ページボトムへスクロール
+       $('html, body').animate({
+           scrollTop: $(document).height()
+       },"slow");
+       return false;
+    });
+  })(jQuery);
+  </script>
+
+  <!-- トップアイコンの設定 -->
+  <a id="pagetop" href="#top" class="page_top" style="display: none;"><i class="fa fa-arrow-circle-o-up fa-3x"></i></a>
+  <!-- ボトムアイコンの設定 -->
+  <a id="pagebtm" href="#btm" class="page_btm" style="display: none;"><i class="fa fa-arrow-circle-o-down fa-3x"></i></a>
+
+<script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+<!--スプレッドシートで作った呼びかけのhashファイルを読み出す。-->
+<script type="text/javascript" src="https://drive.google.com/uc?id=1af7VQlf7EBkzPR1tjNgN3LM46OtBfQOw"></script>
+
+<script type="text/javascript">
+  //スプレッドシートで作った呼びかけのhashファイルを関数で呼び出す。
+  //ネットワーク用変数宣言
+  var nodes = [];
+  var edges = [];
+  var container = document.getElementById("mynetwork");
+  var data = {};
+  var options = {};
+  var network = new vis.Network(container, data, options);
+
+  //エッジが選択されたときの動作
+  var edgeChosen = function(values, id, selected, hovering) {
+    values.color = "#ffffff";
+    values.width = 4;
+  };
+  //エッジが選択されたときのラベルの設定
+  var edgeLabelChosen = function(values, id, selected, hovering) {
+    values.color = "#ff4500";
+    values.size  = 23;
+    values.mod = "bold";
+    values.strokeWidth = 5;
+  };
+  //ノードが選択されたときのノードの設定
+  var nodeChosen = function(values, id, selected, hovering) {
+    values.borderWidth = 10;
+    values.borderColor = "#ff42a0";
+  };
+  //ノードが選択されたときのラベルの設定
+  var nodeLabelChosen = function(values, id, selected, hovering) {
+    values.color = "#FFFFFF";
+    values.size = 25;
+    values.strokeColor = "#ff42a0";
+    values.strokeWidth = 5;
+  };
+
+  //ネットワーク設定
+    //ネットワーク情報を初期化する
+    nodes = [];
+    edges = [];
+    network = null;
+
+    var girlName = ["環いろは", "七海やちよ", "由比鶴乃", "二葉さな", "深月フェリシア", "梓みふゆ", "里見灯花", "アリナ・グレイ", "水波レナ", "十咎ももこ", "秋野かえで", "御園かりん", "竜城明日香", "柊ねむ", "環うい", "和泉十七夜", "八雲みたま", "天音月夜", "天音月咲", "煌里ひかる", "笠音アオ", "時女静香", "広江ちはる", "土岐すなお", "宮尾時雨", "安積はぐむ", "八雲みかげ", "佐和月出里", "篠目ヨヅル", "リヴィア・メディロス", "鹿目まどか", "暁美ほむら(眼鏡ver)", "美樹さやか", "巴マミ", "佐倉杏子", "百江なぎさ", "矢宵かのこ", "空穂夏希", "都ひなの", "美凪ささら", "常盤ななか", "木崎衣美里", "保澄雫", "志伸あきら", "胡桃まなか", "阿見莉愛", "夏目かこ", "純美雨", "伊吹れいら", "桑水せいか", "相野みと", "粟根こころ", "七瀬ゆきか", "更紗帆奈", "毬子あやか", "眞尾ひみか", "鈴鹿さくや", "江利あいみ", "若菜つむぎ", "五十鈴れん", "静海このは", "遊佐葉月", "三栗あやめ", "加賀見まさら", "春名このみ", "綾野梨花", "梢麻友", "史乃沙優希", "恵萌花", "千秋理子", "由貴真里愛", "安名メル", "古町みくら", "三穂野せいら", "吉良てまり", "柚希ほとり", "枇々木めぐる", "万年桜のウワサ", "智珠らんか", "観鳥令", "青葉ちか", "柚希りおん", "雪野かなえ", "香春ゆうな", "飾利潤", "牧野郁美", "水樹塁", "南津涼子", "Ashley_Taylor", "黒", "紅晴結菜", "大庭樹里", "有愛うらら", "佐鳥かごめ", "三浦旭", "藍家ひめな", "栗栖アレクサンドラ", "氷室ラビ", "里見那由他", "三輪みつね"];
+
+    // ノードを追加する。tableも準備する。
+    var DIR = "./img/";
+    for(var i = 0 ; i < girlName.length ; i++){
+      var girlImgURL = DIR + girlName[i] + ".png";
+      //ノード追加
+      var girlnode = { id: girlName[i], shape: "circularImage", image: girlImgURL , label: girlName[i] + "\n(" + calltable[girlName[i]]["年齢"] + "/" + calltable[girlName[i]]["学年"] + ")"};
+      nodes.push(girlnode);
+
+    }
+
+    //エッジを追加する。
+    edges = [
+      {from: "環いろは", to: "七海やちよ", arrows: "to, from"},
+      {from: "環いろは", to: "由比鶴乃", arrows: "to, from"},
+      {from: "環いろは", to: "深月フェリシア", arrows: "to, from"},
+      {from: "環いろは", to: "二葉さな", arrows: "to, from"},
+      {from: "環いろは", to: "環うい", arrows: "to, from"},
+      {from: "環いろは", to: "里見灯花", arrows: "to, from"},
+      {from: "環いろは", to: "柊ねむ", arrows: "to, from"},
+      {from: "環いろは", to: "万年桜のウワサ", arrows: "to, from"},
+      {from: "七海やちよ", to: "由比鶴乃", arrows: "to, from"},
+      {from: "七海やちよ", to: "深月フェリシア", arrows: "to, from"},
+      {from: "七海やちよ", to: "二葉さな", arrows: "to, from"},
+      {from: "七海やちよ", to: "環うい", arrows: "to, from"},
+      {from: "七海やちよ", to: "梓みふゆ", arrows: "to, from"},
+      {from: "七海やちよ", to: "十咎ももこ", arrows: "to, from"},
+      {from: "七海やちよ", to: "雪野かなえ", arrows: "to, from"},
+      {from: "七海やちよ", to: "安名メル", arrows: "to, from"},
+      {from: "七海やちよ", to: "和泉十七夜", arrows: "to, from"},
+      {from: "由比鶴乃", to: "深月フェリシア", arrows: "to, from"},
+      {from: "由比鶴乃", to: "二葉さな", arrows: "to, from"},
+      {from: "由比鶴乃", to: "梓みふゆ", arrows: "to, from"},
+      {from: "由比鶴乃", to: "安名メル", arrows: "to, from"},
+      {from: "由比鶴乃", to: "十咎ももこ", arrows: "to, from"},
+      {from: "由比鶴乃", to: "志伸あきら", arrows: "to, from"},
+      {from: "由比鶴乃", to: "木崎衣美里", arrows: "to, from"},
+      {from: "由比鶴乃", to: "純美雨", arrows: "to, from"},
+      {from: "二葉さな", to: "深月フェリシア", arrows: "to, from"},
+      {from: "二葉さな", to: "胡桃まなか", arrows: "to, from"},
+      {from: "二葉さな", to: "環うい", arrows: "to, from"},
+      {from: "二葉さな", to: "土岐すなお", arrows: "to, from"},
+      {from: "深月フェリシア", to: "夏目かこ", arrows: "to, from"},
+      {from: "深月フェリシア", to: "三栗あやめ", arrows: "to, from"},
+      {from: "深月フェリシア", to: "竜城明日香", arrows: "to, from"},
+      {from: "深月フェリシア", to: "美凪ささら", arrows: "to, from"},
+      {from: "梓みふゆ", to: "雪野かなえ", arrows: "to, from"},
+      {from: "梓みふゆ", to: "安名メル", arrows: "to, from"},
+      {from: "梓みふゆ", to: "里見灯花", arrows: "to, from"},
+      {from: "梓みふゆ", to: "柊ねむ", arrows: "to, from"},
+      {from: "梓みふゆ", to: "アリナ・グレイ", arrows: "to, from"},
+      {from: "梓みふゆ", to: "天音月夜", arrows: "to, from"},
+      {from: "梓みふゆ", to: "天音月咲", arrows: "to, from"},
+      {from: "梓みふゆ", to: "七瀬ゆきか", arrows: "to, from"},
+      {from: "里見灯花", to: "柊ねむ", arrows: "to, from"},
+      {from: "里見灯花", to: "アリナ・グレイ", arrows: "to, from"},
+      {from: "里見灯花", to: "環うい", arrows: "to, from"},
+      {from: "里見灯花", to: "万年桜のウワサ", arrows: "to, from"},
+      {from: "水波レナ", to: "十咎ももこ", arrows: "to, from"},
+      {from: "水波レナ", to: "秋野かえで", arrows: "to, from"},
+      {from: "水波レナ", to: "史乃沙優希", arrows: "to, from"},
+      {from: "十咎ももこ", to: "秋野かえで", arrows: "to, from"},
+      {from: "十咎ももこ", to: "八雲みたま", arrows: "to, from"},
+      {from: "十咎ももこ", to: "安名メル", arrows: "to, from"},
+      {from: "秋野かえで", to: "夏目かこ", arrows: "to, from"},
+      {from: "秋野かえで", to: "春名このみ", arrows: "to, from"},
+      {from: "秋野かえで", to: "御園かりん", arrows: "to, from"},
+      {from: "秋野かえで", to: "アリナ・グレイ", arrows: "to, from"},
+      {from: "竜城明日香", to: "美凪ささら", arrows: "to, from"},
+      {from: "竜城明日香", to: "志伸あきら", arrows: "to, from"},
+      {from: "竜城明日香", to: "木崎衣美里", arrows: "to, from"},
+      {from: "柊ねむ", to: "環うい", arrows: "to, from"},
+      {from: "柊ねむ", to: "万年桜のウワサ", arrows: "to, from"},
+      {from: "柊ねむ", to: "アリナ・グレイ", arrows: "to, from"},
+      {from: "環うい", to: "万年桜のウワサ", arrows: "to, from"},
+      {from: "和泉十七夜", to: "八雲みたま", arrows: "to, from"},
+      {from: "和泉十七夜", to: "安名メル", arrows: "to, from"},
+
+
+
+
+
+
+
+
+
+
+
+    ];
+
+    // ネットワーク作成
+    data = {
+      nodes: nodes,
+      edges: edges
+    };
+
+    options = {
+      physics:{
+        enabled: true,
+        stabilization: {
+          enabled: true,
+          iterations:50000
+        }
+      },
+
+      nodes: {
+        physics:false,
+        mass: 3,
+        borderWidth: 2,
+        size: 20,
+        color: {
+          border: "#ff82c0",
+          background: "#FFFFFF"
+        },
+        font: {
+          color: "#FFFFFF", strokeColor: '#ff82c0', size: 12, strokeWidth: 2
+        },
+        //ノードが選択されたときのノードの表示を設定する。
+        chosen: {label: nodeLabelChosen, node: nodeChosen},
+      },
+
+      edges: {
+        /*smooth: {
+           enabled: true,
+            //type: "dynamic",
+            type: "discrete",
+           //roundness: 0.5
+           //roundness: 0.5
+        },*/
+        //エッジが選択されたときの矢印とラベルの動作を設定する。
+        chosen: {label: edgeLabelChosen, edge: edgeChosen},
+
+        selfReference:{ size: 30 },
+        font: { color: "#000000", size: 22, strokeColor: "#FFFFFF", strokeWidth: 3},
+        color:"#eaeaff",
+        arrows: 'to',
+        width: 2,
+      }
+    };
+
+    //ネットワーク描写
+
+    network = new vis.Network(container, data, options);
+
+</script>
+</body>
+</html>
