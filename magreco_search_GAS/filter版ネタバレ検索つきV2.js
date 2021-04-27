@@ -157,65 +157,37 @@ function doGet(e) {
   //Googleドライブにおいているデータファイルをオブジェクトに変換
   var dataObj = JSON.parse(DriveApp.getFileById(JSONfileID).getBlob().getDataAsString());
 
-  /* ネタバレワード検索をするかどうか、ループの中にif文を入れると時間がかかるため、
+  /* 
      1. ネタバレワード検索なし(今までと同じ)
      2. ネタバレワード検索あり、魔法少女選択なし
      3. ネタバレワード検索あり、魔城少女選択あり
-     の3つに分けて、if文で処理をわける。それぞれでループを設定する。(そのほうが多分早い)  
+     の3つのパタンを考える  
    */
   if(!wordtextAry[0]){ //ネタバレ検索ワードがない場合(従来と同じ)
     //セットしたストーリー名ごとにサーチ
     storyAry.forEach(storyName =>{
       //ストーリーの一行ごとにサーチ
       outData[storyName] = dataObj[storyName].filter(storyLine =>{
-        //ストーリーの魔法少女と検索対象の魔法少女がマッチした数をカウント
-        var _ = Underscore.load();
-        var storyCharaCnt = _.intersection(storyLine[1], charaAry).length;
-
-        //魔法少女選択の条件にhitするかチェック
-        var charamuchflg = false;
-        if(storyCharaCnt === 0){charamuchflg = false;}
-        else if(and_or === "AND" && charaAry.length - addGirl === storyCharaCnt)    
-          {charamuchflg = true;}
-        else if(and_or === "OR" && storyCharaCnt > 0){charamuchflg = true;}
-        else if(and_or === "EXCLUSIVE" && storyCharaCnt === 1){charamuchflg = true;}
-        else if(and_or === "ONLY" && storyLine[1].length
-        === storyCharaCnt && charaAry.length - addGirl === storyCharaCnt){charamuchflg = true;}
-        return charamuchflg;
+        return mgirlflg( storyLine[1], charaAry, and_or, addGirl);
       });
     });
+
   }else if(!charaAry[0]){ //ネタバレ検索ワードあり。魔法少女選択なし
     //セットしたストーリー名ごとにサーチ
     storyAry.forEach(storyName =>{
       //ストーリーの一行ごとにサーチ
       outData[storyName] = dataObj[storyName].filter(storyLine =>{
-        return wordtextAry.every(keyword =>{
-          return (storyLine[2].indexOf(keyword) > -1);
-        });
+        return wordmuchflg(wordtextAry, storyLine[2]);
       });
     });
+
   }else{ //ネタバレ検索ワードあり。魔法少女選択あり
     //セットしたストーリー名ごとにサーチ
     storyAry.forEach(storyName =>{
       //ストーリーの一行ごとにサーチ
       outData[storyName] = dataObj[storyName].filter(storyLine =>{
-        //ストーリーの魔法少女と検索対象の魔法少女がマッチした数をカウント
-        var _ = Underscore.load();
-        var storyCharaCnt = _.intersection(storyLine[1], charaAry).length;
-
-        //魔法少女選択の条件にhitするかチェック
-        var charamuchflg = false;
-        if(storyCharaCnt === 0){charamuchflg = false;}
-        else if(and_or === "AND" && charaAry.length - addGirl === storyCharaCnt)    
-          {charamuchflg = true;}
-        else if(and_or === "OR" && storyCharaCnt > 0){charamuchflg = true;}
-        else if(and_or === "EXCLUSIVE" && storyCharaCnt === 1){charamuchflg = true;}
-        else if(and_or === "ONLY" && storyLine[1].length
-        === storyCharaCnt && charaAry.length - addGirl === storyCharaCnt){charamuchflg = true;}
-        var wordflg =  wordtextAry.every(keyword =>{
-          return (storyLine[2].indexOf(keyword) > -1);
-        });
-        return (charamuchflg && wordflg);
+        return (wordmuchflg(wordtextAry, storyLine[2]) &&
+         mgirlflg( storyLine[1], charaAry, and_or, addGirl));
       });
     });
   }
@@ -233,4 +205,28 @@ function doGet(e) {
   //JSONテキストをセットする
   out.setContent(responseText);
   return out;
+}
+
+//////////////以下関数//////////////
+//検索ワード配列(wordtextAry)とネタバレデータ(storydata)を比較し、全てでてきたらtrueを返す。
+function wordmuchflg(wordtextAry, storydata){
+  return wordtextAry.every(keyword =>{
+    return (storydata.indexOf(keyword) > -1);
+  });
+}
+
+//検索魔法少女配列とデータの魔法少女配列と条件を入力し、true/falseを返す。
+function mgirlflg( dataAry, charaAry, and_or, addGirl){
+  //ストーリーの魔法少女と検索対象の魔法少女がマッチした数をカウント
+  var _ = Underscore.load();
+  var storyCharaCnt = _.intersection(dataAry, charaAry).length;
+
+  //魔法少女選択の条件にhitするかチェック
+  var charamuchflg = false;
+  if(storyCharaCnt === 0){charamuchflg = false;}
+  else if(and_or === "AND" && charaAry.length - addGirl === storyCharaCnt){charamuchflg = true;}
+  else if(and_or === "OR" && storyCharaCnt > 0){charamuchflg = true;}
+  else if(and_or === "EXCLUSIVE" && storyCharaCnt === 1){charamuchflg = true;}
+  else if(and_or === "ONLY" && dataAry.length === storyCharaCnt && charaAry.length - addGirl === storyCharaCnt){charamuchflg = true;}
+  return charamuchflg;
 }
