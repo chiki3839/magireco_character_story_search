@@ -129,6 +129,29 @@ img.selectBoxImg{
   background:deeppink;
 }
 
+/*ダイアログ表示時のバックグラウンドの色など*/
+.ui-widget-overlay {
+  background: #000000;
+  opacity: .7;
+  filter: Alpha(Opacity=70);
+}
+/*ダイアログ設定ここまで*/
+
+/*属性選択簡易表示用*/
+#at_result{
+  background:#fff9fc;
+}
+
+h2.at_resultHeader{
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0px 0px 0px 2px;
+}
+
+/*属性選択簡易表示のオーバーレイ用要素用ここまで*/
+
 
 /* 検索ボタンを強調 */
 button[name="search"]{
@@ -398,7 +421,7 @@ body.result{
 margin:0px 5px 0px 0px;
 /*height:42px; *//* 結果のテキスト表示を画像の高さに合わせる */
 /*line-height: 42px;*/
-}}
+}
 
 /* 結果のネタバレを表示する列のスタイルを指定 */
 td.resultNetabare{

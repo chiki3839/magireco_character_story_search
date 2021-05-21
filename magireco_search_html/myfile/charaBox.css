@@ -1,4 +1,8 @@
 ﻿/* 個別キャラ設定 */
+.magicalgirl input[value="桐野紗枝"]{
+    background: url(../img/桐野紗枝.png); background-size: 60px 60px; }
+.magicalgirl input[value="このは・葉月"]{
+    background: url(../img/このは・葉月.png); background-size: 60px 60px; }
 .magicalgirl input[value="愛生まばゆ"]{
     background: url(../img/愛生まばゆ.png); background-size: 60px 60px; }
 .magicalgirl input[value="究極まどか先輩"]{
