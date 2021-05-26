@@ -492,7 +492,7 @@
           </label>
         </div>
         <div>
-          <input type="text" v-model="searchWord" placeholder="名前で絞り込み" />
+          <input type="text" v-model="searchWord" placeholder="名前で絞り込む" />
           <button type="button" @click="searchWord = ''">絞り込み解除</button>
         </div>
         <div class="magicalgirl">
@@ -3409,11 +3409,11 @@
         if(count){
           magicalGirlChoice.forEach((girlname) => {
             resultHeader +=
-              '<span class="resultGirl" style="position:relative;"><img src="./img/' +
+              '<span class="resultGirl" style="position:relative;"><img src="https://magireco-chara-search.netlify.app/img/' +
               girlname +
               '.png" alt="' +
               girlname +
-              '"><span class="girlName">' +
+              '" loading="lazy"><span class="girlName">' +
               girlname +
               "</span></span>";
           });
@@ -3526,11 +3526,11 @@
                   var girlArray = storyLine[1];
                   girlArray.forEach((girlname) => {
                     outTable +=
-                      '<span class="resultGirl" style="position:relative;"><img src="./img/' +
+                      '<span class="resultGirl" style="position:relative;"><img src="https://magireco-chara-search.netlify.app/img/' +
                       girlname +
                       '.png" alt="' +
                       girlname +
-                      '"><span class="girlName">' +
+                      '" loading="lazy"><span class="girlName">' +
                       girlname +
                       "</span></span>";
                   });
@@ -3569,46 +3569,11 @@
     <script src="https://unpkg.com/vue@next"></script>
     <script src="myfile/lazysizes.min.js"></script>
     <script src="myfile/ls.unveilhooks.min.js"></script>
+    <script src="myfile/girlTop.js"></script>
     <script>
-      const GirlTop = {
-        data() {
-          return {
-            searchWord: '',
-            displayImages: false,
-          }
-        },
-        mounted() {
-          this.displayImages = localStorage.getItem('displayImages') === 'true';
-        },
-        watch: {
-          searchWord: function(newValue) {
-            const elements = document.getElementsByClassName('girlbox');
-            [...elements].forEach(ele => {
-              const isChecked = ele.getElementsByTagName('input')[0].checked;
-              const isSearchTarget = ele.textContent.includes(newValue);
-              ele.style.display = isChecked || isSearchTarget ? 'block' : 'none';
-            })
-          },
-          displayImages: function(newValue) {
-            localStorage.setItem('displayImages', this.displayImages);
-            if (!newValue) {
-              [...document.getElementsByClassName('magicalgirl')].forEach(ele => {
-                ele.classList.remove('visibleImage');
-              });
-              return;
-            }
-            if (!(localStorage.getItem('isConfirmed') === 'true') && !window.confirm('全アイコンのダウンロードに7MBほど通信します。よろしいですか？')) {
-              this.displayImages = false;
-              return;
-            }
-            localStorage.setItem('isConfirmed', true);
-            [...document.getElementsByClassName('magicalgirl')].forEach(ele => {
-              ele.classList.add('visibleImage');
-            });
-          }
-        }
-      }
-      Vue.createApp(GirlTop).mount('#girltop');
+      Vue.createApp({
+        mixins: [GirlTop],
+      }).mount('#girltop');
     </script>
   </body>
 </html>
