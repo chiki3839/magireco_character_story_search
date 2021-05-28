@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base target="_top">
+  <link rel="icon" type="image/x-icon" href="./img/png/ファビコン.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./img/png/apple_fabicon.png">
+  <title>マギレコガチャシミュレーター</title>
+  <!-- cssを読み出す -->
+  <link rel="stylesheet" href="./myfile/mycss.css">
+
+  <style type="text/css">
+	<!--
+	table{border:1px black solid;}
+	td{border:1px black solid; padding:5px; text-align: center;}
+	span{font-size:x-large;}
+	button{margin:5px 0;}
+	--></style>
+
+  </head>
+  <body>
+  <H2>マギアレコードガチャシミュレーター</H2>
+  <span class="returnlink"><a href="./index.html">
+  マギレコキャラクタストーリー検索</a></span>&ensp;
+  <span class="returnlink"><a href="./call.html">
+  マギレコ呼びかけ検索</a></span>&ensp;
+    <span class="returnlink"><a href="https://app.the-timeline.jp/2PACX-1vTYF8Mj66tnTEhK2jPwzJzwKWJgtC0Y2-PQGIUwVbkO9csvt1IofUzv0LO0X_bjVpVgKCDyel4_jEry?start=20160518090156&end=20220411205803">
+  マギレコサービス年表</a></span><BR>
+
+
+  マギアストーン、ガチャチケット、10連チケットの個数を入力するとガチャ回数を自動計算します。<BR>
+  または10連・1回ガチャ回数を直接入力して「シミュレーションする」を押すと結果を表とグラフで表示します。<BR>
+
+  <span style="font-size:smaller">※10連ガチャの確率UP、100回ガチャの天井実装済みです。(10連ガチャの方が、☆4,☆3魔法少女の確率がわずかにアップします)</span>
+  <BR><BR>
+  <form id="myform">
+  マギアストーン<input type="tel" id="stone" maxlength="6" size="6" onchange="inputdata()">個、
+  ガチャチケット<input type="tel" id="ticket" maxlength="3" size="3" onchange="inputdata()">枚、
+  10連チケット<input type="tel" id="ticket_10" maxlength="3" size="3" onchange="inputdata()">枚を使った場合、<BR>
+  10連ガチャを<input type="tel" id="tengacha" maxlength="5" size="5" value="10" onchange="gachacntup()">回、
+  1回ガチャを<input type="tel" id="gacha" maxlength="7" size="7" value="0" onchange="gachacntup()" >回実行できます。
+  <BR><div id="gachaCnt"></div>
+  <div style="margin:6px 0px;">（<input type="tel" id="trynum" maxlength="15" size="15" value="1000">回の平均を取る）</div>
+  <button type="button" onclick="gachatest()">シミュレーションする</button>
+  </form><BR>
+  <table>
+  <caption style="font-size:larger">平均枚数と標準偏差</caption>
+  <td>☆4魔法少女限定<BR><span id="mgirl4gen"> </span>枚<BR>標準偏差<BR><span id="mgirl4genhensa"></span></td>
+  <td>☆4魔法少女<BR><span id="mgirl4"> </span>枚<BR>標準偏差<BR><span id="mgirl4hensa"></span></td>
+  <td>☆3魔法少女<BR><span id="mgirl3"> </span>枚<BR>標準偏差<BR><span id="mgirl3hensa"></span></td>
+  <td>☆2魔法少女<BR><span id="mgirl2"> </span>枚<BR>標準偏差<BR><span id="mgirl2hensa"></span></td></tr><tr>
+  <td>☆4魔法少女合計<BR><span id="mgirl4sum"></span>枚<BR>ガチャ合計<BR><span id="sum"></span>回</td>
+  <td>☆4メモリア<BR><span id="memoria4"> </span>枚<BR>標準偏差<BR><span id="memoria4hensa"></span></td>
+  <td>☆3メモリア<BR><span id="memoria3"> </span>枚<BR>標準偏差<BR><span id="memoria3hensa"></span></td>
+  <td>☆2メモリア<BR><span id="memoria2"> </span>枚<BR>標準偏差<BR><span id="memoria2hensa"></span></td>
+  </tr></table>
+
+  <h3>グラフ</h3>
+  <canvas id="mgirl4gengraph" height="100" ></canvas><BR>
+  <canvas id="mgirl4graph" height="100" ></canvas><BR>
+  <canvas id="mgirl3graph" height="100" ></canvas><BR>
+  <canvas id="mgirl2graph" height="100" ></canvas><BR>
+  <canvas id="memoria4graph" height="100" ></canvas><BR>
+  <canvas id="memoria3graph" height="100" ></canvas><BR>
+  <canvas id="memoria2graph" height="100" ></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+  <script type="text/javascript">
+  //ストーン、チケットからガチャ数を計算するファンクション
+  function inputdata(){
+    var stone = document.forms.myform.stone.value;
+    var ticket = document.forms.myform.ticket.value;
+    var ticket_10 = document.forms.myform.ticket_10.value;
+
+    if(isNaN(stone)){stone = 0;}
+    if(isNaN(ticket)){ticket = 0;}
+    if(isNaN(ticket_10)){ticket_10 = 0;}
+
+    var stone_10 = Math.floor(stone / 250);
+    var stone = stone - stone_10 * 250;
+	var stone =  Math.floor(stone / 25);
+
+    document.forms.myform.tengacha.value = Math.floor(ticket_10) + Math.floor(stone_10);
+    document.forms.myform.gacha.value = Math.floor(ticket) + Math.floor(stone);
+
+    var gachadata = Number((Math.floor(ticket_10) + Math.floor(stone_10))*10 + Math.floor(ticket) + Math.floor(stone));
+    document.getElementById("gachaCnt").textContent = "(ガチャ回数：" + gachadata + " 回 (同数の調整屋コイン入手))";
+  }
+
+  function gachacntup(){
+    var tengacha = document.forms.myform.tengacha.value;
+    var gacha    = document.forms.myform.gacha.value;
+    var gachadata = Number(tengacha * 10) +Number(gacha);
+    document.getElementById("gachaCnt").textContent = "(ガチャ回数：" + gachadata + " 回 (同数の調整屋コイン入手))";
+  }
+
+  //ガチャをsimするファンクション
+  function gachatest(){
+
+    var gacha = document.forms.myform.gacha.value;
+    var gacha_10 = document.forms.myform.tengacha.value;
+
+    if(isNaN(gacha)){alert("ガチャ数に数字を入れてください"); return false;}
+    if(gacha == ""){alert("ガチャ数に数字を入れてください"); return false;}
+
+    if(isNaN(gacha_10)){alert("10連ガチャ数に0以上の数字を入れてください"); return false;}
+    if(gacha_10 == ""){alert("10連ガチャ数に0以上の数字を入れてください"); return false;}
+
+    var trynum = document.forms.myform.trynum.value;
+
+    if(isNaN(trynum)){document.forms.myform.trynum.value = 1; tryzum= 1 ;}
+    if(trynum < 1){document.forms.myform.trynum.value = 1; tryzum= 1 ;}
+
+    //ガチャ回数合計を計算
+    var gachasum = parseInt(gacha_10 * 10) + parseInt(gacha);
+
+    //繰り返しごとの引いた枚数を格納する配列
+    var mgirl4genarry = [];
+    var mgirl4arry = [];
+    var mgirl3arry = [];
+    var mgirl2arry = [];
+    var memoria4arry = [];
+    var memoria3arry = [];
+    var memoria2arry = [];
+
+  //ガチャsim繰り返し開始
+	for(var k = 0 ; k < trynum; k++){
+    var cnt = { mgirl4gen:0, mgirl4:0, mgirl3:0, mgirl2:0, memoria4:0, memoria3:0, memoria2:0, cnt:0};
+
+	    //10連チケットのsim
+		for(var j = 0 ; j < gacha_10 ; j++){
+	    	var mgirlnum = Math.floor( Math.random() * 10 ); //0-9の変数
+	        var star3num = Math.floor( Math.random() * 10 );
+	        while(mgirlnum === star3num){ star3num = Math.floor( Math.random() * 10 ); }
+
+	     	for(var i = 0 ; i < 10 ; i++){
+	    		if( i === mgirlnum){ rungacha(0.6, 0.4, 14, 85, 0, 0, 0, cnt); }
+	    		else if( i === star3num){ rungacha(1.2, 0.8, 20, 0, 18, 60, 0, cnt); }
+	    		else{ rungacha(0.6, 0.4, 4, 25.5, 4, 12, 53.5, cnt); }
+	   		}
+	  }
+
+		//一回ガチャのsim
+		for(var j = 0 ; j < gacha ; j++){
+			rungacha(0.6, 0.4, 4, 25.5, 4, 12, 53.5, cnt);
+		}
+
+    //それぞれの配列にガチャ結果を追加する。
+    mgirl4genarry.push(cnt['mgirl4gen']);
+    mgirl4arry.push(cnt['mgirl4']);
+    mgirl3arry.push(cnt['mgirl3']);
+    mgirl2arry.push(cnt['mgirl2']);
+    memoria4arry.push(cnt['memoria4']);
+    memoria3arry.push(cnt['memoria3']);
+    memoria2arry.push(cnt['memoria2']);
+	} //ガチャsim繰り返し完了
+
+  //平均と標準偏差を計算する。
+  //平均を求める。
+  const mgirl4genave = mgirl4genarry.reduce((previous, current) => previous + current ) / mgirl4genarry.length;
+  const mgirl4ave = mgirl4arry.reduce((previous, current) => previous + current ) / mgirl4arry.length;
+  const mgirl3ave = mgirl3arry.reduce((previous, current) => previous + current ) / mgirl3arry.length;
+  const mgirl2ave = mgirl2arry.reduce((previous, current) => previous + current ) / mgirl2arry.length;
+  const memoria4ave = memoria4arry.reduce((previous, current) => previous + current ) / memoria4arry.length;
+  const memoria3ave = memoria3arry.reduce((previous, current) => previous + current ) / memoria3arry.length;
+  const memoria2ave = memoria2arry.reduce((previous, current) => previous + current ) / memoria2arry.length;
+  //標準偏差を求める。
+  const mgirl4gensD = Math.sqrt( mgirl4genarry.map((current) => {
+        let difference = current - mgirl4genave;  // 平均値との差を求める
+        return difference ** 2;  // 差を2乘する
+    }).reduce((previous, current) => previous + current) / mgirl4genarry.length);
+
+  const mgirl4sD = Math.sqrt( mgirl4arry.map((current) => {
+        let difference = current - mgirl4ave;  // 平均値との差を求める
+        return difference ** 2;  // 差を2乘する
+    }).reduce((previous, current) => previous + current) / mgirl4arry.length);
+
+  const mgirl3sD = Math.sqrt( mgirl3arry.map((current) => {
+      let difference = current - mgirl3ave;  // 平均値との差を求める
+      return difference ** 2;  // 差を2乘する
+  }).reduce((previous, current) => previous + current) / mgirl3arry.length);
+
+  const mgirl2sD = Math.sqrt( mgirl2arry.map((current) => {
+      let difference = current - mgirl2ave;  // 平均値との差を求める
+      return difference ** 2;  // 差を2乘する
+  }).reduce((previous, current) => previous + current) / mgirl2arry.length);
+
+  const memoria4sD = Math.sqrt( memoria4arry.map((current) => {
+      let difference = current - memoria4ave;  // 平均値との差を求める
+      return difference ** 2;  // 差を2乘する
+  }).reduce((previous, current) => previous + current) / memoria4arry.length);
+
+  const memoria3sD = Math.sqrt( memoria3arry.map((current) => {
+      let difference = current - memoria3ave;  // 平均値との差を求める
+      return difference ** 2;  // 差を2乘する
+  }).reduce((previous, current) => previous + current) / memoria3arry.length);
+
+  const memoria2sD = Math.sqrt( memoria2arry.map((current) => {
+      let difference = current - memoria2ave;  // 平均値との差を求める
+      return difference ** 2;  // 差を2乘する
+  }).reduce((previous, current) => previous + current) / memoria2arry.length);
+
+	//alert(cnt['mgirl4'] + " " + cnt['mgirl3'] + " " + cnt['mgirl2'] + " " + cnt['memoria4'] + " " + cnt['memoria3'] + " " + cnt['memoria2']);
+	//結果のhtml書き換え
+	document.getElementById('mgirl4gen').innerHTML = mgirl4genave.toFixed(2);
+	document.getElementById('mgirl4').innerHTML = mgirl4ave.toFixed(2);
+	document.getElementById('mgirl3').innerHTML = mgirl3ave.toFixed(2);
+	document.getElementById('mgirl2').innerHTML = mgirl2ave.toFixed(2);
+	document.getElementById('memoria4').innerHTML = memoria4ave.toFixed(2);
+	document.getElementById('memoria3').innerHTML = memoria3ave.toFixed(2);
+	document.getElementById('memoria2').innerHTML = memoria2ave.toFixed(2);
+	document.getElementById('mgirl4genhensa').innerHTML = mgirl4gensD.toFixed(2);
+	document.getElementById('mgirl4hensa').innerHTML = mgirl4sD.toFixed(2);
+	document.getElementById('mgirl3hensa').innerHTML = mgirl3sD.toFixed(2);
+	document.getElementById('mgirl2hensa').innerHTML = mgirl2sD.toFixed(2);
+	document.getElementById('memoria4hensa').innerHTML = mgirl4sD.toFixed(2);
+	document.getElementById('memoria3hensa').innerHTML = mgirl3sD.toFixed(2);
+	document.getElementById('memoria2hensa').innerHTML = mgirl2sD.toFixed(2);
+	document.getElementById('mgirl4sum').innerHTML = ((parseInt(mgirl4genave.toFixed(2)*100) + parseInt(mgirl4ave.toFixed(2)*100))/100).toFixed(2);
+	document.getElementById('sum').innerHTML = gachasum;
+
+  //棒グラフのデータ準備をする。
+  //mgirl4cnthashにkey:引いた数、value:回数で連想配列を積む。
+  var mgirl4gencnthash = {};
+  mgirl4genarry.forEach(function(value){
+    if( mgirl4gencnthash[value] ){mgirl4gencnthash[value]++; }
+    else{mgirl4gencnthash[value] = 1;}
+  });
+  var mgirl4gencnthashkey = Object.keys(mgirl4gencnthash);
+  var mgirl4gencnthashvalue=[];
+  mgirl4gencnthashkey.forEach(function(value){
+    mgirl4gencnthashvalue.push((mgirl4gencnthash[value] / trynum * 100).toFixed(2));
+  });
+
+  var mgirl4cnthash = {};
+  mgirl4arry.forEach(function(value){
+    if( mgirl4cnthash[value] ){mgirl4cnthash[value]++; }
+    else{mgirl4cnthash[value] = 1;}
+  });
+  var mgirl4cnthashkey = Object.keys(mgirl4cnthash);
+  var mgirl4cnthashvalue=[];
+  mgirl4cnthashkey.forEach(function(value){
+    mgirl4cnthashvalue.push((mgirl4cnthash[value] / trynum * 100).toFixed(2));
+  });
+
+  var mgirl3cnthash = {};
+  mgirl3arry.forEach(function(value){
+    if( mgirl3cnthash[value] ){mgirl3cnthash[value]++; }
+    else{mgirl3cnthash[value] = 1;}
+  });
+  var mgirl3cnthashkey = Object.keys(mgirl3cnthash);
+  var mgirl3cnthashvalue=[];
+  mgirl3cnthashkey.forEach(function(value){
+    mgirl3cnthashvalue.push((mgirl3cnthash[value] / trynum * 100).toFixed(2));
+  });
+
+  var mgirl2cnthash = {};
+  mgirl2arry.forEach(function(value){
+    if( mgirl2cnthash[value] ){mgirl2cnthash[value]++; }
+    else{mgirl2cnthash[value] = 1;}
+  });
+  var mgirl2cnthashkey = Object.keys(mgirl2cnthash);
+  var mgirl2cnthashvalue=[];
+  mgirl2cnthashkey.forEach(function(value){
+    mgirl2cnthashvalue.push((mgirl2cnthash[value] / trynum * 100).toFixed(2));
+  });
+
+  var memoria4cnthash = {};
+  memoria4arry.forEach(function(value){
+    if( memoria4cnthash[value] ){memoria4cnthash[value]++; }
+    else{memoria4cnthash[value] = 1;}
+  });
+  var memoria4cnthashkey = Object.keys(memoria4cnthash);
+  var memoria4cnthashvalue=[];
+  memoria4cnthashkey.forEach(function(value){
+    memoria4cnthashvalue.push((memoria4cnthash[value] / trynum * 100).toFixed(2));
+  });
+
+  var memoria3cnthash = {};
+  memoria3arry.forEach(function(value){
+    if( memoria3cnthash[value] ){memoria3cnthash[value]++; }
+    else{memoria3cnthash[value] = 1;}
+  });
+  var memoria3cnthashkey = Object.keys(memoria3cnthash);
+  var memoria3cnthashvalue=[];
+  memoria3cnthashkey.forEach(function(value){
+    memoria3cnthashvalue.push((memoria3cnthash[value] / trynum * 100).toFixed(2));
+  });
+
+  var memoria2cnthash = {};
+  memoria2arry.forEach(function(value){
+    if( memoria2cnthash[value] ){memoria2cnthash[value]++; }
+    else{memoria2cnthash[value] = 1;}
+  });
+  var memoria2cnthashkey = Object.keys(memoria2cnthash);
+  var memoria2cnthashvalue=[];
+  memoria2cnthashkey.forEach(function(value){
+    memoria2cnthashvalue.push((memoria2cnthash[value] / trynum * 100).toFixed(2));
+  });
+
+
+  //棒グラフの描写
+  var mgirl4gengraph = document.getElementById("mgirl4gengraph");
+  if(typeof(myChartmgirl4gen)!=="undefined"){myChartmgirl4gen.destroy()};
+  myChartmgirl4gen = new Chart(mgirl4gengraph, { type: 'bar', data: {labels:mgirl4gencnthashkey,
+    datasets:[{label:'入手確率', data:mgirl4gencnthashvalue, backgroundColor:"rgba(255,0,0,0.5)" }]},
+    options: { title:{ display:true, text:'☆4ピックアップ魔法少女' },
+      legend:{ display:false},
+        scales:{
+         yAxes:[{ticks:{suggestedMin: 0,callback: function(value, index, values){ return  value +  '%'}}}],
+         xAxes:[{display:true, barPercentage: 1, categoryPercentage:1, scaleLabel:{display: true,labelString:'(枚)'}}]
+  }, } });
+
+  var mgirl4graph = document.getElementById("mgirl4graph");
+    if(typeof(myChartmgirl4)!=="undefined"){myChartmgirl4.destroy()};
+    myChartmgirl4 = new Chart(mgirl4graph, { type: 'bar', data: {labels:mgirl4cnthashkey,
+      datasets:[{label:'入手確率', data:mgirl4cnthashvalue, backgroundColor:"rgba(219,39,91,0.5)" }]},
+      options: { title:{ display:true, text:'☆4魔法少女' },
+        legend:{ display:false},
+        scales:{
+         yAxes:[{ticks:{suggestedMin: 0,callback: function(value, index, values){ return  value +  '%'}}}],
+         xAxes:[{display:true, barPercentage: 1, categoryPercentage:1, scaleLabel:{display: true,labelString:'(枚)'}}]
+  }, } });
+
+  var mgirl3graph = document.getElementById("mgirl3graph");
+    if(typeof(myChartmgirl3)!=="undefined"){myChartmgirl3.destroy()};
+    myChartmgirl3 = new Chart(mgirl3graph, { type: 'bar', data: {labels:mgirl3cnthashkey,
+      datasets:[{label:'入手確率', data:mgirl3cnthashvalue, backgroundColor:"rgba(255,160,122,0.5)" }]},
+      options: { title:{ display:true, text:'☆3魔法少女' },
+        legend:{ display:false},
+        scales:{
+         yAxes:[{ticks:{suggestedMin: 0,callback: function(value, index, values){ return  value +  '%'}}}],
+         xAxes:[{display:true, barPercentage: 1, categoryPercentage:1, scaleLabel:{display: true,labelString:'(枚)'}}]
+  }, } });
+
+  var mgirl2graph = document.getElementById("mgirl2graph");
+    if(typeof(myChartmgirl2)!=="undefined"){myChartmgirl2.destroy()};
+    myChartmgirl2 = new Chart(mgirl2graph, { type: 'bar', data: {labels:mgirl2cnthashkey,
+      datasets:[{label:'入手確率', data:mgirl2cnthashvalue, backgroundColor:"rgba(255,255,0,0.5)" }]},
+      options: { title:{ display:true, text:'☆2魔法少女' },
+        legend:{ display:false},
+        scales:{
+         yAxes:[{ticks:{suggestedMin: 0,callback: function(value, index, values){ return  value +  '%'}}}],
+         xAxes:[{display:true, barPercentage: 1, categoryPercentage:1, scaleLabel:{display: true,labelString:'(枚)'}}]
+  }, } });
+
+  var memoria4graph = document.getElementById("memoria4graph");
+    if(typeof(myChartmemoria4)!=="undefined"){myChartmemoria4.destroy()};
+    myChartmemoria4 = new Chart(memoria4graph, { type: 'bar', data: {labels:memoria4cnthashkey,
+      datasets:[{label:'入手確率', data:memoria4cnthashvalue, backgroundColor:"rgba(0,0,255,0.5)" }]},
+      options: { title:{ display:true, text:'☆4メモリア' },
+        legend:{ display:false},
+        scales:{
+         yAxes:[{ticks:{suggestedMin: 0,callback: function(value, index, values){ return  value +  '%'}}}],
+         xAxes:[{display:true, barPercentage: 1, categoryPercentage:1, scaleLabel:{display: true,labelString:'(枚)'}}]
+  }, } });
+
+  var memoria3graph = document.getElementById("memoria3graph");
+    if(typeof(myChartmemoria3)!=="undefined"){myChartmemoria3.destroy()};
+    myChartmemoria3 = new Chart(memoria3graph, { type: 'bar', data: {labels:memoria3cnthashkey,
+      datasets:[{label:'入手確率', data:memoria3cnthashvalue, backgroundColor:"rgba(127,255,212,0.5)" }]},
+      options: { title:{ display:true, text:'☆3メモリア' },
+        legend:{ display:false},
+        scales:{
+         yAxes:[{ticks:{suggestedMin: 0,callback: function(value, index, values){ return  value +  '%'}}}],
+         xAxes:[{display:true, barPercentage: 1, categoryPercentage:1, scaleLabel:{display: true,labelString:'(枚)'}}]
+  }, } });
+
+  var memoria2graph = document.getElementById("memoria2graph");
+    if(typeof(myChartmemoria2)!=="undefined"){myChartmemoria2.destroy()};
+    myChartmemoria2 = new Chart(memoria2graph, { type: 'bar', data: {labels:memoria2cnthashkey,
+      datasets:[{label:'入手確率', data:memoria2cnthashvalue, backgroundColor:"rgba(173,255,47,0.5)" }]},
+      options: { title:{ display:true, text:'☆2メモリア' },
+        legend:{ display:false},
+        scales:{
+         yAxes:[{ticks:{suggestedMin: 0,callback: function(value, index, values){ return  value +  '%'}}}],
+         xAxes:[{display:true, barPercentage: 1, categoryPercentage:1, scaleLabel:{display: true,labelString:'(枚)'}}]
+  }, } });
+
+  }
+
+  function rungacha(girl4gen_per, girl4_per, girl3_per, girl2_per, memoria4_per, memoria3_per, memoria2_per, cnthash){
+    // 確率判定は0-99.9の間で判定する。
+    var dice = Math.floor( Math.random() * 999 ) / 10;
+   	//天井だったら☆4魔法少女をカウントしてリターン。
+  	if(cnthash["cnt"] === 99){
+      if(dice < 60){cnthash['mgirl4gen']++;}
+      else{cnthash['mgirl4']++;}
+      cnthash['cnt'] = 0; return;
+    }
+	if( memoria2_per > dice ){ cnthash['memoria2']++; cnthash['cnt']++;}
+	else if((memoria2_per + memoria3_per) > dice ){ cnthash['memoria3']++; cnthash['cnt']++;}
+	else if((memoria2_per + memoria3_per + memoria4_per) > dice ){ cnthash['memoria4']++; cnthash['cnt']++;}
+	else if((memoria2_per + memoria3_per + memoria4_per + girl2_per) > dice ){ cnthash['mgirl2']++; cnthash['cnt']++;}
+	else if((memoria2_per + memoria3_per + memoria4_per + girl2_per + girl3_per) > dice ){ cnthash['mgirl3']++; cnthash['cnt']++;}
+	else if((memoria2_per + memoria3_per + memoria4_per + girl2_per + girl3_per + girl4gen_per) > dice ){ cnthash['mgirl4gen']++; cnthash['cnt'] = 0;}
+	else { cnthash['mgirl4']++; cnthash['cnt'] = 0;}
+	return ;
+  }
+
+  </script>
+
+
+  </body>
+</html>
