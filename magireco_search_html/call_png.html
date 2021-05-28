@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <base target="_top">
-  <link rel="icon" type="image/x-icon" href="./img/webp/ファビコン.webp">
-  <link rel="apple-touch-icon" sizes="180x180" href="./img/webp/apple_fabicon.webp">
+  <link rel="icon" type="image/x-icon" href="./img/png/ファビコン.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./img/png/apple_fabicon.png">
 
   <title>マギレコ魔法少女呼びかけ検索</title>
 
   <!-- CSSファイル読み出し -->
   <link rel="stylesheet" href="./myfile/mycss.css">
-  <link rel="stylesheet" href="./myfile/charaBox_webp.css">
+  <link rel="stylesheet" href="./myfile/charaBox_png.css">
   <!-- このページだけのスタイル -->
   <style type="text/css">
   /* ネットワーク図のスタイル */
@@ -42,7 +42,7 @@
   <H2>マギレコ魔法少女呼びかけ検索</H2>
   キャラクタを選択するとページ下部に呼びかけ関係図と表が表示されます。(右下の矢印を押すと上下に移動できます)<BR>
 
-  <a href="./call_png.html" target="_blank">画像が表示されない場合はこちら</a><BR>
+    <a href="./call.html" target="_blank">軽量版はこちら</a><BR>
 
   <span class="returnlink"><a href="https://docs.google.com/spreadsheets/d/1Xzv7e_YgwkChqXApmRj2cbkTZuq9L9Cu8Du9NEp6E14/edit#gid=1136068404">
   呼びかけ一覧表はこちら(コメント追加可能。間違い等のご指摘をお願いします)</a></span><BR>
@@ -438,9 +438,9 @@
       }
     }
     // ノードを追加する。tableも準備する。
-    var DIR = "./img/webp/";
+    var DIR = "./img/png/";
     for(var i = 0 ; i < girlName.length ; i++){
-      var girlImgURL = DIR + girlName[i] + ".webp";
+      var girlImgURL = DIR + girlName[i] + ".png";
       //ノード追加
       var girlnode = { id: girlName[i], shape: "circularImage", image: girlImgURL , label: girlName[i] + "\n(" + calltable[girlName[i]]["年齢"] + "/" + calltable[girlName[i]]["学年"] + ")"};
       nodes.push(girlnode);
@@ -469,7 +469,7 @@
     }
     //二人称のノードを追加する。
     if(nodes.length){
-      nodes.push({ id: "二人称", shape: "circularImage", image : "./img/webp/二人称.webp" , label: "二人称"});
+      nodes.push({ id: "二人称", shape: "circularImage", image : "./img/png/二人称.png" , label: "二人称"});
     }
     //二人称のノードの場所は常に右下
     nodes[nodes.length-1].x = otherx;

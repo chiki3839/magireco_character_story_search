@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <base target="_top" />
-  <link rel="icon" type="image/x-icon" href="./img/webp/ファビコン.webp" />
-  <link rel="apple-touch-icon" sizes="180x180" href="./img/webp/apple_fabicon.webp">
+  <link rel="icon" type="image/x-icon" href="./img/png/ファビコン.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./img/png/apple_fabicon.png">
   <title>マギレコキャラクタストーリー検索</title>
 
   <!-- キャラクタ追加指針 -----------------------------------------------------
@@ -20,7 +20,7 @@
   <!-- cssを読み出す -->
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
   <link rel="stylesheet" href="./myfile/mycss.css" />
-  <link rel="stylesheet" href="./myfile/charaBox_webp.css" />
+  <link rel="stylesheet" href="./myfile/charaBox_png.css" />
 
   <!-- 上に進む、下に進むボタンの設置 -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -35,7 +35,7 @@
   <div id="headerBanner"></div>
   <span class="headerExpl2">(クリックで関係ページにジャンプします)</span><br />
 
-  <a href="./index_png.html" target="_blank">画像が表示されない場合はこちら</a><BR>
+  <a href="./index.html" target="_blank">軽量ページはこちら</a><BR>
 
   <span class="returnlink"><a href="./gachasim.html">ガチャシミュレータ</a></span>
   &nbsp;<span class="returnlink"><a href="./call.html">マギレコキャラ呼びかけ検索</a></span>
@@ -262,22 +262,22 @@
       <div class="selectBoxSet">
         <div class="selectBox">
           <label><input type="radio" class="and_or" name="and_or" value="AND" checked="checked" required />AND<br />
-            <img class="selectBoxImg" src="./img/webp/AND.webp" alt="AND" /></label>
+            <img class="selectBoxImg" src="./img/png/AND.png" alt="AND" /></label>
         </div>
 
         <div class="selectBox">
           <label><input type="radio" class="and_or" name="and_or" value="OR" />OR<br />
-            <img class="selectBoxImg" src="./img/webp/OR.webp" alt="OR" /></label>
+            <img class="selectBoxImg" src="./img/png/OR.png" alt="OR" /></label>
         </div>
 
         <div class="selectBox">
           <label><input type="radio" class="and_or" name="and_or" value="EXCLUSIVE" />EXCLUSIVE<br />
-            <img class="selectBoxImg" src="./img/webp/EXCLUSIVE.webp" alt="EXCLUSIVE" /></label>
+            <img class="selectBoxImg" src="./img/png/EXCLUSIVE.png" alt="EXCLUSIVE" /></label>
         </div>
 
         <div class="selectBox">
           <label><input type="radio" class="and_or" name="and_or" value="ONLY" />ONLY<br />
-            <img class="selectBoxImg" src="./img/webp/ONLY.webp" alt="ONLY" /></label>
+            <img class="selectBoxImg" src="./img/png/ONLY.png" alt="ONLY" /></label>
         </div>
       </div>
       <ul class="option">
@@ -1200,13 +1200,13 @@
     //バナー表示を早くするために一番最初に処理する。
     var images = {
       0: {
-        imgID: "愛川.webp",
+        imgID: "愛川.png",
         height: "100",
         name: "愛川",
         linkUrl: "https://www.pixiv.net/users/41044900",
       },
       1: {
-        imgID: "粉くずff.webp",
+        imgID: "粉くずff.png",
         height: "150",
         name: "こな",
         linkUrl: "https://twitter.com/kona_kuzu",
@@ -1367,9 +1367,9 @@
 
       //属性検索結果の画像アイコンを並べる。
       charaindex.forEach(cindex =>{
-      at_resultHtml += '<span class="resultGirl result" style="position:relative;"><img src="./img/webp/'
+      at_resultHtml += '<span class="resultGirl result" style="position:relative;"><img src="./img/png/'
         + allnames[cindex]
-        + '.webp" alt="' + allnames[cindex] + '"><span class="girlName">' + allnames[cindex] + "</span></span>";
+        + '.png" alt="' + allnames[cindex] + '"><span class="girlName">' + allnames[cindex] + "</span></span>";
       });
       document.getElementById("at_result").innerHTML = at_resultHtml;
 
@@ -1455,9 +1455,9 @@
       if (count) {
         magicalGirlChoice.forEach((girlname) => {
           resultHeader +=
-            '<span class="resultGirl" style="position:relative;"><img src="./img/webp/' +
+            '<span class="resultGirl" style="position:relative;"><img src="./img/png/' +
             girlname +
-            '.webp" alt="' +
+            '.png" alt="' +
             girlname +
             '"><span class="girlName">' +
             girlname +
@@ -1481,7 +1481,7 @@
       resultHeader += " を検索しました。<BR>";
       document.getElementById("mytable").innerHTML = resultHeader;
       document.getElementById("mytable2").innerHTML =
-        '<img border="0" src="./img/webp/loading.webp" width="100" height="100" alt="loading...">';
+        '<img border="0" src="./img/png/loading.gif" width="100" height="100" alt="loading...">';
 
       //結果TOPに移動する。
       $("html, body").animate({
@@ -1570,9 +1570,9 @@
                   var girlArray = storyLine[1];
                   girlArray.forEach((girlname) => {
                     outTable +=
-                      '<span class="resultGirl" style="position:relative;"><img src="./img/webp/' +
+                      '<span class="resultGirl" style="position:relative;"><img src="./img/png/' +
                       girlname +
-                      '.webp" alt="' +
+                      '.png" alt="' +
                       girlname +
                       '"><span class="girlName">' +
                       girlname +
