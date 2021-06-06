@@ -2,526 +2,723 @@
 <html lang="ja">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <base target="_top">
-  <link rel="icon" type="image/x-icon" href="./img/png/ファビコン.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="./img/png/apple_fabicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <base target="_top">
+    <link rel="icon" type="image/x-icon" href="./img/png/ファビコン.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/png/apple_fabicon.png">
 
-  <title>マギレコ魔法少女呼びかけ検索</title>
+    <title>マギレコ魔法少女呼びかけ検索</title>
 
-  <!-- CSSファイル読み出し -->
-  <link rel="stylesheet" href="./myfile/mycss.css">
-  <link rel="stylesheet" href="./myfile/charaBox_png.css">
-  <!-- このページだけのスタイル -->
-  <style type="text/css">
-  /* ネットワーク図のスタイル */
-  #mynetwork {
-    /* width : 350px; */
-    width : 90%;
-    height: 400px;
-    border: 1px solid lightgray;
-    display: block;
-    background:rgba(0,0,0,1);
-    margin:0 auto;
-  }
+    <!-- CSSファイル読み出し -->
+    <link rel="stylesheet" href="./myfile/mycss.css">
+    <link rel="stylesheet" href="./myfile/charaBox_png.css">
+    <!-- このページだけのスタイル -->
+    <style>
+        /* ネットワーク図のスタイル */
+        #mynetwork {
+            /* width : 350px; */
+            width: 90%;
+            height: 400px;
+            border: 1px solid lightgray;
+            display: block;
+            background: rgba(0, 0, 0, 1);
+            margin: 0 auto;
+        }
 
-  #girltable{
-    margin:0 auto;
-    border-collapse: separate;
-    font-size: small;
-  }
-  </style>
+        #girltable {
+            margin: 0 auto;
+            border-collapse: separate;
+            font-size: small;
+        }
+    </style>
 
-  <!-- 上に進む、下に進むボタンの設置 -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <!-- 上に進む、下に進むボタンの設置 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <!-- 魔法少女絞り込みのjavascriptメソッドを読む-->
+    <script src="./myfile/mgirlnarrow.js"></script>
 </head>
 
 <body>
-  <H2>マギレコ魔法少女呼びかけ検索</H2>
-  キャラクタを選択するとページ下部に呼びかけ関係図と表が表示されます。(右下の矢印を押すと上下に移動できます)<BR>
+    <H2>マギレコ魔法少女呼びかけ検索</H2>
+    キャラクタを選択するとページ下部に呼びかけ関係図と表が表示されます。(右下の矢印を押すと上下に移動できます)<BR>
 
-    <a href="./call.html" target="_blank">軽量版はこちら</a><BR>
+    <a href="./call_png.html" target="_blank">画像が表示されない場合はこちら</a><BR>
 
-  <span class="returnlink"><a href="https://docs.google.com/spreadsheets/d/1Xzv7e_YgwkChqXApmRj2cbkTZuq9L9Cu8Du9NEp6E14/edit#gid=1136068404">
-  呼びかけ一覧表はこちら(コメント追加可能。間違い等のご指摘をお願いします)</a></span><BR>
-  <span class="returnlink"><a href="index.html">
-  マギレコキャラクタストーリー検索</a></span>&ensp;
-  <span class="returnlink"><a href="./gachasim.html">
-  マギレコガチャシミュレーター</a></span>&ensp;
-  <span class="returnlink"><a href="https://app.the-timeline.jp/2PACX-1vTYF8Mj66tnTEhK2jPwzJzwKWJgtC0Y2-PQGIUwVbkO9csvt1IofUzv0LO0X_bjVpVgKCDyel4_jEry?start=20160518090156&end=20220411205803">
-  マギレコサービス年表</a></span>
+    <span class="returnlink"><a
+            href="https://docs.google.com/spreadsheets/d/1Xzv7e_YgwkChqXApmRj2cbkTZuq9L9Cu8Du9NEp6E14/edit#gid=1136068404">
+            呼びかけ一覧表はこちら(コメント追加可能。間違い等のご指摘をお願いします)</a></span><BR>
+    <span class="returnlink"><a href="index.html">
+            マギレコキャラクタストーリー検索</a></span>&ensp;
+    <span class="returnlink"><a href="./gachasim.html">
+            マギレコガチャシミュレーター</a></span>&ensp;
+    <span class="returnlink"><a
+            href="https://app.the-timeline.jp/2PACX-1vTYF8Mj66tnTEhK2jPwzJzwKWJgtC0Y2-PQGIUwVbkO9csvt1IofUzv0LO0X_bjVpVgKCDyel4_jEry?start=20160518090156&end=20220411205803">
+            マギレコサービス年表</a></span>
 
-  <BR>
-  <button type="button" name="mgreset" class="mgreset" onClick="return girlReset()" id="startbutton">魔法少女の選択をすべて解除</button>
-  <!-- 魔法少女チェックボックス実装 -->
- 	<form name="magicalgirl">
-	<div class="magicalgirl">
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="環いろは" value="環いろは" onchange="chkBoxCng();"><BR>環いろは</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="七海やちよ" value="七海やちよ" onchange="chkBoxCng();"><BR>七海やちよ</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="由比鶴乃" value="由比鶴乃" onchange="chkBoxCng();" onchange="chkBoxCng();"><BR>由比鶴乃</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="二葉さな" value="二葉さな" onchange="chkBoxCng();" onchange="chkBoxCng();"><BR>二葉さな</label></div>
-	<div class="girlbox umeColor" id="feri"><label><input type="checkbox" class="MagicalChk" name="chara" id="深月フェリシア" value="深月フェリシア" onchange="chkBoxCng();" onchange="chkBoxCng();"><BR>深月<BR>フェリシア</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="梓みふゆ" value="梓みふゆ" onchange="chkBoxCng();"><BR>梓みふゆ</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="里見灯花" value="里見灯花" onchange="chkBoxCng();"><BR>里見灯花</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="柊ねむ" value="柊ねむ" onchange="chkBoxCng();"><BR>柊ねむ</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="環うい" value="環うい" onchange="chkBoxCng();"><BR>環うい</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="万年桜のウワサ" value="万年桜のウワサ" onchange="chkBoxCng();"><BR>万年桜の<BR>ウワサ</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="アリナ・グレイ" value="アリナ・グレイ" onchange="chkBoxCng();"><BR>アリナ・<BR>グレイ</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="御園かりん" value="御園かりん" onchange="chkBoxCng();"><BR>御園かりん</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="水波レナ" value="水波レナ" onchange="chkBoxCng();"><BR>水波レナ</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="十咎ももこ" value="十咎ももこ" onchange="chkBoxCng();"><BR>十咎ももこ</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="秋野かえで" value="秋野かえで" onchange="chkBoxCng();"><BR>秋野かえで</label></div>
+    <BR>
+    <!-- 魔法少女絞り込みテキスト入力実装 -->
+    <input type="text" spellcheck="false" class="ndownword" name="ndownword" placeholder="かなカナ漢字名で絞り込み。スペースでOR。削除で戻る"
+       id="ndownword1" oninput="mgirlnarrow('call', 'ndownword1')">
+    <input type="button" value="絞り込みリセット" class="ndownwordreset"
+      onClick="document.getElementById('ndownword1').value=''; allshow();"><BR>
 
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="和泉十七夜" value="和泉十七夜" onchange="chkBoxCng();"><BR>和泉十七夜</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="八雲みたま" value="八雲みたま" onchange="chkBoxCng();"><BR>八雲<BR>みたま</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="里見那由他" value="里見那由他" onchange="chkBoxCng();"><BR>里見那由他</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="氷室ラビ" value="氷室ラビ" onchange="chkBoxCng();"><BR>氷室ラビ</label></div>
-  <div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="八雲みかげ" value="八雲みかげ" onchange="chkBoxCng();"><BR>八雲みかげ</label></div>
-  <div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="天音月夜" value="天音月夜" onchange="chkBoxCng();"><BR>天音月夜</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="天音月咲" value="天音月咲" onchange="chkBoxCng();"><BR>天音月咲</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="千秋理子" value="千秋理子" onchange="chkBoxCng();"><BR>千秋理子</label></div>
+    <button type="button" name="mgreset" class="mgreset" onClick="return girlReset()"
+        id="startbutton">魔法少女の選択をすべて解除</button>
+    <!-- 魔法少女チェックボックス実装 -->
+    <form name="magicalgirl">
+        <div class="magicalgirl">
 
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="紅晴結菜" value="紅晴結菜" onchange="chkBoxCng();"><BR>紅晴結菜</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="大庭樹里" value="大庭樹里" onchange="chkBoxCng();"><BR>大庭樹里</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="笠音アオ" value="笠音アオ" onchange="chkBoxCng();"><BR>笠音アオ</label></div>
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="煌里ひかる" value="煌里ひかる" onchange="chkBoxCng();"><BR>煌里ひかる</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="智珠らんか" value="智珠らんか" onchange="chkBoxCng();"><BR>智珠らんか</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="鈴鹿さくや" value="鈴鹿さくや" onchange="chkBoxCng();"><BR>鈴鹿さくや</label></div>
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="有愛うらら" value="有愛うらら" onchange="chkBoxCng()"><BR>有愛うらら</label></div>
-
-  <div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="広江ちはる" value="広江ちはる" onchange="chkBoxCng();"><BR>広江ちはる</label></div>
-  <div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="土岐すなお" value="土岐すなお" onchange="chkBoxCng();"><BR>土岐すなお</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="時女静香" value="時女静香" onchange="chkBoxCng();"><BR>時女静香</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="南津涼子" value="南津涼子" onchange="chkBoxCng();"><BR>南津涼子</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="三浦旭" value="三浦旭" onchange="chkBoxCng();"><BR>三浦旭</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="青葉ちか" value="青葉ちか" onchange="chkBoxCng();"><BR>青葉ちか</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="七瀬ゆきか" value="七瀬ゆきか" onchange="chkBoxCng();"><BR>七瀬ゆきか</label></div>
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="柚希ほとり" value="柚希ほとり" onchange="chkBoxCng();"><BR>柚希ほとり</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="柚希りおん" value="柚希りおん" onchange="chkBoxCng();"><BR>柚希りおん</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="香春ゆうな" value="香春ゆうな" onchange="chkBoxCng();"><BR>香春ゆうな</label></div>
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="入名クシュ" value="入名クシュ" onchange="chkBoxCng();"><BR>入名クシュ</label></div>
-
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="宮尾時雨" value="宮尾時雨" onchange="chkBoxCng();"><BR>宮尾時雨</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="安積はぐむ" value="安積はぐむ" onchange="chkBoxCng();"><BR>安積はぐむ</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="藍家ひめな" value="藍家ひめな" onchange="chkBoxCng()"><BR>藍家ひめな</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="栗栖アレクサンドラ" value="栗栖アレクサンドラ" onchange="chkBoxCng()"><BR>栗栖アレクサンドラ</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="神楽燦" value="神楽燦" onchange="chkBoxCng()"><BR>神楽燦</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="遊狩ミユリ" value="遊狩ミユリ" onchange="chkBoxCng()"><BR>遊狩ミユリ</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="飾利潤" value="飾利潤" onchange="chkBoxCng();"><BR>飾利潤</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="三輪みつね" value="三輪みつね" onchange="chkBoxCng();"><BR>三輪みつね</label></div>
-
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="リヴィア・メディロス" value="リヴィア・メディロス" onchange="chkBoxCng();"><BR>リヴィア・メディロス</label></div>
-  <div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="篠目ヨヅル" value="篠目ヨヅル" onchange="chkBoxCng();"><BR>篠目ヨヅル</label></div>
-	<div class="girlbox umeColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="佐和月出里" value="佐和月出里" onchange="chkBoxCng();"><BR>佐和月出里</label></div>
-
-	<div class="girlbox PMHQColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="鹿目まどか" value="鹿目まどか" onchange="chkBoxCng();"><BR>鹿目<BR>まどか</label></div>
-	<div class="girlbox PMHQColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="暁美ほむら" value="暁美ほむら" onchange="chkBoxCng();"><BR>暁美<BR>ほむら</label></div>
-	<div class="girlbox PMHQColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="暁美ほむら(眼鏡ver)" value="暁美ほむら(眼鏡ver)" onchange="chkBoxCng();"><BR>暁美ほむら<BR>(眼鏡ver)</label></div>
-	<div class="girlbox PMHQColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="美樹さやか" value="美樹さやか" onchange="chkBoxCng();"><BR>美樹さやか</label></div>
-	<div class="girlbox PMHQColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="巴マミ" value="巴マミ" onchange="chkBoxCng();"><BR>巴マミ</label></div>
-	<div class="girlbox PMHQColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="佐倉杏子" value="佐倉杏子" onchange="chkBoxCng();"><BR>佐倉杏子</label></div>
-	<div class="girlbox PMHQColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="百江なぎさ" value="百江なぎさ" onchange="chkBoxCng();"><BR>百江なぎさ</label></div>
-	<div class="girlbox PMHQColor" id="arumado"><label><input type="checkbox" class="MagicalChk" name="chara" id="アルティメットまどか" value="アルティメットまどか" onchange="chkBoxCng();"><BR>アルティメットまどか</label></div>
-
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="矢宵かのこ" value="矢宵かのこ" onchange="chkBoxCng();"><BR>矢宵かのこ</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="空穂夏希" value="空穂夏希" onchange="chkBoxCng();"><BR>空穂夏希</label></div>
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="更紗帆奈" value="更紗帆奈" onchange="chkBoxCng();"><BR>更紗帆奈</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="眞尾ひみか" value="眞尾ひみか" onchange="chkBoxCng();"><BR>眞尾ひみか</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="春名このみ" value="春名このみ" onchange="chkBoxCng();"><BR>春名このみ</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="恵萌花" value="恵萌花" onchange="chkBoxCng();"><BR>恵萌花</label></div>
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="由貴真里愛" value="由貴真里愛" onchange="chkBoxCng();"><BR>由貴真里愛</label></div>
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="枇々木めぐる" value="枇々木めぐる" onchange="chkBoxCng();"><BR>枇々木めぐる</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="保澄雫" value="保澄雫" onchange="chkBoxCng();"><BR>保澄雫</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="毬子あやか" value="毬子あやか" onchange="chkBoxCng();"><BR>毬子あやか</label></div>
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="竜城明日香" value="竜城明日香" onchange="chkBoxCng();"><BR>竜城明日香</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="美凪ささら" value="美凪ささら" onchange="chkBoxCng();"><BR>美凪ささら</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="粟根こころ" value="粟根こころ" onchange="chkBoxCng();"><BR>粟根こころ</label></div>
-  <div class="girlbox otherColor" id="masara"><label><input type="checkbox" class="MagicalChk" name="chara" id="加賀見まさら" value="加賀見まさら" onchange="chkBoxCng();"><BR>加賀見まさら</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="江利あいみ" value="江利あいみ" onchange="chkBoxCng();"><BR>江利あいみ</label></div>
-  <div class="girlbox otherColor" id="ash"><label><input type="checkbox" class="MagicalChk" name="chara" id="アシュリー・テイラー" value="アシュリー・テイラー" onchange="chkBoxCng();"><BR>アシュリー・テイラー</label></div>
-
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="都ひなの" value="都ひなの" onchange="chkBoxCng();"><BR>都ひなの</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="木崎衣美里" value="木崎衣美里" onchange="chkBoxCng();"><BR>木崎衣美里</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="観鳥令" value="観鳥令" onchange="chkBoxCng();"><BR>観鳥令</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="牧野郁美" value="牧野郁美" onchange="chkBoxCng();"><BR>牧野郁美</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="綾野梨花" value="綾野梨花" onchange="chkBoxCng();"><BR>綾野梨花</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="五十鈴れん" value="五十鈴れん" onchange="chkBoxCng();"><BR>五十鈴れん</label></div>
-
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="常盤ななか" value="常盤ななか" onchange="chkBoxCng();"><BR>常盤ななか</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="志伸あきら" value="志伸あきら" onchange="chkBoxCng();"><BR>志伸あきら</label></div>
-  <div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="夏目かこ" value="夏目かこ" onchange="chkBoxCng();"><BR>夏目かこ</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="純美雨" value="純美雨" onchange="chkBoxCng();"><BR>純美雨</label></div>
-
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="胡桃まなか" value="胡桃まなか" onchange="chkBoxCng();"><BR>胡桃まなか</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="阿見莉愛" value="阿見莉愛" onchange="chkBoxCng();"><BR>阿見莉愛</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="梢麻友" value="梢麻友" onchange="chkBoxCng();"><BR>梢麻友</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="史乃沙優希" value="史乃沙優希" onchange="chkBoxCng();"><BR>史乃沙優希</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="若菜つむぎ" value="若菜つむぎ" onchange="chkBoxCng();"><BR>若菜つむぎ</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="水名の先輩" value="水名の先輩" onchange="chkBoxCng();"><BR>水名の先輩</label></div>
-
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="伊吹れいら" value="伊吹れいら" onchange="chkBoxCng();"><BR>伊吹れいら</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="桑水せいか" value="桑水せいか" onchange="chkBoxCng();"><BR>桑水せいか</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="相野みと" value="相野みと" onchange="chkBoxCng();"><BR>相野みと</label></div>
-
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="静海このは" value="静海このは" onchange="chkBoxCng();"><BR>静海このは</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="遊佐葉月" value="遊佐葉月" onchange="chkBoxCng();"><BR>遊佐葉月</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="三栗あやめ" value="三栗あやめ" onchange="chkBoxCng();"><BR>三栗あやめ</label></div>
-	<div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="桐野紗枝" value="桐野紗枝" onchange="chkBoxCng();"><BR>桐野紗枝</label></div>
+            <label class="girlbox umeColor" data-kana="たまき いろは"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="環いろは" value="環いろは"><br>環いろは★</label>
+            <label class="girlbox umeColor" data-kana="ななみ やちよ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="七海やちよ" value="七海やちよ"><br>七海やちよ★</label>
+            <label class="girlbox umeColor" data-kana="ゆい つるの"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="由比鶴乃" value="由比鶴乃"><br>由比鶴乃★</label>
+            <label class="girlbox umeColor" data-kana="ふたば さな"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="二葉さな" value="二葉さな"><br>二葉さな★</label>
+            <label class="girlbox umeColor" id="feri" data-kana="みつき ふぇりしあ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="深月フェリシア" value="深月フェリシア"><br>深月<br>フェリシア★</label>
+            <label class="girlbox umeColor" data-kana="あずさ みふゆ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="梓みふゆ" value="梓みふゆ"><br>梓みふゆ★</label>
+            <label class="girlbox umeColor" data-kana="さとみ とうか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="里見灯花" value="里見灯花"><br>里見灯花★</label>
+            <label class="girlbox umeColor" data-kana="ありな ぐれい"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="アリナ・グレイ" value="アリナ・グレイ"><br>アリナ・<br>グレイ★</label>
+            <label class="girlbox umeColor" data-kana="みなみ れな"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="水波レナ" value="水波レナ"><br>水波レナ★</label>
+            <label class="girlbox umeColor" data-kana="とがめ ももこ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="十咎ももこ" value="十咎ももこ"><br>十咎ももこ★</label>
+            <label class="girlbox umeColor" data-kana="あきの かえで"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="秋野かえで" value="秋野かえで"><br>秋野かえで★</label>
+            <label class="girlbox umeColor" data-kana="みその かりん"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="御園かりん" value="御園かりん"><br>御園かりん</label>
+            <label class="girlbox umeColor" data-kana="たつき あすか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="竜城明日香" value="竜城明日香"><br>竜城明日香</label>
+            <label class="girlbox umeColor" data-kana="ひいらぎ ねむ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="柊ねむ" value="柊ねむ"><br>柊ねむ★</label>
+            <label class="girlbox umeColor" data-kana="たまき うい"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="環うい" value="環うい"><br>環うい</label>
+            <label class="girlbox umeColor" data-kana="いずみ かなぎ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="和泉十七夜" value="和泉十七夜"><br>和泉十七夜★</label>
+            <label class="girlbox umeColor" data-kana="やくも みたま"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="八雲みたま" value="八雲みたま"><br>八雲<br>みたま★</label>
+            <label class="girlbox umeColor" data-kana="あまね つくよ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="天音月夜" value="天音月夜"><br>天音月夜★</label>
+            <label class="girlbox umeColor" data-kana="あまね つかさ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="天音月咲" value="天音月咲"><br>天音月咲★</label>
+            <label class="girlbox umeColor" data-kana="みやこ ひなの"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="都ひなの" value="都ひなの"><br>都ひなの</label>
+            <label class="girlbox umeColor" data-kana="まんねんざくらのうわさ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="万年桜のウワサ" value="万年桜のウワサ"><br>万年桜の<br>ウワサ★</label>
+            <label class="girlbox umeColor" data-kana="みどり りょう"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="観鳥令" value="観鳥令"><br>観鳥令</label>
+            <label class="girlbox umeColor" data-kana="まきの いくみ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="牧野郁美" value="牧野郁美"><br>牧野郁美</label>
 
 
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="古町みくら" value="古町みくら" onchange="chkBoxCng();"><BR>古町みくら</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="三穂野せいら" value="三穂野せいら" onchange="chkBoxCng();"><BR>三穂野せいら</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="吉良てまり" value="吉良てまり" onchange="chkBoxCng();"><BR>吉良てまり</label></div>
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="水樹塁" value="水樹塁" onchange="chkBoxCng();"><BR>水樹塁</label></div>
+            <label class="girlbox umeOtherColor leftm" data-kana="くれは ゆな"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="紅晴結菜" value="紅晴結菜"><br>紅晴結菜</label>
+            <label class="girlbox umeOtherColor" data-kana="きらり ひかる"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="煌里ひかる" value="煌里ひかる"><br>煌里ひかる</label>
+            <label class="girlbox umeOtherColor" data-kana="かさね あお"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="笠音アオ" value="笠音アオ"><br>笠音アオ</label>
+            <label class="girlbox umeOtherColor" data-kana="おおば じゅり"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="大庭樹里" value="大庭樹里"><br>大庭樹里</label>
+            <label class="girlbox umeOtherColor" data-kana="すずか さくや"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="鈴鹿さくや" value="鈴鹿さくや"><br>鈴鹿さくや</label>
+            <label class="girlbox umeOtherColor" data-kana="ちず らんか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="智珠らんか" value="智珠らんか"><br>智珠らんか</label>
+            <label class="girlbox umeOtherColor" data-kana="ゆめ うらら"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="有愛うらら" value="有愛うらら"><br>有愛うらら</label>
 
 
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="安名メル" value="安名メル" onchange="chkBoxCng();"><BR>安名メル</label></div>
-  <div class="girlbox other2Color"><label><input type="checkbox" class="MagicalChk" name="chara" id="雪野かなえ" value="雪野かなえ" onchange="chkBoxCng();"><BR>雪野かなえ</label></div>
+            <label class="girlbox PMHQColor leftm" data-kana="ときめ しずか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="時女静香" value="時女静香"><br>時女静香</label>
+            <label class="girlbox PMHQColor" data-kana="ひろえ ちはる"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="広江ちはる" value="広江ちはる"><br>広江ちはる</label>
+            <label class="girlbox PMHQColor" data-kana="とき すなお"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="土岐すなお" value="土岐すなお"><br>土岐すなお</label>
+            <label class="girlbox PMHQColor" data-kana="あおば ちか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="青葉ちか" value="青葉ちか"><br>青葉ちか</label>
+            <label class="girlbox PMHQColor" data-kana="なつ りょうこ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="南津涼子" value="南津涼子"><br>南津涼子</label>
+            <label class="girlbox PMHQColor" data-kana="みうら あさひ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="三浦旭" value="三浦旭"><br>三浦旭</label>
 
-	<div class="girlbox otherColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="黒" value="黒" onchange="chkBoxCng();"><BR>黒</label></div>
-	<!-- ここから外伝キャラ -->
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="美国織莉子" value="美国織莉子" onchange="chkBoxCng();"><BR>美国織莉子</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="呉キリカ" value="呉キリカ" onchange="chkBoxCng();"><BR>呉キリカ</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="千歳ゆま" value="千歳ゆま" onchange="chkBoxCng();"><BR>千歳ゆま</label></div>
+            <label class="girlbox PMHQotherColor leftm" data-kana="あいか ひめな"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="藍家ひめな" value="藍家ひめな"><br>藍家ひめな</label>
+            <label class="girlbox PMHQotherColor" data-kana="みやび しぐれ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="宮尾時雨" value="宮尾時雨"><br>宮尾時雨</label>
+            <label class="girlbox PMHQotherColor" data-kana="あずみ はぐむ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="安積はぐむ" value="安積はぐむ"><br>安積はぐむ</label>
+            <label class="girlbox PMHQotherColor" data-kana="くるす あれくさんどら"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="栗栖アレクサンドラ" value="栗栖アレクサンドラ"><br>栗栖アレクサンドラ</label>
+            <label class="girlbox PMHQotherColor" data-kana="かぐら さん"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="神楽燦" value="神楽燦"><br>神楽燦</label>
+            <label class="girlbox PMHQotherColor" data-kana="ゆかり みゆり"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="遊狩ミユリ" value="遊狩ミユリ"><br>遊狩ミユリ</label>
+            <label class="girlbox PMHQotherColor" data-kana="かざり じゅん"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="飾利潤" value="飾利潤"><br>飾利潤</label>
+            <label class="girlbox PMHQotherColor" data-kana="みわ みつね"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="三輪みつね" value="三輪みつね"><br>三輪みつね</label>
 
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="かずみ" value="かずみ" onchange="chkBoxCng();"><BR>かずみ</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="御崎海香" value="御崎海香" onchange="chkBoxCng();"><BR>御崎海香</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="牧カオル" value="牧カオル" onchange="chkBoxCng();"><BR>牧カオル</label></div>
-
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="タルト" value="タルト" onchange="chkBoxCng();"><BR>タルト</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="リズ" value="リズ" onchange="chkBoxCng();"><BR>リズ</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="メリッサ" value="メリッサ" onchange="chkBoxCng();"><BR>メリッサ</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="エリザ" value="エリザ" onchange="chkBoxCng();"><BR>エリザ</label></div>
-  <div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="ペレネル" value="ペレネル"><BR>ペレネル</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="コルボー" value="コルボー" onchange="chkBoxCng();"><BR>コルボー</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="ラピヌ" value="ラピヌ" onchange="chkBoxCng();"><BR>ラピヌ</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="ミヌゥ" value="ミヌゥ" onchange="chkBoxCng();"><BR>ミヌゥ</label></div>
-
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="天乃鈴音" value="天乃鈴音" onchange="chkBoxCng();"><BR>天乃鈴音</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="日向茉莉" value="日向茉莉" onchange="chkBoxCng();"><BR>日向茉莉</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="成見亜里紗" value="成見亜里紗" onchange="chkBoxCng();"><BR>成見亜里紗</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="詩音千里" value="詩音千里" onchange="chkBoxCng();"><BR>詩音千里</label></div>
-	<div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="奏遥香" value="奏遥香" onchange="chkBoxCng();"><BR>奏遥香</label></div>
-  <div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="美琴椿" value="美琴椿" onchange="chkBoxCng();"><BR>美琴椿</label></div>
-  <div class="girlbox gaidenColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="日向華々莉" value="日向華々莉" onchange="chkBoxCng();"><BR>日向華々莉</label></div>
-
-	<div class="girlbox collaboColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="高町なのは" value="高町なのは" onchange="chkBoxCng();"><BR>高町なのは</label></div>
-	<div class="girlbox collaboColor" id="fate_t"><label><input type="checkbox" class="MagicalChk" name="chara" id="フェイト・T・ハラオウン" value="フェイト・T・ハラオウン" onchange="chkBoxCng();"><BR>フェイト・T<BR>・ハラオウン</label></div>
-	<div class="girlbox collaboColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="八神はやて" value="八神はやて" onchange="chkBoxCng();"><BR>八神はやて</label></div>
-
-	<!-- ここから魔法少女以外 -->
-	<div class="girlbox mobColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="キュゥべえ" value="キュゥべえ" onchange="chkBoxCng();"><BR>キュゥべえ</label></div>
-	<div class="girlbox unimpColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="佐鳥かごめ" value="佐鳥かごめ" onchange="chkBoxCng();"><BR>佐鳥かごめ</label></div>
-	<div class="girlbox unimpColor"><label><input type="checkbox" class="MagicalChk" name="chara" id="黒江" value="黒江" onchange="chkBoxCng();"><BR>黒江</label></div>
-	</div></form>
-
-  <!-- 魔法少女チェックボックス実装おわり -->
-
-  <button type="button" name="mgreset" class="mgreset" onClick="return girlReset()">魔法少女の選択をすべて解除</button>
-  <div class = "caution" >※アイコンドラッグ：アイコンの移動　ホイールスライド：拡大/縮小　ドラッグ：全体の移動<BR>
-  アイコン・矢印クリック：強調　アイコンダブルクリック：中央に移動＆強調<BR>
-  ※アイコンが表示されない場合はいったん「選択をすべて解除」してから再度選択をお願いします
-  </div>
-
-  <!-- ネットワーク図表示 -->
-  <div id="mynetwork"></div>
-  <BR>
-  <!-- 表を表示 -->
-  <div id="mytable"></div>
-
-  <BR>
-  <!-- 表示部分終わり。以下処理用javascriptなど ----------------------------------------------------------------------->
-
-  <script>
-  /**
-   *ページトップへ戻る矢印の実装
-   *Jqueryを使用
-   */
-  $(function () {
-     /** ページトップ処理 **/
-   $('#pagetop').fadeIn("slow");
-   // クリックした場合
-   $('#pagetop').click(function() {
-       // ページトップへスクロール
-       $('html, body').animate({
-           scrollTop: $("#startbutton").offset().top
-       },"slow");
-       return false;
-    });
-  })(jQuery);
-  </script>
-
-  <script>
-  /**
-   *ページボトムへ進む矢印の実装
-   *Jqueryを使用
-   */
-  $(function () {
-     /** ページボトム処理 **/
-     $('#pagebtm').fadeIn("slow");
-  // クリックした場合
-    $('#pagebtm').click(function() {
-       // ページボトムへスクロール
-       $('html, body').animate({
-           scrollTop: $(document).height()
-       },"slow");
-       return false;
-    });
-  })(jQuery);
-  </script>
-
-  <script>
-  <!-- ページ真ん中へ進む -->
-  $(function () {
-     /** ページボトム処理 **/
-     $('#pagemdl').fadeIn("slow");
-   // クリックした場合
-    $('#pagemdl').click(function() {
-       // ページボトムへスクロール
-       $('html, body').animate({
-           scrollTop: $("#mynetwork").offset().top
-       },"slow");
-       return false;
-    });
-  })(jQuery);
-  </script>
-
-  <!-- トップアイコンの設定 -->
-  <a id="pagetop" href="#top" class="page_top" style="display: none;"><i class="fa fa-arrow-circle-o-up fa-3x"></i></a>
-  <!-- 真ん中アイコンの設定 -->
-  <a id="pagemdl" href="#mdl" class="page_mdl" style="display: none;"><i class="fa fa-share-alt-square fa-3x"></i></a>
-  <!-- ボトムアイコンの設定 -->
-  <a id="pagebtm" href="#btm" class="page_btm" style="display: none;"><i class="fa fa-arrow-circle-o-down fa-3x"></i></a>
-
-<script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
-<!--スプレッドシートで作った呼びかけのhashファイルを読み出す。-->
-<script type="text/javascript" src="./myfile/calltable.js"></script>
-
-<script type="text/javascript">
-  //スプレッドシートで作った呼びかけのhashファイルを関数で呼び出す。
-  //ネットワーク用変数宣言
-  var nodes = [];
-  var edges = [];
-  var container = document.getElementById("mynetwork");
-  var data = {};
-  var options = {};
-  var network = new vis.Network(container, data, options);
-
-  //二人称のノードの座標
-  var otherx = document.getElementById('mynetwork').clientWidth / 2;
-  var othery = document.getElementById('mynetwork').clientHeight / 2;
+            <label class="girlbox otherColor leftm" data-kana="やくも みかげ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="八雲みかげ" value="八雲みかげ"><br>八雲みかげ</label>
+            <label class="girlbox otherColor" data-kana="ひむろ らび"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="氷室ラビ" value="氷室ラビ"><br>氷室ラビ</label>
+            <label class="girlbox otherColor" data-kana="さとみ なゆた"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="里見那由他" value="里見那由他"><br>里見那由他</label>
 
 
-  //エッジが選択されたときの動作
-  var edgeChosen = function(values, id, selected, hovering) {
-    values.color = "#ffffff";
-    values.width = 4;
-  };
-  //エッジが選択されたときのラベルの設定
-  var edgeLabelChosen = function(values, id, selected, hovering) {
-    values.color = "#ff4500";
-    values.size  = 23;
-    values.mod = "bold";
-    values.strokeWidth = 5;
-  };
-  //ノードが選択されたときのノードの設定
-  var nodeChosen = function(values, id, selected, hovering) {
-    values.borderWidth = 10;
-    values.borderColor = "#ff42a0";
-  };
-  //ノードが選択されたときのラベルの設定
-  var nodeLabelChosen = function(values, id, selected, hovering) {
-    values.color = "#FFFFFF";
-    values.size = 25;
-    values.strokeColor = "#ff42a0";
-    values.strokeWidth = 5;
-  };
+            <label class="girlbox otherColor2 leftm" data-kana="さわ すだち"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="佐和月出里" value="佐和月出里"><br>佐和月出里</label>
+            <label class="girlbox otherColor2" data-kana="ささめ よづる"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="篠目ヨヅル" value="篠目ヨヅル"><br>篠目ヨヅル</label>
+            <label class="girlbox otherColor2" data-kana="りゔぃあ めでぃろす"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="リヴィア・メディロス" value="リヴィア・メディロス"><br>リヴィア・メディロス</label>
+
+            <label class="girlbox otherotherColor leftm" data-kana="かなめ まどか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="鹿目まどか" value="鹿目まどか"><br>鹿目<br>まどか★</label>
+            <label class="girlbox otherotherColor" data-kana="あけみ ほむら"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="暁美ほむら" value="暁美ほむら"><br>暁美<br>ほむら★</label>
+            <label class="girlbox otherotherColor" data-kana="あけみ ほむら めがね"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="暁美ほむら(眼鏡ver)"
+                    value="暁美ほむら(眼鏡ver)"><br>暁美ほむら<br>(眼鏡ver)</label>
+            <label class="girlbox otherotherColor" data-kana="みき さやか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="美樹さやか" value="美樹さやか"><br>美樹さやか★</label>
+            <label class="girlbox otherotherColor" data-kana="ともえ まみ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="巴マミ" value="巴マミ"><br>巴マミ★</label>
+            <label class="girlbox otherotherColor" data-kana="さくら きょうこ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="佐倉杏子" value="佐倉杏子"><br>佐倉杏子★</label>
+            <label class="girlbox otherotherColor" data-kana="ももえ なぎさ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="百江なぎさ" value="百江なぎさ"><br>百江なぎさ★</label>
+
+            <label class="girlbox otherColor leftm" data-kana="やよい かのこ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="矢宵かのこ" value="矢宵かのこ"><br>矢宵かのこ</label>
+            <label class="girlbox otherColor" data-kana="うつほ なつき"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="空穂夏希" value="空穂夏希"><br>空穂夏希</label>
+            <label class="girlbox otherColor" data-kana="みなぎ ささら"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="美凪ささら" value="美凪ささら"><br>美凪ささら</label>
+            <label class="girlbox otherColor2" data-kana="ときわ ななか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="常盤ななか" value="常盤ななか"><br>常盤ななか</label>
+            <label class="girlbox otherColor2" data-kana="しのぶ あきら"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="志伸あきら" value="志伸あきら"><br>志伸あきら</label>
+            <label class="girlbox otherColor2" data-kana="なつめ かこ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="夏目かこ" value="夏目かこ"><br>夏目かこ</label>
+            <label class="girlbox otherColor2" data-kana="ちゅん めいゆい"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="純美雨" value="純美雨"><br>純美雨</label>
+
+            <label class="girlbox otherColor" data-kana="きさき えみり"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="木崎衣美里" value="木崎衣美里"><br>木崎衣美里</label>
+            <label class="girlbox otherColor" data-kana="ほずみ しずく"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="保澄雫" value="保澄雫"><br>保澄雫</label>
+            <label class="girlbox otherColor" data-kana="まりこ あやか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="毬子あやか" value="毬子あやか"><br>毬子あやか</label>
+            <label class="girlbox otherColor2" data-kana="くるみ まなか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="胡桃まなか" value="胡桃まなか"><br>胡桃まなか</label>
+            <label class="girlbox otherColor2" data-kana="わかな つむぎ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="若菜つむぎ" value="若菜つむぎ"><br>若菜つむぎ</label>
+            <label class="girlbox otherColor2" data-kana="あみ りあ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="阿見莉愛" value="阿見莉愛"><br>阿見莉愛</label>
+            <label class="girlbox otherColor2" data-kana="こづえ まゆ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="梢麻友" value="梢麻友"><br>梢麻友</label>
+            <label class="girlbox otherColor2" data-kana="しの さゆき"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="史乃沙優希" value="史乃沙優希"><br>史乃沙優希</label>
+
+            <label class="girlbox otherColor" data-kana="いぶき れいら"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="伊吹れいら" value="伊吹れいら"><br>伊吹れいら</label>
+            <label class="girlbox otherColor" data-kana="くみ せいか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="桑水せいか" value="桑水せいか"><br>桑水せいか</label>
+            <label class="girlbox otherColor" data-kana="あいの みと"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="相野みと" value="相野みと"><br>相野みと</label>
+            <label class="girlbox otherColor2" data-kana="あわね こころ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="粟根こころ" value="粟根こころ"><br>粟根こころ</label>
+            <label class="girlbox otherColor2" id="masara" data-kana="かがみ まさら"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="加賀見まさら" value="加賀見まさら"><br>加賀見まさら</label>
+            <label class="girlbox otherColor" data-kana="さらさ はんな"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="更紗帆奈" value="更紗帆奈"><br>更紗帆奈</label>
+            <label class="girlbox otherColor" data-kana="まお ひみか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="眞尾ひみか" value="眞尾ひみか"><br>眞尾ひみか</label>
+            <label class="girlbox otherColor" data-kana="えり あいみ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="江利あいみ" value="江利あいみ"><br>江利あいみ</label>
+            <label class="girlbox otherColor2" data-kana="しずみ このは"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="静海このは" value="静海このは"><br>静海このは★</label>
+            <label class="girlbox otherColor2" data-kana="ゆさ はづき"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="遊佐葉月" value="遊佐葉月"><br>遊佐葉月★</label>
+            <label class="girlbox otherColor2" data-kana="みくり あやめ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="三栗あやめ" value="三栗あやめ"><br>三栗あやめ</label>
+            <label class="girlbox otherColor2" data-kana="ゆき まりあ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="由貴真里愛" value="由貴真里愛"><br>由貴真里愛</label>
+            <label class="girlbox otherColor2" data-kana="きりの さえ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="桐野紗枝" value="桐野紗枝"><br>桐野紗枝</label>
+            <label class="girlbox otherColor" data-kana="はるな このみ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="春名このみ" value="春名このみ"><br>春名このみ</label>
+            <label class="girlbox otherColor" data-kana="あやの りか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="綾野梨花" value="綾野梨花"><br>綾野梨花★</label>
+            <label class="girlbox otherColor" data-kana="いすず れん"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="五十鈴れん" value="五十鈴れん"><br>五十鈴れん★</label>
+
+            <label class="girlbox otherColor" data-kana="ちあき りこ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="千秋理子" value="千秋理子"><br>千秋理子</label>
+            <label class="girlbox otherColor" id="ash" data-kana="あしゅりー ていらー"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="アシュリー・テイラー" value="アシュリー・テイラー"><br>アシュリー・テイラー</label>
+
+            <label class="girlbox otherColor2" data-kana="こまち みくら"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="古町みくら" value="古町みくら"><br>古町みくら</label>
+            <label class="girlbox otherColor2" data-kana="みほの せいら"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="三穂野せいら" value="三穂野せいら"><br>三穂野せいら</label>
+            <label class="girlbox otherColor2" data-kana="きら てまり"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="吉良てまり" value="吉良てまり"><br>吉良てまり</label>
+            <label class="girlbox otherColor2" data-kana="みずき るい"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="水樹塁" value="水樹塁"><br>水樹塁</label>
+            <label class="girlbox otherColor" data-kana="ゆずき ほとり"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="柚希ほとり" value="柚希ほとり"><br>柚希ほとり</label>
+            <label class="girlbox otherColor" data-kana="ゆずき りおん"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="柚希りおん" value="柚希りおん"><br>柚希りおん</label>
+            <label class="girlbox otherColor" data-kana="かはる ゆうな"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="香春ゆうな" value="香春ゆうな"><br>香春ゆうな</label>
+            <label class="girlbox otherColor" data-kana="ななせ ゆきか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="七瀬ゆきか" value="七瀬ゆきか"><br>七瀬ゆきか</label>
+
+            <label class="girlbox otherColor2" data-kana="めぐみ もか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="恵萌花" value="恵萌花"><br>恵萌花</label>
+            <label class="girlbox otherColor2" data-kana="ひびき めぐる"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="枇々木めぐる" value="枇々木めぐる"><br>枇々木めぐる</label>
+            <label class="girlbox otherColor2" data-kana="ゆきの かなえ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="雪野かなえ" value="雪野かなえ"><br>雪野かなえ</label>
+            <label class="girlbox otherColor2" data-kana="あんな める"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="安名メル" value="安名メル"><br>安名メル</label>
+
+            <!-- ここから外伝キャラ -->
+            <label class="girlbox gaidenColor leftm" data-kana="みくに おりこ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="美国織莉子" value="美国織莉子"><br>美国織莉子</label>
+            <label class="girlbox gaidenColor" data-kana="くれ きりか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="呉キリカ" value="呉キリカ"><br>呉キリカ</label>
+            <label class="girlbox gaidenColor" data-kana="ちとせ ゆま"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="千歳ゆま" value="千歳ゆま"><br>千歳ゆま</label>
+
+            <label class="girlbox gaidenColor leftm" data-kana="かずみ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="かずみ" value="かずみ"><br>かずみ</label>
+            <label class="girlbox gaidenColor" data-kana="みさき うみか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="御崎海香" value="御崎海香"><br>御崎海香</label>
+            <label class="girlbox gaidenColor" data-kana="まき かおる"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="牧カオル" value="牧カオル"><br>牧カオル</label>
+
+            <label class="girlbox gaidenColor leftm" data-kana="たると"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="タルト" value="タルト"><br>タルト★</label>
+            <label class="girlbox gaidenColor" data-kana="りず"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="リズ" value="リズ"><br>リズ</label>
+            <label class="girlbox gaidenColor" data-kana="めりっさ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="メリッサ" value="メリッサ"><br>メリッサ</label>
+            <label class="girlbox gaidenColor" data-kana="えりざ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="エリザ" value="エリザ"><br>エリザ</label>
+            <label class="girlbox unimpColor" data-kana="ぺれねる"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="ペレネル" value="ペレネル"><br>ペレネル</label>
+            <label class="girlbox gaidenColor" data-kana="みぬぅ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="ミヌゥ" value="ミヌゥ"><br>ミヌゥ</label>
+            <label class="girlbox gaidenColor" data-kana="こるぼー"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="コルボー" value="コルボー"><br>コルボー</label>
+            <label class="girlbox gaidenColor" data-kana="らぴぬ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="ラピヌ" value="ラピヌ"><br>ラピヌ</label>
+            <label class="girlbox collaboColor" data-kana="いざぼー まじょ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="イザボー(魔女ver)"
+                    value="イザボー(魔女ver)"><br>イザボー<BR>(魔女ver)</label>
+
+            <label class="girlbox gaidenColor leftm" data-kana="あまの すずね"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="天乃鈴音" value="天乃鈴音"><br>天乃鈴音</label>
+            <label class="girlbox gaidenColor" data-kana="ひなた まつり"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="日向茉莉" value="日向茉莉"><br>日向茉莉</label>
+            <label class="girlbox gaidenColor" data-kana="なるみ ありさ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="成見亜里紗" value="成見亜里紗"><br>成見亜里紗</label>
+            <label class="girlbox gaidenColor" data-kana="しおん ちさと"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="詩音千里" value="詩音千里"><br>詩音千里</label>
+            <label class="girlbox gaidenColor" data-kana="かなで はるか"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="奏遥香" value="奏遥香"><br>奏遥香</label>
+            <label class="girlbox gaidenColor" data-kana="みこと つばき"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="美琴椿" value="美琴椿"><br>美琴椿</label>
+            <label class="girlbox gaidenColor" data-kana="ひなた かがり"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="日向華々莉" value="日向華々莉"><br>日向華々莉</label>
+
+            <label class="girlbox collaboColor leftm" data-kana="たかまち なのは"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="高町なのは" value="高町なのは"><br>高町なのは</label>
+            <label class="girlbox collaboColor" id="fate_t" data-kana="ふぇいと てぃー はらおうん"><input type="checkbox"
+                    class="MagicalChk" onchange="chkBoxCng();" name="chara" id="フェイト・T・ハラオウン"
+                    value="フェイト・T・ハラオウン"><br>フェイト・T<br>・ハラオウン</label>
+            <label class="girlbox collaboColor" data-kana="やがみ はやて"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="八神はやて" value="八神はやて"><br>八神はやて</label>
+
+            <!-- ここから魔法少女以外 -->
+            <label class="girlbox mobColor leftm" data-kana="きゅぅべえ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="キュゥべえ" value="キュゥべえ"><br>キュゥべえ★</label>
+
+            <label class="girlbox unimpColor" data-kana="さとり かごめ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="佐鳥かごめ" value="佐鳥かごめ"><br>佐鳥かごめ</label>
+            <label class="girlbox unimpColor" data-kana="いりな くしゅ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="入名クシュ" value="入名クシュ"><br>入名クシュ</label>
+            <label class="girlbox unimpColor" data-kana="くろえ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="黒江" value="黒江"><br>黒江</label>
+            <label class="girlbox unimpColor" data-kana="あき まばゆ"><input type="checkbox" class="MagicalChk"
+                    onchange="chkBoxCng();" name="chara" id="愛生まばゆ" value="愛生まばゆ"><br>愛生まばゆ</label>
+
+        </div>
+    </form>
+    <!-- 魔法少女チェックボックス実装おわり -->
+    <button type="button" name="mgreset" class="mgreset" onClick="return girlReset()">魔法少女の選択をすべて解除</button>
+
+        <!-- 魔法少女絞り込みテキスト入力実装 -->
+        <input type="text" spellcheck="false" class="ndownword" name="ndownword" placeholder="かなカナ漢字名で絞り込み。スペースでOR。削除で戻る"
+        id="ndownword2" oninput="mgirlnarrow('call', 'ndownword2')">
+     <input type="button" value="絞り込みリセット" class="ndownwordreset"
+       onClick="document.getElementById('ndownword2').value=''; allshow();"><BR>
+
+    <div class="caution">※アイコンドラッグ：アイコンの移動　ホイールスライド：拡大/縮小　ドラッグ：全体の移動<BR>
+        アイコン・矢印クリック：強調　アイコンダブルクリック：中央に移動＆強調<BR>
+        ※アイコンが表示されない場合はいったん「選択をすべて解除」してから再度選択をお願いします
+    </div>
+
+    <!-- ネットワーク図表示 -->
+    <div id="mynetwork"></div>
+    <BR>
+    <!-- 表を表示 -->
+    <div id="mytable"></div>
+
+    <BR>
+    <!-- 表示部分終わり。以下処理用javascriptなど ============================================== -->
+    <!-- 共通処理ファイルを読む -->
+    <script src="./myfile/mycommon.js"></script>
+
+    <!-- 魔法少女絞り込みのjavascriptメソッドを読む-->
+    <script src="./myfile/mgirlnarrow.js"></script>
+
+    <script>
+        //ページトップへ進む。jqueryで実装。
+        $(function () {
+            /** ページトップ処理 **/
+            $('#pagetop').fadeIn("slow");
+            // クリックした場合
+            $('#pagetop').click(function () {
+                // ページトップへスクロール
+                $('html, body').animate({
+                    scrollTop: $("#startbutton").offset().top
+                }, "slow");
+                return false;
+            });
+        })(jQuery);
+    </script>
+
+    <script>
+        //ページボトムへ進む。jqueryで実装。
+        $(function () {
+            /** ページボトム処理 **/
+            $('#pagebtm').fadeIn("slow");
+            // クリックした場合
+            $('#pagebtm').click(function () {
+                // ページボトムへスクロール
+                $('html, body').animate({
+                    scrollTop: $(document).height()
+                }, "slow");
+                return false;
+            });
+        })(jQuery);
+    </script>
+
+    <script>
+        //ページ真ん中へ進む。jqueryで実装。
+        $(function () {
+            /** ページ真ん中処理 **/
+            $('#pagemdl').fadeIn("slow");
+            // クリックした場合
+            $('#pagemdl').click(function () {
+                // ページボトムへスクロール
+                $('html, body').animate({
+                    scrollTop: $("#mynetwork").offset().top
+                }, "slow");
+                return false;
+            });
+        })(jQuery);
+    </script>
+
+    <!-- トップアイコンの設定 -->
+    <a id="pagetop" href="#top" class="page_top" style="display: none;"><i
+            class="fa fa-arrow-circle-o-up fa-3x"></i></a>
+    <!-- 真ん中アイコンの設定 -->
+    <a id="pagemdl" href="#mdl" class="page_mdl" style="display: none;"><i class="fa fa-share-alt-square fa-3x"></i></a>
+    <!-- ボトムアイコンの設定 -->
+    <a id="pagebtm" href="#btm" class="page_btm" style="display: none;"><i
+            class="fa fa-arrow-circle-o-down fa-3x"></i></a>
+
+    <script src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+    <!--スプレッドシートで作った呼びかけのhashファイルを読み出す。-->
+    <script src="./myfile/calltable.js"></script>
+
+    <script>
+        //スプレッドシートで作った呼びかけのhashファイルを関数で呼び出す。
+        //ネットワーク用変数宣言
+        var nodes = [];
+        var edges = [];
+        var container = document.getElementById("mynetwork");
+        var data = {};
+        var options = {};
+        var network = new vis.Network(container, data, options);
+
+        //二人称のノードの座標
+        var otherx = document.getElementById('mynetwork').clientWidth / 2;
+        var othery = document.getElementById('mynetwork').clientHeight / 2;
 
 
-  //ネットワーク書き込み/////////////////////////////////////////
-  function draw() {
+        //エッジが選択されたときの動作
+        var edgeChosen = function (values, id, selected, hovering) {
+            values.color = "#ffffff";
+            values.width = 4;
+        };
+        //エッジが選択されたときのラベルの設定
+        var edgeLabelChosen = function (values, id, selected, hovering) {
+            values.color = "#ff4500";
+            values.size = 23;
+            values.mod = "bold";
+            values.strokeWidth = 5;
+        };
+        //ノードが選択されたときのノードの設定
+        var nodeChosen = function (values, id, selected, hovering) {
+            values.borderWidth = 10;
+            values.borderColor = "#ff42a0";
+        };
+        //ノードが選択されたときのラベルの設定
+        var nodeLabelChosen = function (values, id, selected, hovering) {
+            values.color = "#FFFFFF";
+            values.size = 25;
+            values.strokeColor = "#ff42a0";
+            values.strokeWidth = 5;
+        };
 
-    // ネットワーク作成
-    data = {
-      nodes: nodes,
-      edges: edges
-    };
 
-    options = {
-      physics:{
-        enabled: true,
-        stabilization: {
-          enabled: true,
-          iterations:50000
-        }
-      },
+        //ネットワーク書き込み/////////////////////////////////////////
+        function draw() {
 
-      nodes: {
-        physics:false,
-        mass: 3,
-        borderWidth: 7,
-        size: 40,
-        color: {
-          border: "#ff82c0",
-          background: "#FFFFFF"
-        },
-        font: {
-          color: "#FFFFFF", strokeColor: '#ff82c0', size: 22, strokeWidth: 3
-        },
-        //ノードが選択されたときのノードの表示を設定する。
-        chosen: {label: nodeLabelChosen, node: nodeChosen},
-      },
+            // ネットワーク作成
+            data = {
+                nodes: nodes,
+                edges: edges
+            };
 
-      edges: {
-        /*smooth: {
-           enabled: true,
-            //type: "dynamic",
-            type: "discrete",
-           //roundness: 0.5
-           //roundness: 0.5
-        },*/
-        //エッジが選択されたときの矢印とラベルの動作を設定する。
-        chosen: {label: edgeLabelChosen, edge: edgeChosen},
+            options = {
+                physics: {
+                    enabled: true,
+                    stabilization: {
+                        enabled: true,
+                        iterations: 50000
+                    }
+                },
 
-        selfReference:{ size: 30 },
-        font: { color: "#000000", size: 22, strokeColor: "#FFFFFF", strokeWidth: 3},
-        color:"#eaeaff",
-        arrows: 'to',
-        width: 2,
-      }
-    };
+                nodes: {
+                    physics: false,
+                    mass: 3,
+                    borderWidth: 7,
+                    size: 40,
+                    color: {
+                        border: "#ff82c0",
+                        background: "#FFFFFF"
+                    },
+                    font: {
+                        color: "#FFFFFF",
+                        strokeColor: '#ff82c0',
+                        size: 22,
+                        strokeWidth: 3
+                    },
+                    //ノードが選択されたときのノードの表示を設定する。
+                    chosen: {
+                        label: nodeLabelChosen,
+                        node: nodeChosen
+                    },
+                },
 
-    //ネットワーク描写
-    network = new vis.Network(container, data, options);
+                edges: {
+                    /*smooth: {
+                       enabled: true,
+                        //type: "dynamic",
+                        type: "discrete",
+                       //roundness: 0.5
+                       //roundness: 0.5
+                    },*/
+                    //エッジが選択されたときの矢印とラベルの動作を設定する。
+                    chosen: {
+                        label: edgeLabelChosen,
+                        edge: edgeChosen
+                    },
 
-    //ダブルクリックされたときのイベント
-    network.on("doubleClick", function(params) {
-      //ダブルクリックした時にノードが選択されていたら処理を行う。
-      //alert(params.nodes[0]);
-        if(params.nodes[0]){
-          var cnt = 0;
-          var radius  = 300;     //円の半径
-          var angle = 2 * Math.PI / (nodes.length - 2);
-          for(var i = 0 ; i < nodes.length ; i++){
-            if(nodes[i].id === params.nodes[0]){
-              network.moveNode(nodes[i].id, 0, 0);
-            } else if(nodes[i].id === "二人称"){ //二人称のノードの座標。常に右下。
-              network.moveNode(nodes[i].id,otherx,othery);
-            } else { // その他のノードの座標
-              var nodesx = radius * Math.cos(angle * (cnt-1));
-              var nodesy = radius * Math.sin(angle * (cnt-1));
-              network.moveNode(nodes[i].id,nodesx,nodesy)
-              cnt++;
+                    selfReference: {
+                        size: 30
+                    },
+                    font: {
+                        color: "#000000",
+                        size: 22,
+                        strokeColor: "#FFFFFF",
+                        strokeWidth: 3
+                    },
+                    color: "#eaeaff",
+                    arrows: 'to',
+                    width: 2,
+                }
+            };
+
+            //ネットワーク描写
+            network = new vis.Network(container, data, options);
+
+            //ダブルクリックされたときのイベント
+            network.on("doubleClick", function (params) {
+                //ダブルクリックした時にノードが選択されていたら処理を行う。
+                //alert(params.nodes[0]);
+                if (params.nodes[0]) {
+                    var cnt = 0;
+                    var radius = 300; //円の半径
+                    var angle = 2 * Math.PI / (nodes.length - 2);
+                    for (var i = 0; i < nodes.length; i++) {
+                        if (nodes[i].id === params.nodes[0]) {
+                            network.moveNode(nodes[i].id, 0, 0);
+                        } else if (nodes[i].id === "二人称") { //二人称のノードの座標。常に右下。
+                            network.moveNode(nodes[i].id, otherx, othery);
+                        } else { // その他のノードの座標
+                            var nodesx = radius * Math.cos(angle * (cnt - 1));
+                            var nodesy = radius * Math.sin(angle * (cnt - 1));
+                            network.moveNode(nodes[i].id, nodesx, nodesy)
+                            cnt++;
+                        }
+                    }
+                }
+            });
+
+        } //ネットワーク書き込み終わり
+
+        //チェックボックスが変更になったときに動作させる関数
+        function chkBoxCng() {
+            //ネットワーク情報を初期化する
+            nodes = [];
+            edges = [];
+            network = null;
+
+            //tableタグも準備する。
+            var girltable = "<table id = 'girltable'><tr><th>↓呼ぶ 呼ばれる→</th><th>一人称</th><th>二人称</th>";
+            console.log(document.magicalgirl.chara.length);
+            var girlName = []; //チェックボックスで選択された魔法少女名を格納する配列
+            for (var i = 0; i < document.magicalgirl.chara.length; i++) {
+                if (document.magicalgirl.chara[i].checked) {
+                    girlName.push(document.magicalgirl.chara[i].value);
+                }
             }
-          }
+            // ノードを追加する。tableも準備する。
+            var DIR = "./img/png/";
+            for (var i = 0; i < girlName.length; i++) {
+                var girlImgURL = DIR + girlName[i] + ".png";
+                //ノード追加
+                var girlnode = {
+                    id: girlName[i],
+                    shape: "circularImage",
+                    image: girlImgURL,
+                    label: girlName[i] + "\n(" + calltable[girlName[i]]["年齢"] + "/" + calltable[girlName[i]]["学年"] +
+                        ")"
+                };
+                nodes.push(girlnode);
+
+                //一人称のエッジも追加
+                var girlI = {
+                    from: girlName[i],
+                    to: girlName[i],
+                    label: calltable[girlName[i]]["一人称"]
+                };
+                edges.push(girlI);
+
+                //二人称のエッジも追加
+                if (calltable[girlName[i]]["二人称"]) {
+                    var girledge = {
+                        from: girlName[i],
+                        to: "二人称",
+                        label: calltable[girlName[i]]["二人称"]
+                    };
+                    edges.push(girledge);
+                }
+
+                //テーブルも追加
+                girltable = girltable + "<th>" + girlName[i] + "</th>";
+            }
+            girltable = girltable + "</tr>";
+
+            //ノード位置の初期設定をする。
+            var radius = 300; //円の半径
+            var angle = 2 * Math.PI / nodes.length;
+            for (var i = 0; i < nodes.length; i++) {
+                nodes[i].x = radius * Math.cos(angle * (i - 1));
+                nodes[i].y = radius * Math.sin(angle * (i - 1));
+            }
+            //二人称のノードを追加する。
+            if (nodes.length) {
+                nodes.push({
+                    id: "二人称",
+                    shape: "circularImage",
+                    image: "./img/png/二人称.png",
+                    label: "二人称"
+                });
+            }
+            //二人称のノードの場所は常に右下
+            nodes[nodes.length - 1].x = otherx;
+            nodes[nodes.length - 1].y = othery;
+
+            //エッジを追加する。
+            for (var j = 0; j < girlName.length; j++) {
+                //テーブルの左の魔法少女名と一人称、二人称を追加する。
+                girltable = girltable + "<tr><th>" + girlName[j] + "</th><td>";
+                if (calltable[girlName[j]]["一人称"]) {
+                    girltable += calltable[girlName[j]]["一人称"];
+                }
+                girltable += "</td><td>";
+                if (calltable[girlName[j]]["二人称"]) {
+                    girltable += calltable[girlName[j]]["二人称"];
+                }
+                girltable += "</td>";
+
+                for (var i = 0; i < girlName.length; i++) {
+                    //エッジを追加する。
+                    if (calltable[girlName[j]][girlName[i]]) {
+                        var girledge = {
+                            from: girlName[j],
+                            to: girlName[i],
+                            label: calltable[girlName[j]][girlName[i]]
+                        };
+                        edges.push(girledge);
+
+                        //テーブルも追加する。
+                        girltable = girltable + "<td>" + calltable[girlName[j]][girlName[i]] + "</td>";
+                    } else {
+                        //テーブルも追加する。
+                        girltable = girltable + "<td></td>";
+                    }
+                }
+                girltable = girltable + "</tr>";
+            }
+            girltable = girltable + "</table>";
+
+            //テーブルを出力する
+            document.getElementById('mytable').innerHTML = girltable;
+            //ネットワークを出力する
+            draw();
         }
-    });
 
-  } //ネットワーク書き込み終わり
-
-  //チェックボックスが変更になったときに動作させる関数
-  function chkBoxCng(){
-    //ネットワーク情報を初期化する
-    nodes = [];
-    edges = [];
-    network = null;
-
-    //tableタグも準備する。
-    var girltable = "<table id = 'girltable'><tr><th>↓呼ぶ 呼ばれる→</th><th>一人称</th><th>二人称</th>";
-
-    var girlName = []; //チェックボックスで選択された魔法少女名を格納する配列
-    for(var i = 0 ; i < document.magicalgirl.chara.length ; i++){
-      if(document.magicalgirl.chara[i].checked){
-        girlName.push(document.magicalgirl.chara[i].value);
-      }
-    }
-    // ノードを追加する。tableも準備する。
-    var DIR = "./img/png/";
-    for(var i = 0 ; i < girlName.length ; i++){
-      var girlImgURL = DIR + girlName[i] + ".png";
-      //ノード追加
-      var girlnode = { id: girlName[i], shape: "circularImage", image: girlImgURL , label: girlName[i] + "\n(" + calltable[girlName[i]]["年齢"] + "/" + calltable[girlName[i]]["学年"] + ")"};
-      nodes.push(girlnode);
-
-      //一人称のエッジも追加
-      var girlI = { from: girlName[i], to: girlName[i], label: calltable[girlName[i]]["一人称"]};
-      edges.push(girlI);
-
-      //二人称のエッジも追加
-      if(calltable[girlName[i]]["二人称"]){
-        var girledge = { from: girlName[i], to: "二人称", label: calltable[girlName[i]]["二人称"]};
-        edges.push(girledge);
-      }
-
-      //テーブルも追加
-      girltable = girltable + "<th>" + girlName[i] + "</th>";
-    }
-    girltable = girltable + "</tr>";
-
-    //ノード位置の初期設定をする。
-    var radius  = 300;     //円の半径
-    var angle = 2 * Math.PI / nodes.length;
-    for(var i = 0 ; i < nodes.length ; i++){
-      nodes[i].x = radius * Math.cos(angle * (i-1));
-      nodes[i].y = radius * Math.sin(angle * (i-1));
-    }
-    //二人称のノードを追加する。
-    if(nodes.length){
-      nodes.push({ id: "二人称", shape: "circularImage", image : "./img/png/二人称.png" , label: "二人称"});
-    }
-    //二人称のノードの場所は常に右下
-    nodes[nodes.length-1].x = otherx;
-    nodes[nodes.length-1].y = othery;
-
-    //エッジを追加する。
-    for(var j = 0 ; j < girlName.length ; j++){
-      //テーブルの左の魔法少女名と一人称、二人称を追加する。
-      girltable = girltable + "<tr><th>" + girlName[j] + "</th><td>";
-      if( calltable[girlName[j]]["一人称"] ){ girltable += calltable[girlName[j]]["一人称"];}
-      girltable += "</td><td>";
-      if( calltable[girlName[j]]["二人称"] ){ girltable += calltable[girlName[j]]["二人称"];}
-      girltable += "</td>";
-
-      for(var i = 0 ; i < girlName.length ; i++){
-        //エッジを追加する。
-        if(calltable[girlName[j]][girlName[i]]){
-          var girledge = { from: girlName[j], to: girlName[i] , label:calltable[girlName[j]][girlName[i]] };
-          edges.push(girledge);
-
-          //テーブルも追加する。
-          girltable = girltable + "<td>" + calltable[girlName[j]][girlName[i]] + "</td>";
-        } else {
-        //テーブルも追加する。
-          girltable = girltable + "<td></td>";
+        // 魔法少女の選択をリセットする。関数
+        function girlReset() {
+            var checkboxes = document.getElementsByName('chara');
+            for (i in checkboxes) {
+                checkboxes[i].checked = false;
+            }
+            //ネットワーク情報も初期化する。
+            nodes = [];
+            edges = [];
+            network = null;
+            draw();
+            //テーブルも初期化する。
+            document.getElementById('mytable').innerHTML = "";
         }
-      }
-      girltable = girltable + "</tr>";
-    }
-    girltable = girltable + "</table>";
-
-    //テーブルを出力する
-    document.getElementById('mytable').innerHTML = girltable;
-    //ネットワークを出力する
-    draw();
-  }
-
-  // 魔法少女の選択をリセットする。関数
-  function girlReset(){
-    var checkboxes = document.getElementsByName('chara');
-    for (i in checkboxes) {
-    checkboxes[i].checked = false;
-    }
-    //ネットワーク情報も初期化する。
-    nodes = [];
-    edges = [];
-    network = null;
-    draw();
-    //テーブルも初期化する。
-    document.getElementById('mytable').innerHTML = "";
-  }
-
-</script>
+    </script>
 </body>
+
 </html>

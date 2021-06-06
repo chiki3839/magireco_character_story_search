@@ -1,395 +1,485 @@
 ﻿  /* 呼びかけ一覧tableのスタイル */
 
-  #girltable tr td:nth-of-type(1){
-    color:#ff0000;
+  /* iosでinput入力時にアップさせない */
+  body,
+  input,
+  textarea,
+  select {
+    font-size: 16px;
   }
 
-  #girltable tr td:nth-of-type(1){
-    color:#ff0000;
+  #girltable tr td:nth-of-type(1) {
+    color: #ff0000;
   }
 
-  #girltable tr td:nth-of-type(2){
-    color:#0000ff;
+  #girltable tr td:nth-of-type(1) {
+    color: #ff0000;
   }
 
-.returnlink{
-  font-size: smaller;
-}
+  #girltable tr td:nth-of-type(2) {
+    color: #0000ff;
+  }
 
-  #girltable tr:nth-child(odd){
+  .returnlink {
+    font-size: smaller;
+  }
+
+  #girltable tr:nth-child(odd) {
     background-color: #ffcce5;
   }
 
-  #girltable tr:nth-child(even){
+  #girltable tr:nth-child(even) {
     background-color: #efffff;
   }
 
-  #girltable  tr{
-  	text-align: center;
+  #girltable tr {
+    text-align: center;
   }
 
-  #girltable  th, td{
-  	padding: 3px;
+  #girltable th,
+  td {
+    padding: 3px;
   }
+
   /* 呼びかけ一覧tableのスタイルここまで */
 
-.mgreset{
-  margin : 3px;
-}
+  div.caution {
+    font-size: small;
+    text-align: center;
+  }
 
-div.caution{
-  font-size: small;
-  text-align: center;
-}
+  /* 共通設定 */
+  body {
+    font-size: small;
+    -webkit-text-size-adjust: 100%;
+  }
 
-/* 共通設定 */
-body{
-  font-size:small;
-  -webkit-text-size-adjust: 100%;
-}
+  .at {
+    white-space: nowrap;
+  }
 
-.at{
-  white-space: nowrap;
-}
+  .returnlink {
+    font-size: smaller;
+  }
 
-.returnlink{
-  font-size: smaller;
-}
-
-/* ヘッダバナーの設定 */
-img.headerBanner{
-  max-width :750px;
-  width:100%;
-  height:100%;
-  padding:0px;
-  margin:0px;
-  border-style:none;
-}
-
-/* ヘッダ説明の設定 */
-span.headerExpl{
-}
-
-span.headerExpl2{
-  font-size: xx-small;
-}
-
-
-/* 検索オプションの設定 */
-.selectBoxImg {
-  width:76px;
-  height:77px;
-  padding:0px;
-  margin:0px;
-}
-
-/*ダイアログ関係*/
-/*ダイアログにリンクするテキストのスタイル*/
-.topdialoglink span{
-  color:rgb(41, 41, 243);
-  font-weight: bold;
-  vertical-align: -1px;
-  margin-left:2px;
-}
-.topdialoglink i{
-  color:rgb(41, 41, 243);
-  vertical-align: middle;
-}
-
-.dialoglink span{
-  color:deeppink;
-  font-weight: bold;
-  vertical-align: -1px;
-  margin-left:2px;
-}
-.dialoglink i{
-  color:deeppink;
-  vertical-align: middle;
-}
-
-/*タイトルバーの色*/
-.topTitleClass .ui-dialog-titlebar{
-  color:white;
-  background:rgb(30, 30, 180);
-}
-
-.topTitleClass .ui-button {
-  color:white;
-  background:rgb(30, 30, 180);
-}
-
-.useTitleClass .ui-dialog-titlebar{
-  color:white;
-  background:deeppink;
-}
-
-/*ダイアログボタンの色*/
-.useTitleClass .ui-button {
-  color:white;
-  background:deeppink;
-}
-
-/*ダイアログ表示時のバックグラウンドの色など*/
-.ui-widget-overlay {
-  background: #000000;
-  opacity: .7;
-  filter: Alpha(Opacity=70);
-}
-/*ダイアログ設定ここまで*/
-
-/*属性選択簡易表示用*/
-#at_result{
-  background:#fff9fc;
-}
-
-h2.at_resultHeader{
-  max-width: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  margin: 0px 0px 0px 2px;
-}
-
-/*属性選択簡易表示のオーバーレイ用要素用ここまで*/
-
-
-/* 検索ボタンを強調 */
-button[name="search"]{
-  font-size:larger;
-  background-color:#f5bcd8;
-  border-color:#fc6ab1
-
-}
-
-.storytable td{
-  padding:1px 30px 1px 0px;
-}
-
-/* 魔法少女選択のdivの高さを合わせる。 */
-div.magicalgirl{
-  display: inline-flex;
-  flex-wrap: wrap;
-}
-/* 魔法少女選択のboxの仕様 */
-div.girlbox{
-    width: 68px;
-    padding:0px;
+  /* ヘッダバナーの設定 */
+  img.headerBanner {
+    max-width: 750px;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
     margin: 0px;
-    font-size:12px;
-    line-height:13px;
-    text-align:center;
+    border-style: none;
+  }
+
+  span.headerExpl2 {
+    font-size: xx-small;
+  }
+
+  /* 検索オプションの設定 */
+  /*箇条書き設定*/
+  dl.searchOption {
+    margin: 0;
+    padding: 0;
+  }
+
+  dl.searchOption dt {
+    position: relative;
+    padding-left: 1.2em;
+    margin: 0;
+  }
+
+  dl.searchOption dt::before {
+    position: absolute;
+    content: "★";
+    color:deeppink;
+    top: 0%;
+    left: 0%;
+    font-size: 1em;
+  }
+
+  dl.searchOption dd {
+    margin-left: 0.5em;
+  }
+
+  dl.searchOption div.storychkbox{
+    display:inline-block;
+    vertical-align: top;
+  }
+
+
+  /*選択boxイメージの設定*/
+  .selectBoxImg {
+    width: 76px;
+    height: 77px;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  /*AND, ORボックスのスタイル*/
+  div.selectBoxSet {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    text-align: left;
+  }
+
+  .selectBox {
+    border: 1px #000000 solid;
+    width: 80px;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    font-size: 10px;
+  }
+
+
+  /*ダイアログ関係*/
+  /*ダイアログにリンクするテキストのスタイル*/
+  .topdialoglink span {
+    color: rgb(41, 41, 243);
+    font-weight: bold;
+    vertical-align: -1px;
+    margin-left: 2px;
+  }
+
+  .topdialoglink i {
+    color: rgb(41, 41, 243);
+    vertical-align: middle;
+  }
+
+  .dialoglink span {
+    color: deeppink;
+    font-weight: bold;
+    vertical-align: -1px;
+    margin-left: 2px;
+  }
+
+  .dialoglink i {
+    color: deeppink;
+    vertical-align: middle;
+  }
+
+  /*タイトルバーの色*/
+  .topTitleClass .ui-dialog-titlebar {
+    color: white;
+    background: rgb(30, 30, 180);
+  }
+
+  .topTitleClass .ui-button {
+    color: white;
+    background: rgb(30, 30, 180);
+  }
+
+  .useTitleClass .ui-dialog-titlebar {
+    color: white;
+    background: deeppink;
+  }
+
+  /*ダイアログボタンの色*/
+  .useTitleClass .ui-button {
+    color: white;
+    background: deeppink;
+  }
+
+  /*ダイアログ表示時のバックグラウンドの色など*/
+  .ui-widget-overlay {
+    background: #000000;
+    opacity: .7;
+    filter: Alpha(Opacity=70);
+  }
+
+  /*ダイアログ設定ここまで*/
+
+  /*属性選択簡易表示用*/
+  #at_result {
+    background: #fff9fc;
+  }
+
+  h2.at_resultHeader {
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0px 0px 0px 2px;
+  }
+
+  #at_reset{
+    font-size:smaller;
+  }
+
+  /*属性選択簡易表示のオーバーレイ用要素用ここまで*/
+
+
+  /* 検索ボタンを強調 */
+  button[name="search"] {
+    font-size: larger;
+    background-color: #f5bcd8;
+    border-color: #fc6ab1
+  }
+
+  .storytable td {
+    padding: 1px 30px 1px 0px;
+  }
+
+  /* 魔法少女選択のdivの高さを合わせる。 */
+  div.magicalgirl {
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+
+  /* 魔法少女選択のboxの仕様 */
+  label.girlbox {
+    width: 68px;
+    padding: 0px;
+    margin: 0px;
+    font-size: 12px;
+    line-height: 13px;
+    text-align: center;
     border: solid 1px #000000;
-}
+    position: relative;
+  }
 
-/* 魔法少女選択のboxの背景色 */
-/*うめ先生デザインキャラの背景色 */
-.umeColor{
-  background-color:#ffffdb;
-}
+  /*girlboxの区切りに隙間を作る*/
+  label.leftm{
+    margin-left:1px;
+    width:67px;
+  }
 
-/*うめ先生デザイン別バージョンキャラ*/
-.umeOtherColor{
-  background-color:#dbdbff;
-}
+  /* girlboxにひらがなのツールチップをつける */
+  label.girlbox::after {
+    position: absolute;
+    opacity: 0;
+  }
 
-/*PMHQ*/
-.PMHQColor{
-  background-color:#ffdbed;
-}
+  label.girlbox::after {
+    font-size: x-small;
+    content: attr(data-kana);
+    display: block;
+    padding: 2px;
+    background: #fdc6d2f6;
+    color: #000;
+    border-radius: 5px;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    width: 95%;
 
-/*PMHQ別バージョンキャラ*/
-.PMHQotherColor{
-  background-color:#dbffff;
-}
+  }
 
-/*その他の魔法少女*/
-.otherColor{
-  background-color:#ffffdb;
-}
+  label.girlbox:hover::after {
+    opacity: 1;
+  }
 
-/*その他の魔法少女その2*/
-.otherColor2{
-  background-color:#eddbff;
-}
+  /* 魔法少女選択のboxの背景色 */
+  /*うめ先生デザインキャラの背景色 */
+  .umeColor {
+    background-color: #ffffdb;
+  }
 
-/*その他の魔法少女バージョン違い*/
-.otherotherColor{
-  background-color:#ffeddb;
-}
+  /*うめ先生デザイン別バージョンキャラ*/
+  .umeOtherColor {
+    background-color: #dbdbff;
+  }
 
-/*外伝キャラ*/
-.gaidenColor{
-  background-color:#dbffdb;
-}
+  /*PMHQ*/
+  .PMHQColor {
+    background-color: #ffdbed;
+  }
 
-/*コラボキャラ*/
-.collaboColor{
-  background-color:#ffeddb;
-}
+  /*PMHQ別バージョンキャラ*/
+  .PMHQotherColor {
+    background-color: #dbffff;
+  }
 
-/*モブキャラ*/
-.mobColor{
-  background-color:#f8f8f8;
-}
+  /*その他の魔法少女*/
+  .otherColor {
+    background-color: #ffffdb;
+  }
 
-/*未実装キャラ*/
-.unimpColor{
-  background-color:#cacaca;
-}
+  /*その他の魔法少女その2*/
+  .otherColor2 {
+    background-color: #eddbff;
+  }
 
-/*魔法少女選択の名前フォントの大きさ*/
-#arumado{
-  font-size:10px;
-}
+  /*その他の魔法少女バージョン違い*/
+  .otherotherColor {
+    background-color: #ffeddb;
+  }
 
-#masara{
-  font-size:10px;
-}
+  /*外伝キャラ*/
+  .gaidenColor {
+    background-color: #dbffdb;
+  }
 
-#feri{
-  font-size:10px;
-}
+  /*コラボキャラ*/
+  .collaboColor {
+    background-color: #ffeddb;
+  }
 
-#fate_t{
-  font-size:10px;
-}
+  /*モブキャラ*/
+  .mobColor {
+    background-color: #f8f8f8;
+  }
 
-#hitagi{
-  font-size:10px;
-}
+  /*未実装キャラ*/
+  .unimpColor {
+    background-color: #cacaca;
+  }
 
-#ash{
-  font-size:10px;
-}
-/*魔法少女選択の名前フォントの大きさ終わり*/
+  /*魔法少女選択の名前フォントの大きさ*/
+  #arumado {
+    font-size: 10px;
+  }
+
+  #masara {
+    font-size: 10px;
+  }
+
+  #feri {
+    font-size: 10px;
+  }
+
+  #fate_t {
+    font-size: 10px;
+  }
+
+  #hitagi {
+    font-size: 10px;
+  }
+
+  #ash {
+    font-size: 10px;
+  }
+
+  /*魔法少女選択の名前フォントの大きさ終わり*/
 
 
-/* 検索オプションの箇条書きのpadding */
-li{
-  padding:5px 0 0 0;
-}
+  /* 検索オプションの箇条書きのpadding */
+  li {
+    padding: 5px 0 0 0;
+  }
 
-ul {
-/*  list-style: none; */
- margin: 0 0 0 0;
- padding: 0 0 0 1em;
- text-indent: -0.5em
- }
+  ul {
+    /*  list-style: none; */
+    margin: 0 0 0 0;
+    padding: 0 0 0 1em;
+    text-indent: -0.5em
+  }
 
-.story .netabare .star{
-  vertical-align:middle;
-  text-align:center;
-}
+  .story .netabare .star {
+    vertical-align: middle;
+    text-align: center;
+  }
 
-#mgreset{
-  margin:3px;
-}
+  .mgreset {
+    margin: 3px;
+  }
 
-.nodata{
-  text-decoration: line-through;
-}
+  /*絞り込みワード入力のinputの幅をスマホのときは長くPCの時は短く*/
+  .ndownword {
+    width: 90%;
+    background-color:#ffebef;
+    display:block;
+    margin-top:2px;
+  }
 
-fieldset {
+  @media only screen and (min-width : 640px) {
+    .ndownword {
+      width: 50%;
+      background-color:#ffebef;
+      display:block;
+      margin-top:2px;
+    }
+  }
+
+  .ndownwordreset {
+    margin: 3px 0px 3px 3px;
+    font-size: smaller;
+  }
+
+  .nodata {
+    text-decoration: line-through;
+  }
+
+  fieldset {
     display: inline;
-}
-
-/* AND, ORの説明文のスタイル
-.optionExplain{
-  font-size:smaller;
-}
-*/
-
-/*AND, ORボックスのスタイル*/
-div.selectBoxSet{
-  display: inline-flex;
-  flex-wrap: nowrap;
-  text-align: left;
-}
-
-.selectBox{
-  border: 1px #000000 solid;
-  width: 80px;
-  padding:0px;
-  margin: 0px;
-  text-align:center;
-  font-size:10px;
-}
-
-/* キーワードテキストリセットボタンのCSS */
-#keyreset{
-  font-size:smaller;
-  padding: 1px 1px;
-  display:block;
-  margin-top:2px;
-}
+  }
 
 
-/* 魔法少女アイコンクリック時挙動。チェック前挙動 */
-.magicalgirl input[type="checkbox"]{
-  -webkit-appearance: none;  /* 元々のチェックボックスを非表示 */
-  position: relative;        /* checked時画像のためのrelative */
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  background-size: contain;
-  border:none;
-  filter: brightness(50%);
-}
+  /* キーワードテキストリセットボタンのCSS */
+  #keyreset {
+    font-size: smaller;
+    display: block;
+    margin: 5px 7px 0px 0px;
+  }
 
-/* チェック時の挙動 */
-.magicalgirl input[type="checkbox"]:checked:before {
-  content: "";
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  /* background-size: 51px 51px; */
+
+  /* 魔法少女アイコンクリック時挙動。チェック前挙動 */
+  .magicalgirl input[type="checkbox"] {
+    -webkit-appearance: none;
+    /* 元々のチェックボックスを非表示 */
+    position: relative;
+    /* checked時画像のためのrelative */
+    display: inline-block;
+    width: 60px;
+    height: 60px;
     background-size: contain;
-}
+    border: none;
+    filter: brightness(50%);
+  }
 
-.magicalgirl input[type="checkbox"]:checked{
-  filter: brightness(90%);
-  filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.8));
-}
+  /* チェック時の挙動 */
+  .magicalgirl input[type="checkbox"]:checked:before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    /* background-size: 51px 51px; */
+    background-size: contain;
+  }
 
-:focus {
+  .magicalgirl input[type="checkbox"]:checked {
+    filter: brightness(90%);
+    filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.8));
+  }
+
+  :focus {
     outline: none;
-}
-/************** 以下結果表示のスタイル ****************/
-/* 結果の～話を表示する列のスタイルを指定 */
-td.resultStory{
+  }
+
+  /************** 以下結果表示のスタイル ****************/
+  /* 結果の～話を表示する列のスタイルを指定 */
+  td.resultStory {
     font-size: 13px;
-    line-height:13px;
-}
+    line-height: 13px;
+  }
 
-/* 結果のストーリーのリンクのスタイル */
-.resultStory a{
-  text-decoration: none;
-  border:none;
-  outline:none;
-  color:black;
-}
+  /* 結果のストーリーのリンクのスタイル */
+  .resultStory a {
+    text-decoration: none;
+    border: none;
+    outline: none;
+    color: black;
+  }
 
-/* 結果のストーリーにリンクを貼っていることに対する注意書きのスタイル */
-.resultLinkCaution{
-  /* font-size:smaller; */
-}
-
-/* 結果の魔法少女を表示する列のスタイルを指定
+  /* 結果の魔法少女を表示する列のスタイルを指定
   画像にマウスオーバーしないとき魔法少女名を出さない。 */
-.resultGirl span{
+  .resultGirl span {
     display: none;
-}
-/* マウスオーバーした時の魔法少女名を上に重ねるためzを10に設定 */
-.resultGirl img{
-  z-index:10;
-}
+  }
 
-/* 画像にマウスオーバーしたとき魔法少女名を出す。 */
-.resultGirl img:hover+span{
-position: absolute;
+  /* マウスオーバーした時の魔法少女名を上に重ねるためzを10に設定 */
+  .resultGirl img {
+    z-index: 10;
+  }
+
+  /* 画像にマウスオーバーしたとき魔法少女名を出す。 */
+  .resultGirl img:hover+span {
+    position: absolute;
     top: -20px;
     left: 35px;
     display: block;
@@ -403,255 +493,261 @@ position: absolute;
     white-space: nowrap;
     height: auto;
 
-}
+  }
 
-/*結果の画像とキャラ名を切り替えるチェックボックスのスタイル*/
-div.cngChk{
-   position:fixed; /*位置を画面に固定する*/
-    right:5%;       /* 右からの位置指定 */
-     top:0px;        /*上からの位置指定 */
+  /*結果の画像とキャラ名を切り替えるチェックボックスのスタイル*/
+  div.cngChk {
+    position: fixed;
+    /*位置を画面に固定する*/
+    right: 5%;
+    /* 右からの位置指定 */
+    top: 0px;
+    /*上からの位置指定 */
 
-}
+  }
 
-body.result{
-  position:absolute;
-}
+  body.result {
+    position: absolute;
+  }
 
-.girlName{
-margin:0px 5px 0px 0px;
-/*height:42px; *//* 結果のテキスト表示を画像の高さに合わせる */
-/*line-height: 42px;*/
-}
+  .girlName {
+    margin: 0px 5px 0px 0px;
+    /*height:42px; */
+    /* 結果のテキスト表示を画像の高さに合わせる */
+    /*line-height: 42px;*/
+  }
 
-/* 結果のネタバレを表示する列のスタイルを指定 */
-td.resultNetabare{
+  /* 結果のネタバレを表示する列のスタイルを指定 */
+  td.resultNetabare {
     font-size: 13px;
-    line-height:13px;
-}
+    line-height: 13px;
+  }
 
-/* スペシャルの発生時期のフォントを指定 */
-span.specialTime{
+  /* スペシャルの発生時期のフォントを指定 */
+  span.specialTime {
     font-size: 12px;
-    line-height:12px;
+    line-height: 12px;
     color: #ff5ba3;
-}
+  }
 
-/* 結果出力時の画像基本設定 */
-.result img {
-  width: 40px;
-  height: 40px;
-  margin:1px;
-  vertical-align:middle;
-}
+  /* 結果出力時の画像基本設定 */
+  .result img {
+    width: 40px;
+    height: 40px;
+    margin: 1px;
+    vertical-align: middle;
+  }
 
-/* 結果一覧のテーブル設定 */
-.result table {
-  text-align: left;
-  border-collapse: collapse;
-  border: solid 2px black;
-}
+  /* 結果一覧のテーブル設定 */
+  .result table {
+    text-align: left;
+    border-collapse: collapse;
+    border: solid 2px black;
+  }
 
-.result tr td {
-  border-collapse: collapse;
-  border: solid 1px black;
-  margin: 2px;
-  /* line-height:100%; */
-}
+  .result tr td {
+    border-collapse: collapse;
+    border: solid 1px black;
+    margin: 2px;
+    /* line-height:100%; */
+  }
 
-.result th {
-  background: #3f3f3f;
-  color: #ffffff;
-  border: solid 1px white;
-  text-align: center;
-}
+  .result th {
+    background: #3f3f3f;
+    color: #ffffff;
+    border: solid 1px white;
+    text-align: center;
+  }
 
-tr.メイン【第1部】{
-  background: #6C6691;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.メイン【第1部】 {
+    background: #6C6691;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.メイン【第2部】{
-  background: #6C6691;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.メイン【第2部】 {
+    background: #6C6691;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.アナザー【第1部】{
-  background:#4C8785;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.アナザー【第1部】 {
+    background: #4C8785;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.アナザー【第2部】{
-  background:#4C8785;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.アナザー【第2部】 {
+    background: #4C8785;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.魔法少女ストーリー{
-  background:#FF647E;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.魔法少女ストーリー {
+    background: #FF647E;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.衣装ストーリー{
-  background:#FF7B44;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.衣装ストーリー {
+    background: #FF7B44;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.ミラーズストーリー{
-  background:#B837DF;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.ミラーズストーリー {
+    background: #B837DF;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.イベントストーリー{
-  background: #ffff7a;
-  color: black;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.イベントストーリー {
+    background: #ffff7a;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.スペシャル{
-  background: #ff60af;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.スペシャル {
+    background: #ff60af;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.EDムービー{
-  background: #060A1F;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.EDムービー {
+    background: #060A1F;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
-tr.アニメ{
-  background: #ff7fbf;
-  color: black;
-  font-weight: bold;
-  text-align: center;
-}
+  tr.アニメ {
+    background: #ff7fbf;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+  }
 
-/* スペースなど調整用 */
-.mgr-10{
-    margin-right : 10px;
-}
-/* call.html用*************************/
-/* ページトップへ戻るボタン */
-#pagetop {
-    position:fixed;
-    bottom:100px;
-    right:10px;
-    padding:10px 20px;
-    color:#fc70c1d2;
-    text-align:center;
+  /* スペースなど調整用 */
+  .mgr-10 {
+    margin-right: 10px;
+  }
+
+  /* call.html用*************************/
+  /* ページトップへ戻るボタン */
+  #pagetop {
+    position: fixed;
+    bottom: 100px;
+    right: 10px;
+    padding: 10px 20px;
+    color: #fc70c1d2;
+    text-align: center;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
-}
+  }
 
-/* ページボトムへ進むボタン */
-#pagebtm {
-    position:fixed;
-    bottom:10px;
-    right:10px;
-    padding:10px 20px;
-    color:#f85ab6d2;
-    text-align:center;
+  /* ページボトムへ進むボタン */
+  #pagebtm {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    color: #f85ab6d2;
+    text-align: center;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
-}
+  }
 
-/* ページの真ん中へ進むボタン */
-#pagemdl {
-    position:fixed;
-    bottom:55px;
-    right:10px;
-    padding:10px 20px;
-    color:#f85ab6d2;
-    text-align:center;
+  /* ページの真ん中へ進むボタン */
+  #pagemdl {
+    position: fixed;
+    bottom: 55px;
+    right: 10px;
+    padding: 10px 20px;
+    color: #f85ab6d2;
+    text-align: center;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
-}
-/* call.html用終わり*************************/
+  }
 
-/* index.html用*************************/
-/* ページトップへ戻るボタン */
-#sty_pagetop {
-    position:fixed;
-    bottom:200px;
-    right:2px;
-    padding:14px 10px;
-    color:#f85ab6d2;
-    text-align:center;
+  /* call.html用終わり*************************/
+
+  /* index.html用*************************/
+  /* ページトップへ戻るボタン */
+  #sty_pagetop {
+    position: fixed;
+    bottom: 200px;
+    right: 2px;
+    padding: 14px 10px;
+    color: #f85ab6d2;
+    text-align: center;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
-}
+  }
 
-/* ページの魔法少女トップへ進むボタン */
-#sty_pagecharatop {
-    position:fixed;
-    bottom:160px;
-    right:0px;
-    padding:14px 10px;
-    color:#f85ab6d2;
-    text-align:center;
+  /* ページの魔法少女トップへ進むボタン */
+  #sty_pagecharatop {
+    position: fixed;
+    bottom: 160px;
+    right: 0px;
+    padding: 14px 10px;
+    color: #f85ab6d2;
+    text-align: center;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
-}
+  }
 
-/* 検索するボタン */
-#sty_seach {
-    position:fixed;
-    bottom:120px;
-    right:0px;
-    padding:14px 10px;
-    color:#f85ab6d2;
-    text-align:center;
+  /* 検索するボタン */
+  #sty_seach {
+    position: fixed;
+    bottom: 120px;
+    right: 0px;
+    padding: 14px 10px;
+    color: #f85ab6d2;
+    text-align: center;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
-}
+  }
 
-/* ページの魔法少女エンドへ進むボタン */
-#sty_pagecharaend {
-    position:fixed;
-    bottom:80px;
-    right:0px;
-    padding:14px 10px;
-    color:#f85ab6d2;
-    text-align:center;
+  /* ページの魔法少女エンドへ進むボタン */
+  #sty_pagecharaend {
+    position: fixed;
+    bottom: 80px;
+    right: 0px;
+    padding: 14px 10px;
+    color: #f85ab6d2;
+    text-align: center;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
-}
+  }
 
-/* ページの結果テーブルへ進むボタン */
-#sty_pagetbl {
-    position:fixed;
-    bottom:40px;
-    right:0px;
-    padding:14px 10px;
-    color:#f85ab6d2;
-    text-align:center;
+  /* ページの結果テーブルへ進むボタン */
+  #sty_pagetbl {
+    position: fixed;
+    bottom: 40px;
+    right: 0px;
+    padding: 14px 10px;
+    color: #f85ab6d2;
+    text-align: center;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
-}
+  }
 
-/* ページボトムへ進むボタン */
-#sty_pagebtm {
-    position:fixed;
-    bottom:5px;
-    right:0px;
-    padding:14px 10px;
-    color:#f85ab6d2;
-    text-align:center;
+  /* ページボトムへ進むボタン */
+  #sty_pagebtm {
+    position: fixed;
+    bottom: 5px;
+    right: 0px;
+    padding: 14px 10px;
+    color: #f85ab6d2;
+    text-align: center;
     text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
-}
+  }
 
-/* index.html用終わり*************************/
+  /* index.html用終わり*************************/
 
-/*検索結果表示*/
-H3.seachResult{
-  padding: 0px 0px 0px 0px;
-  margin:10px 0px 0px 0px;
-}
+  /*検索結果表示*/
+  H3.seachResult {
+    padding: 0px 0px 0px 0px;
+    margin: 10px 0px 0px 0px;
+  }
