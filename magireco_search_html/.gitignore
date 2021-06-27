@@ -1,0 +1,12 @@
+/img/webp/*.webp
+!/img/webp/*.webp/AND.webp
+!/img/webp/*.webp/EXCLUSIVE.webp
+!/img/webp/*.webp/OR.webp
+!/img/webp/*.webp/ONLY.webp
+!/img/webp/*.webp/loading.webp
+/img/png/*.png
+!/img/png/*.png/AND.png
+!/img/png/*.png/EXCLUSIVE.png
+!/img/png/*.png/OR.png
+!/img/png/*.png/ONLY.png
+!/img/png/*.png/loading.gif
