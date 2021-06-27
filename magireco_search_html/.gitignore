@@ -1,3 +1,5 @@
+/banner/png/*.png
+/banner/webp/*.webp
 /img/webp/*.webp
 !/img/webp/*.webp/AND.webp
 !/img/webp/*.webp/EXCLUSIVE.webp
@@ -10,3 +12,6 @@
 !/img/png/*.png/OR.png
 !/img/png/*.png/ONLY.png
 !/img/png/*.png/loading.gif
+/banner/png/*.png
+/banner/webp/*.webp
+/myfile/callTableダウンロード
