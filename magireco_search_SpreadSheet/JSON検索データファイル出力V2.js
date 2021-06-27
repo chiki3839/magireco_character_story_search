@@ -1,5 +1,5 @@
 function outputJSONv2() {
-  //V2では魔法少女欄を(列2)を配列にする。
+  //魔法少女欄(列2)を配列にする。
 
   const outputFileID = "1kFoEYZ6nJrYQAxGQVwN-SyLg-aPKkH6q";
   //アクティブなスプレッドシートを取得し、そのスプレッドシートにある全てのシートを取得

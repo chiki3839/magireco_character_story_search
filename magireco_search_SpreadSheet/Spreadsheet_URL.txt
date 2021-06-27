@@ -1,0 +1,3 @@
+https://docs.google.com/spreadsheets/d/1fNC-ddSXpkDJHcvUCYpa97cJkf8-lo4EXieKqKkFQwo/edit?usp=sharing
+↑これの「JSON検索データファイル出力V2」スクリプトを実行すると「Ajax用ストーリー検索データV2.JSON」が更新される。
+(スクリプト内に記載しているGASのファイルIDを編集すること)
