@@ -1,4 +1,6 @@
 ﻿/* 個別キャラ設定 */
+.magicalgirl input[value="七海やちよ(七夕ver)"]{
+    background: url(../img/webp/七海やちよ\(七夕ver\).webp); background-size: 60px 60px; }
 .magicalgirl input[value="桐野紗枝"]{
     background: url(../img/webp/桐野紗枝.webp); background-size: 60px 60px; }
 .magicalgirl input[value="このは・葉月"]{
