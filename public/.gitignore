@@ -1,5 +1,4 @@
-/banner/*.png
-/banner/*.webp
+/banner/*
 /img/webp/*.webp
 !/img/webp/AND.webp
 !/img/webp/EXCLUSIVE.webp
