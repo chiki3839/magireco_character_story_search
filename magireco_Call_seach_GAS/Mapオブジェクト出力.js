@@ -7,8 +7,9 @@ function callOutput() {
   const callData = sheet.getDataRange().getValues();
   let callMapString = "const callTable = new Map(["; // 呼びかけの二次元Mapオブジェクトを格納する変数
   let mapSetString = "const calledMap = new Map(["; // 呼びかけられのMapとSet組み合わせオブジェクトの宣言の文字列
-  
-  //呼ぶ->呼ばれるのデータを作る
+  const calDataSrt = "7"; //列の呼びかけデータがスタートする所。0からカウント
+
+  //呼ぶ->呼ばれるのデータを作る。年齢・学年・身長のデータも入れる
   for( let j = 1 ; j < callData.length ; j++){
     let rowArry = []; //行データのハッシュを格納する変数
     for(let i = 2 ; i < callData[0].length ; i++){
@@ -23,7 +24,7 @@ function callOutput() {
   callMapString += "]);";
 
   //呼ばれる->呼ぶのデータ。「呼ばれた人名」をキーに呼ぶ人の配列をぶら下げる
-  for( let j = 6 ; j < callData[0].length ; j++){
+  for( let j = calDataSrt ; j < callData[0].length ; j++){
     let columnAry = []; //呼んだ人名の配列
     for(let i = 1 ; i < callData.length ; i++){
       if( callData[i][j] ){

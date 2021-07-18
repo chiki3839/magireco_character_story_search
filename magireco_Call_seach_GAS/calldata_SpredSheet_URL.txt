@@ -1,3 +1,0 @@
-SpreadSheetのデータをjavascriptのMap/Setオブジェクトの宣言として出力する。
-呼びかけデータはこちら
-https://docs.google.com/spreadsheets/d/1Xzv7e_YgwkChqXApmRj2cbkTZuq9L9Cu8Du9NEp6E14/edit#gid=1136068404
