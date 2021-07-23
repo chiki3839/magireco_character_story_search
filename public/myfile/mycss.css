@@ -218,6 +218,7 @@ h2.at_resultHeader {
 
 #at_reset {
   font-size: smaller;
+  -webkit-appearance: none;
 }
 
 /*属性選択簡易表示のオーバーレイ用要素用ここまで*/
@@ -227,9 +228,16 @@ h2.at_resultHeader {
 .searchbtn{
   font-size: larger;
   background-color: #f5bcd8;
-  border-color: #fc6ab1
+  border-color: #fc6ab1;
+  -webkit-appearance: none;
+}
+
+.resetbtn{
+  background-color: #f7e8ef;
+  -webkit-appearance: none;
 
 }
+
 
 .storytable td {
   padding: 1px 30px 1px 0px;
@@ -390,6 +398,8 @@ ul {
 
 .mgreset {
   margin: 3px 0 3px 0;
+  -webkit-appearance: none;
+  background-color: #e6e6e6;
 }
 
 /*絞り込みワード入力のinputの幅をスマホのときは長くPCの時は短く*/
@@ -413,6 +423,7 @@ ul {
   margin: 3px 0 3px 0;
   pointer-events:none;
   color:gray;
+  -webkit-appearance: none;
 }
 
 .ndownReset_caution {
@@ -422,6 +433,7 @@ ul {
   color:white;
   font-weight: bolder;
   border:1;
+  -webkit-appearance: none;
 }
 
 .nodata {
@@ -438,6 +450,7 @@ fieldset {
   font-size: smaller;
   display: block;
   margin: 5px 7px 0px 0px;
+  -webkit-appearance: none;
 }
 
 
