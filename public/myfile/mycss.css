@@ -668,7 +668,14 @@ tr.EDムービー {
   text-align: center;
 }
 
-tr.アニメ {
+tr.アニメ【1st】 {
+  background: #ff7fbf;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
+
+tr.アニメ【2nd】 {
   background: #ff7fbf;
   color: black;
   font-weight: bold;

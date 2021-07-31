@@ -1,4 +1,6 @@
 ﻿/* 個別キャラ設定 */
+.magicalgirl input[value="美樹さやか(波乗りver)"]{
+    background: url(../img/webp/美樹さやか\(波乗りver\).webp); background-size: 60px 60px; }
 .magicalgirl input[value="ももこ・みたま(人魚ver)"]{
     background: url(../img/webp/ももこ・みたま\(人魚ver\).webp); background-size: 60px 60px; }
 .magicalgirl input[value="七海やちよ(七夕ver)"]{
