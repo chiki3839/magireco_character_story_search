@@ -99,7 +99,10 @@ dl.searchOption {
 dl.searchOption dt {
   position: relative;
   padding-left: 1.2em;
-  margin: 0;
+}
+
+dl.searchOption dt:not(:first-child) {
+  margin: 0.3em 0 0 0;
 }
 
 dl.searchOption dt::before {
@@ -112,7 +115,7 @@ dl.searchOption dt::before {
 }
 
 dl.searchOption dd {
-  margin-left: 0.5em;
+  margin-left: 1em;
 }
 
 dl.searchOption div.storychkbox {
