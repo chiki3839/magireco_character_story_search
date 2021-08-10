@@ -1,4 +1,11 @@
-﻿p {
+﻿/* 共通設定 */
+body {
+  font-family: sans-serif;
+  /*font-size: small;*/
+  -webkit-text-size-adjust: 100%;
+}
+
+p {
   margin: 0;
 }
 
@@ -61,12 +68,6 @@ div.caution {
   text-align: center;
 }
 
-/* 共通設定 */
-body {
-  font-size: small;
-  -webkit-text-size-adjust: 100%;
-}
-
 .at {
   white-space: nowrap;
 }
@@ -114,13 +115,18 @@ dl.searchOption dt::before {
   font-size: 1em;
 }
 
-dl.searchOption dd {
+dl.searchOption dd.selectBoxSet {
+  margin-left: 0.5em;
+}
+dl.searchOption dd:not(.selectBoxSet) {
   margin-left: 1em;
 }
+
 
 dl.searchOption div.storychkbox {
   display: inline-block;
   vertical-align: top;
+  font-size: smaller;
 }
 
 
@@ -735,6 +741,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
+  font-size:smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 
@@ -748,6 +755,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
+  font-size:smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }
@@ -760,6 +768,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
+  font-size:smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }
@@ -772,6 +781,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
+  font-size:smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }
@@ -784,6 +794,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
+  font-size:smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }
@@ -796,6 +807,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
+  font-size:smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }

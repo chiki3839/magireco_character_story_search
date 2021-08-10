@@ -218,7 +218,7 @@
       </dt>
 
       <dt>複数選択オプション</dt>
-      <dd>
+      <dd class="selectBoxSet">
         <div class="selectBoxSet">
           <label class="selectBox"><input type="radio" class="and_or" name="and_or" value="AND" checked="checked" required>AND<br>
             <img class="selectBoxImg" src="./img/webp/AND.webp" alt="AND"></label>
@@ -250,7 +250,7 @@
   <!-- 魔法少女絞り込みテキスト入力実装 -->
   <input type="text" spellcheck="false" class="ndownword" name="ndownword" placeholder="かなカナ漢字名で絞り込み。スペースでOR。削除で戻る" id="ndownword1" oninput="mgirlNarrow('index', 'ndownword1')">
   <input type="button" value="絞り込みリセット" class="ndownReset" onClick="ndownReset()">
-  <input type="button" name="mgreset" class="mgreset" value="魔法少女の選択解除" onClick="girlReset()">
+  <input type="button" name="mgreset" class="mgreset" value="魔法少女の選択解除" id="mgreset"  onClick="girlReset()">
 
   <BR>
 
@@ -275,6 +275,7 @@
     <label class="girlbox umeColor" data-kana="やくも みたま"><input type="checkbox" class="MagicalChk" name="chara" id="八雲みたま" value="八雲みたま"><br>八雲<br>みたま★</label>
     <label class="girlbox umeColor" data-kana="あまね つくよ"><input type="checkbox" class="MagicalChk" name="chara" id="天音月夜" value="天音月夜"><br>天音月夜★</label>
     <label class="girlbox umeColor" data-kana="あまね つかさ"><input type="checkbox" class="MagicalChk" name="chara" id="天音月咲" value="天音月咲"><br>天音月咲★</label>
+    <label class="girlbox umeColor" data-kana="くれは ゆな"><input type="checkbox" class="MagicalChk" name="chara" id="紅晴結菜" value="紅晴結菜"><br>紅晴結菜</label>
     <label class="girlbox umeColor" data-kana="きらり ひかる"><input type="checkbox" class="MagicalChk" name="chara" id="煌里ひかる" value="煌里ひかる"><br>煌里ひかる</label>
     <label class="girlbox umeColor" data-kana="かさね あお"><input type="checkbox" class="MagicalChk" name="chara" id="笠音アオ" value="笠音アオ"><br>笠音アオ</label>
     <label class="girlbox umeColor" data-kana="おおば じゅり"><input type="checkbox" class="MagicalChk" name="chara" id="大庭樹里" value="大庭樹里"><br>大庭樹里</label>
@@ -440,8 +441,7 @@
     <label class="girlbox mobColor" data-kana="ちはるのはは"><input type="checkbox" class="MagicalChk" name="chara" id="ちはるの母" value="ちはるの母"><br>ちはるの母</label>
     <label class="girlbox mobColor" data-kana="しずかのはは"><input type="checkbox" class="MagicalChk" name="chara" id="静香の母" value="静香の母"><br>静香の母</label>
 
-    <label class="girlbox unimpColor leftm" data-kana="くれは ゆな"><input type="checkbox" class="MagicalChk" name="chara" id="紅晴結菜" value="紅晴結菜"><br>紅晴結菜</label>
-    <label class="girlbox unimpColor" data-kana="ゆめ うらら"><input type="checkbox" class="MagicalChk" name="chara" id="有愛うらら" value="有愛うらら"><br>有愛うらら</label>
+    <label class="girlbox unimpColor leftm" data-kana="ゆめ うらら"><input type="checkbox" class="MagicalChk" name="chara" id="有愛うらら" value="有愛うらら"><br>有愛うらら</label>
     <label class="girlbox unimpColor" data-kana="さとり かごめ"><input type="checkbox" class="MagicalChk" name="chara" id="佐鳥かごめ" value="佐鳥かごめ"><br>佐鳥かごめ</label>
     <label class="girlbox unimpColor" data-kana="みうら あさひ"><input type="checkbox" class="MagicalChk" name="chara" id="三浦旭" value="三浦旭"><br>三浦旭</label>
     <label class="girlbox unimpColor" data-kana="あいか ひめな"><input type="checkbox" class="MagicalChk" name="chara" id="藍家ひめな" value="藍家ひめな"><br>藍家ひめな</label>
@@ -459,7 +459,7 @@
 
   <!-- 魔法少女絞り込みテキスト入力実装 -->
   <input type="button" value="絞り込みリセット" class="ndownReset" onClick="ndownReset()">
-  <input type="button" name="mgreset" class="mgreset" value="魔法少女の選択解除" onClick="girlReset()"><BR>
+  <input type="button" name="mgreset" class="mgreset" id="mgreset2" value="魔法少女の選択解除" onClick="girlReset()"><BR>
   <input type="text" spellcheck="false" class="ndownword" name="ndownword" placeholder="かなカナ漢字名で絞り込み。スペースでOR。削除で戻る" id="ndownword2" oninput="mgirlNarrow('index', 'ndownword2')">
 
   <!-- ストーリー検索ボタンとリセットボタン -->
@@ -758,12 +758,18 @@
     });
 
     //魔法少女のチェックボックスを設定
+    document.getElementById("mgreset").disabled = true;
+    document.getElementById("mgreset2").disabled = true;
     const magicalGirlArr = localStorage
       .getItem("magicalGirlChoice")
       .split(",");
     magicalGirlArr.forEach(function(setgirl) {
       document.getElementById(setgirl).checked = true;
     });
+    if(magicalGirlArr.length > 0 ){
+      document.getElementById("mgreset").disabled = false;
+      document.getElementById("mgreset2").disabled = false;
+    }
   });
 
   // ストーリーのチェックボタンを一括でオンオフするイベント処理。
@@ -781,7 +787,29 @@
     for (i in checkboxes) {
       checkboxes[i].checked = false;
     }
+    //リセットボタンを無効にする。
+    document.getElementById("mgreset").disabled = true;
+    document.getElementById("mgreset2").disabled = true;
   }
+
+  //魔法少女チェックボックスの有無で選択解除ボタンの有効無効を設定する。
+  $(function(){
+    $('[name="chara"]').change(function(){ //もしキャラのチェックボックスが変化したら
+        let chkflg = false;
+        $('[name="chara"]:checked').each(function(){
+          chkflg = true;
+          return false;
+        });
+        if(chkflg){
+          //もしチェックボックスが選択されていたらリセットボタンを有効にする
+          document.getElementById("mgreset").disabled = false;
+          document.getElementById("mgreset2").disabled = false;
+        }else{
+          document.getElementById("mgreset").disabled = true;
+          document.getElementById("mgreset2").disabled = true;
+        }
+      });
+  });
 
   //検索ボタンが押された時の処理。////////////////////////////////////////////////////////////////////////////////////////////////////
   //ストーリーと魔法少女の選択チェックを行い、結果を出力する。
