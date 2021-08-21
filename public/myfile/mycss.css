@@ -433,6 +433,8 @@ ul {
   pointer-events:none;
   color:gray;
   -webkit-appearance: none;
+  border:1;
+  border-color:rgb(187, 185, 185);
 }
 
 .ndownReset_caution {
