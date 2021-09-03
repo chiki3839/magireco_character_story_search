@@ -72,7 +72,7 @@
   <input type="text" spellcheck="false" class="ndownword" name="ndownword" placeholder="かなカナ漢字名前で絞り込み。スペースでOR。削除で戻る" id="ndownword1" oninput="mgirlNarrow('call', 'ndownword1')">
   <input type="button" value="絞り込みリセット" class="ndownReset" onClick="ndownReset('call')">
   &ensp;
-  <input type="button" value="魔法少女の選択解除" name="mgreset" class="mgreset" onClick="return girlReset()">
+  <input type="button" value="魔法少女の選択解除" name="mgreset" class="mgreset" id="mgreset" onClick="return girlReset()">
   <!-- 魔法少女チェックボックス実装 -->
   <form name="magicalgirl">
     <div class="magicalgirl">
@@ -240,7 +240,7 @@
   <!-- 魔法少女チェックボックス実装おわり -->
   <input type="button" value="絞り込みリセット" class="ndownReset" onClick="ndownReset('call');">
   &ensp;
-  <input type="button" value="魔法少女の選択解除" name="mgreset" class="mgreset" onClick="return girlReset()">
+  <input type="button" value="魔法少女の選択解除" name="mgreset" class="mgreset" id="mgreset2" onClick="return girlReset()">
 
   <!-- 魔法少女絞り込みテキスト入力実装 -->
   <input type="text" spellcheck="false" class="ndownword" name="ndownword" placeholder="かなカナ漢字名前で絞り込み。スペースでOR。削除で戻る" id="ndownword2" oninput="mgirlNarrow('call', 'ndownword2')">
@@ -387,6 +387,10 @@
   <a id="pagebtm" href="#btm" class="page_btm" style="display: none;"><i class="fa fa-arrow-circle-o-down fa-3x"></i></a>
 
   <script>
+    //ページ読み込み直後リセットボタンを無効化する。
+    document.getElementById("mgreset").disabled = true;
+    document.getElementById("mgreset2").disabled = true;
+
     //callTableの「学年」データを元にcharaAttributeのSetに学年データを追加する。
     for (let [name, value] of callTable) {
       //console.log(charaAttribute.get(name));
@@ -550,6 +554,7 @@
 
     //チェックボックスが変更になったときに動作させる関数
     function chkBoxCng() {
+
       //ネットワーク情報を初期化する
       nodes = [];
       edges = [];
@@ -563,6 +568,15 @@
           girlName.push(document.magicalgirl.chara[i].value);
         }
       }
+      //もし一人でもチェックしていたらリセットボタンを有効化する。一人もいなかったら無効化する。
+      if(girlName.length){
+        document.getElementById("mgreset").disabled = false;
+        document.getElementById("mgreset2").disabled = false;
+      }else{
+        document.getElementById("mgreset").disabled = true;
+        document.getElementById("mgreset2").disabled = true;
+      }
+
       // ノードを追加する。tableも準備する。
       var DIR = "./img/webp/";
       for (var i = 0; i < girlName.length; i++) {
@@ -671,8 +685,13 @@
       edges = [];
       network = null;
       draw();
+
       //テーブルも初期化する。
       document.getElementById('mytable').innerHTML = "";
+
+      //ボタン自体を無効化する。
+      document.getElementById("mgreset").disabled = true;
+      document.getElementById("mgreset2").disabled = true;
     }
   </script>
 </body>
