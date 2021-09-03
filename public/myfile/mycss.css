@@ -278,11 +278,6 @@ label.leftm {
 
 /* girlboxにひらがなのツールチップをつける */
 label.girlbox::after {
-  position: absolute;
-  opacity: 0;
-}
-
-label.girlbox::after {
   font-size: x-small;
   content: attr(data-kana);
   display: block;
@@ -298,10 +293,14 @@ label.girlbox::after {
   word-break:keep-all; /*ツールチップ内でスペース以外改行しない*/
   line-height:110%;
   z-index: 9999;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 
 label.girlbox:hover::after {
   opacity: 1;
+  pointer-events: none;
 }
 
 /* 魔法少女選択のboxの背景色 */
