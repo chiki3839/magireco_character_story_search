@@ -1,4 +1,8 @@
 ﻿/* 個別キャラ設定 */
+.magicalgirl input[value="由良蛍"]{
+    background: url(../img/webp/由良蛍.webp); background-size: 60px 60px; }
+.magicalgirl input[value="里見太助"]{
+    background: url(../img/webp/里見太助.webp); background-size: 60px 60px; }
 .magicalgirl input[value="まどか・いろは"]{
     background: url(../img/webp/まどか・いろは.webp); background-size: 60px 60px; }
 .magicalgirl input[value="美樹さやか(波乗りver)"]{
