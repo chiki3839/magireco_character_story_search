@@ -239,7 +239,7 @@
       <dt>ネタバレワード検索</dt>
       <dd>
         <div style="font-size: smaller;">(半/全角スペース区切りでAND検索。キャラ選択はなくてもOK)<BR>(不要な場合は空にしてください)</div>
-        <input type="text" spellcheck="false" id="keyword" name="keyword" style="background-color:#ffebef; width: 95%; display:block;" placeholder="ネタバレ検索。スペースでAND。不要なら削除">
+        <input type="text" spellcheck="false" id="keyword" name="keyword" style="background-color:#ffebef; width: 90%; display:block;" placeholder="ネタバレ検索。スペースでAND。不要なら削除">
         <input type="button" value="検索ワードリセット" id="keyreset" onClick="document.getElementById('keyword').value='';">
       </dd>
     </dl>
@@ -393,6 +393,7 @@
     <label class="girlbox otherColor2" data-kana="きりの さえ"><input type="checkbox" class="MagicalChk" name="chara" id="桐野紗枝" value="桐野紗枝"><br>桐野紗枝</label>
     <label class="girlbox otherColor2" data-kana="みずき るい"><input type="checkbox" class="MagicalChk" name="chara" id="水樹塁" value="水樹塁"><br>水樹塁</label>
     <label class="girlbox otherColor2" data-kana="なつ りょうこ"><input type="checkbox" class="MagicalChk" name="chara" id="南津涼子" value="南津涼子"><br>南津涼子</label>
+    <label class="girlbox otherColor2" data-kana="いりな くしゅ"><input type="checkbox" class="MagicalChk" name="chara" id="入名クシュ" value="入名クシュ"><br>入名クシュ</label>
 
     <label class="girlbox otherotherColor leftm" data-kana="りか れん くりすます"><input type="checkbox" class="MagicalChk" name="chara" id="梨花・れん(クリスマスver)" value="梨花・れん(クリスマスver)"><br>梨花・れん<br>(クリスマスver)</label>
     <label class="girlbox otherotherColor" data-kana="まんねんざくらのうわさ みずぎ"><input type="checkbox" class="MagicalChk" name="chara" id="万年桜のウワサ(水着ver)" value="万年桜のウワサ(水着ver)"><br>万年桜のウワサ<br>(水着ver)</label>
@@ -454,8 +455,7 @@
     <label class="girlbox unimpColor" data-kana="かぐら さん"><input type="checkbox" class="MagicalChk" name="chara" id="神楽燦" value="神楽燦"><br>神楽燦</label>
     <label class="girlbox unimpColor" data-kana="ゆかり みゆり"><input type="checkbox" class="MagicalChk" name="chara" id="遊狩ミユリ" value="遊狩ミユリ"><br>遊狩ミユリ</label>
     <label class="girlbox unimpColor" data-kana="ひむろ らび"><input type="checkbox" class="MagicalChk" name="chara" id="氷室ラビ" value="氷室ラビ"><br>氷室ラビ</label>
-    <label class="girlbox unimpColor" data-kana="いりな くしゅ"><input type="checkbox" class="MagicalChk" name="chara" id="入名クシュ" value="入名クシュ"><br>入名クシュ</label>
-    <label class="girlbox otherColor2" data-kana="まい あかり"><input type="checkbox" class="MagicalChk" onchange="chkBoxCng();" ondblclick="mgirlCallNarrow(this)" name="chara" id="真井あかり" value="真井あかり"><br>真井あかり</label>
+    <label class="girlbox unimpColor" data-kana="まい あかり"><input type="checkbox" class="MagicalChk" onchange="chkBoxCng();" ondblclick="mgirlCallNarrow(this)" name="chara" id="真井あかり" value="真井あかり"><br>真井あかり</label>
 
     <label class="girlbox unimpColor" data-kana="みずなのせんぱい"><input type="checkbox" class="MagicalChk" name="chara" id="水名の先輩" value="水名の先輩"><br>水名の先輩</label>
     <label class="girlbox unimpColor" data-kana="くろえ"><input type="checkbox" class="MagicalChk" name="chara" id="黒江" value="黒江"><br>黒江</label>
@@ -942,7 +942,7 @@
                                   keywordtext : ネタバレ検索のワード
     */
     const DataUrl =
-      "https://script.google.com/macros/s/AKfycbywFd8l2SHM_giQVruMw1YlWM2n2vcjQ3Kg6OcAsbWNGgZ7F3vSI7-nZcYAm34X7LbS/exec";
+      "https://script.google.com/macros/s/AKfycbwEYqIFqdPbUT66fRv4-KtUi9dmgx0BVZ0a8Xxn5vAWg16-FoFu1NrKQhzG4LIXitGH/exec";
     $.ajax({
         type: "GET",
         url: DataUrl,

@@ -116,7 +116,7 @@ dl.searchOption dt::before {
 }
 
 dl.searchOption dd.selectBoxSet {
-  margin-left: 0.5em;
+  margin-left: 0.2em;
 }
 dl.searchOption dd:not(.selectBoxSet) {
   margin-left: 1em;
@@ -296,6 +296,7 @@ label.girlbox::after {
   position: absolute;
   opacity: 0;
   pointer-events: none;
+  white-space: nowrap;
 }
 
 label.girlbox:hover::after {

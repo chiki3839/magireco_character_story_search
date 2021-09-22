@@ -7,6 +7,9 @@ function magicalGirlAttributeSearch(htmlName) {
         .filter((el) => el.checked)
         .map((el) => el.value);
 
+    //ボタンを押したときのスクロール座標をコピー
+    //const y = window.pageYOffset;
+
     //絞り込み検索テキストをリセットする。
     document.getElementById('ndownword1').value = '';
     document.getElementById('ndownword2').value = '';
@@ -21,6 +24,9 @@ function magicalGirlAttributeSearch(htmlName) {
         document.getElementById("at_result").style.border = "";
         document.getElementById("at_result").innerHTML = "";
         }
+        //y座標をスクロールさせる
+        //scrollTo( 0, y );
+
         return;
     }
 
