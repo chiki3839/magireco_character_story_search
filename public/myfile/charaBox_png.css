@@ -1,4 +1,12 @@
 ﻿/* 個別キャラ設定 */
+.magicalgirl input[value="神那ニコ"]{
+    background: url(../img/png/神那ニコ.png); background-size: 60px 60px; }
+.magicalgirl input[value="浅海サキ"]{
+    background: url(../img/png/浅海サキ.png); background-size: 60px 60px; }
+.magicalgirl input[value="和紗ミチル"]{
+    background: url(../img/png/和紗ミチル.png); background-size: 60px 60px; }
+.magicalgirl input[value="昴かずみ"]{
+    background: url(../img/png/昴かずみ.png); background-size: 60px 60px; }
 .magicalgirl input[value="真井あかり"]{
     background: url(../img/png/真井あかり.png); background-size: 60px 60px; }
 .magicalgirl input[value="由良蛍"]{

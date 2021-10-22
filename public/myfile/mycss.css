@@ -228,7 +228,13 @@ h2.at_resultHeader {
 #at_reset {
   font-size: smaller;
   -webkit-appearance: none;
+  border-radius:5px;
+  border: 1px solid rgb(70, 70, 70);
 }
+#at_reset:active{
+  color:gray;
+}
+
 
 /*属性選択簡易表示のオーバーレイ用要素用ここまで*/
 
@@ -236,19 +242,26 @@ h2.at_resultHeader {
 /* 検索ボタンを強調 */
 .searchbtn{
   font-size: larger;
-  background-color: #f5bcd8;
-  border-color: #fc6ab1;
+  background-color: #fdd8ea;
+  border : 2px solid #fc6ab1;
+  border-radius: 7px;
   -webkit-appearance: none;
+}
+.searchbtn:active{
+  background-color: #fc6ab1;
 }
 
 .resetbtn{
-  background-color: #f7e8ef;
+  background-color: #fdebf4;
+  border : 2px solid #88797f;
+  border-radius: 5px;
   -webkit-appearance: none;
-
 }
+.resetbtn:active{
+  background-color: #88797f;
+ }
 
-
-.storytable td {
+ .storytable td {
   padding: 1px 30px 1px 0px;
 }
 
@@ -409,6 +422,8 @@ ul {
   margin: 3px 0 3px 0;
   -webkit-appearance: none;
   background-color: #e6e6e6;
+  border:1px solid gray;
+  border-radius: 5px;
 }
 
 /*絞り込みワード入力のinputの幅をスマホのときは長くPCの時は短く*/
@@ -417,6 +432,9 @@ ul {
   background-color: #ffebef;
   display: block;
   margin: 2px 0 2px 0;
+  border-radius:5px;
+  border: 1px solid rgb(70, 70, 70);
+
 }
 
 @media only screen and (min-width : 640px) {
@@ -433,8 +451,9 @@ ul {
   pointer-events:none;
   color:gray;
   -webkit-appearance: none;
-  border:1;
-  border-color:rgb(187, 185, 185);
+  border:1px solid gray;
+  border-radius: 5px;
+
 }
 
 .ndownReset_caution {
@@ -460,8 +479,14 @@ fieldset {
 #keyreset {
   font-size: smaller;
   display: block;
-  margin: 5px 7px 0px 0px;
+  margin-top: 2px;
   -webkit-appearance: none;
+  border-radius: 3px;
+  border: 1px solid rgb(70, 70, 70);
+}
+
+#keyreset:active {
+  background-color: rgb(145, 145, 145);
 }
 
 
@@ -637,28 +662,28 @@ tr.アナザー【第2部】 {
   text-align: center;
 }
 
-tr.魔法少女ストーリー {
+tr.魔法少女 {
   background: #FF647E;
   color: white;
   font-weight: bold;
   text-align: center;
 }
 
-tr.衣装ストーリー {
+tr.衣装 {
   background: #FF7B44;
   color: white;
   font-weight: bold;
   text-align: center;
 }
 
-tr.ミラーズストーリー {
+tr.ミラーズ {
   background: #B837DF;
   color: white;
   font-weight: bold;
   text-align: center;
 }
 
-tr.イベントストーリー {
+tr.イベント {
   background: #ffff7a;
   color: black;
   font-weight: bold;
@@ -858,3 +883,10 @@ tr.gachaboder td{
   background-color: rgb(221, 221, 221);
 }
 
+.shadow-3{-webkit-box-shadow:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -1px rgba(0,0,0,.05)!important;box-shadow:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -1px rgba(0,0,0,.05)!important}
+
+.forminput{
+  border-radius:5px;
+  border: 1px solid rgb(70, 70, 70);
+  margin-top:1px;
+}

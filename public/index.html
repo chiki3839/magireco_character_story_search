@@ -29,7 +29,7 @@
   <script src="./myfile/jquery.blockUI.js"></script>
 </head>
 <!-- ヘッダ終わり============================================================================================= -->
-
+<body>
 <!-- 頂いたヘッダバナー入る↓ -->
 <div id="headerBanner"></div>
 <p><span class="headerExpl2">(クリックで関係ページにジャンプします)</span></p>
@@ -204,12 +204,12 @@
             <label><input type="checkbox" class="story" name="story" id="メイン【第2部】" value="メイン【第2部】">メイン【第2部】</label><BR>
             <label><input type="checkbox" class="story" name="story" id="アナザー【第1部】" value="アナザー【第1部】">アナザー【第1部】</label><BR>
             <label><input type="checkbox" class="story" name="story" id="アナザー【第2部】" value="アナザー【第2部】">アナザー【第2部】</label><BR>
-            <label><input type="checkbox" class="story" name="story" id="魔法少女ストーリー" value="魔法少女ストーリー">魔法少女</label><BR>
-            <label><input type="checkbox" class="story" name="story" id="衣装ストーリー" value="衣装ストーリー">衣装</label><BR>
+            <label><input type="checkbox" class="story" name="story" id="魔法少女" value="魔法少女">魔法少女</label><BR>
+            <label><input type="checkbox" class="story" name="story" id="衣装" value="衣装">衣装</label><BR>
           </div>
           <div class="storychkbox">
-            <label><input type="checkbox" class="story" name="story" id="イベントストーリー" value="イベントストーリー">イベント</label><BR>
-            <label><input type="checkbox" class="story" name="story" id="ミラーズストーリー" value="ミラーズストーリー">ミラーズ</label><BR>
+            <label><input type="checkbox" class="story" name="story" id="イベント" value="イベント">イベント</label><BR>
+            <label><input type="checkbox" class="story" name="story" id="ミラーズ" value="ミラーズ">ミラーズ</label><BR>
             <label><input type="checkbox" class="story" name="story" id="スペシャル" value="スペシャル">スペシャル</label><BR>
             <label><input type="checkbox" class="story" name="story" id="EDムービー" value="EDムービー">EDムービー</label><BR>
             <label><input type="checkbox" class="story" name="story" id="アニメ【1st】" value="アニメ【1st】">アニメ【1st】</label><BR>
@@ -239,7 +239,7 @@
       <dt>ネタバレワード検索</dt>
       <dd>
         <div style="font-size: smaller;">(半/全角スペース区切りでAND検索。キャラ選択はなくてもOK)<BR>(不要な場合は空にしてください)</div>
-        <input type="text" spellcheck="false" id="keyword" name="keyword" style="background-color:#ffebef; width: 90%; display:block;" placeholder="ネタバレ検索。スペースでAND。不要なら削除">
+        <input type="text" spellcheck="false" id="keyword" name="keyword" class="forminput" style="background-color:#ffebef; width: 90%; display:block;" placeholder="ネタバレ検索。スペースでAND。不要なら削除">
         <input type="button" value="検索ワードリセット" id="keyreset" onClick="document.getElementById('keyword').value='';">
       </dd>
     </dl>
@@ -247,7 +247,7 @@
 
   <p>
     <input type="button" name="search" class="mgr-10 searchbtn" value="検索する" onClick="return isCheck()">
-    <input type="reset" value="全リセット" class="resetbtn" onClick="allShow();">
+    <input type="reset" value="全リセット" class="resetbtn" onClick="ndownReset();girlResetBtnInable()">
   </p>
 
   <!-- 魔法少女絞り込みテキスト入力実装 -->
@@ -404,9 +404,10 @@
     <label class="girlbox gaidenColor leftm" data-kana="みくに おりこ"><input type="checkbox" class="MagicalChk" name="chara" id="美国織莉子" value="美国織莉子"><br>美国織莉子</label>
     <label class="girlbox gaidenColor" data-kana="くれ きりか"><input type="checkbox" class="MagicalChk" name="chara" id="呉キリカ" value="呉キリカ"><br>呉キリカ</label>
     <label class="girlbox gaidenColor" data-kana="ちとせ ゆま"><input type="checkbox" class="MagicalChk" name="chara" id="千歳ゆま" value="千歳ゆま"><br>千歳ゆま</label>
-    <label class="girlbox gaidenColor" data-kana="かずみ"><input type="checkbox" class="MagicalChk" name="chara" id="かずみ" value="かずみ"><br>かずみ</label>
+    <label class="girlbox gaidenColor" data-kana="かずみ"><input type="checkbox" class="MagicalChk" name="chara" id="かずみ" value="かずみ"><br>かずみ★</label>
     <label class="girlbox gaidenColor" data-kana="みさき うみか"><input type="checkbox" class="MagicalChk" name="chara" id="御崎海香" value="御崎海香"><br>御崎海香</label>
     <label class="girlbox gaidenColor" data-kana="まき かおる"><input type="checkbox" class="MagicalChk" name="chara" id="牧カオル" value="牧カオル"><br>牧カオル</label>
+    <label class="girlbox gaidenColor" data-kana="すばる かずみ"><input type="checkbox" class="MagicalChk" name="chara" id="昴かずみ" value="昴かずみ"><br>昴かずみ</label>
     <label class="girlbox gaidenColor" data-kana="たると"><input type="checkbox" class="MagicalChk" name="chara" id="タルト" value="タルト"><br>タルト★</label>
     <label class="girlbox gaidenColor" data-kana="りず"><input type="checkbox" class="MagicalChk" name="chara" id="リズ" value="リズ"><br>リズ</label>
     <label class="girlbox gaidenColor" data-kana="めりっさ"><input type="checkbox" class="MagicalChk" name="chara" id="メリッサ" value="メリッサ"><br>メリッサ</label>
@@ -460,6 +461,9 @@
     <label class="girlbox unimpColor" data-kana="みずなのせんぱい"><input type="checkbox" class="MagicalChk" name="chara" id="水名の先輩" value="水名の先輩"><br>水名の先輩</label>
     <label class="girlbox unimpColor" data-kana="くろえ"><input type="checkbox" class="MagicalChk" name="chara" id="黒江" value="黒江"><br>黒江</label>
     <label class="girlbox unimpColor" data-kana="あき まばゆ"><input type="checkbox" class="MagicalChk" name="chara" id="愛生まばゆ" value="愛生まばゆ"><br>愛生まばゆ</label>
+    <label class="girlbox unimpColor" data-kana="かずさ みちる"><input type="checkbox" class="MagicalChk" name="chara" id="和紗ミチル" value="和紗ミチル"><br>和紗ミチル</label>
+    <label class="girlbox unimpColor" data-kana="あさみ さき"><input type="checkbox" class="MagicalChk" name="chara" id="浅海サキ" value="浅海サキ"><br>浅海サキ</label>
+    <label class="girlbox unimpColor" data-kana="かんな にこ"><input type="checkbox" class="MagicalChk" name="chara" id="神那ニコ" value="神那ニコ"><br>神那ニコ</label>
     <label class="girlbox unimpColor" data-kana="ぺれねる"><input type="checkbox" class="MagicalChk" name="chara" id="ペレネル" value="ペレネル"><br>ペレネル</label>
   </div>
   <div id="girlend"></div>
@@ -473,7 +477,7 @@
   <!-- ストーリー検索ボタンとリセットボタン -->
   <p>
     <input type="button" name="search" class="mgr-10 searchbtn" value="検索する" onClick="return isCheck()">
-    <input type="reset" value="全リセット" class="resetbtn" onClick="allShow();">
+    <input type="reset" value="全リセット" class="resetbtn" onClick="ndownReset();girlResetBtnInable()">
   </p>
 </form>
 
@@ -710,7 +714,7 @@
   const bannerTag =
     '<a href="' +
     images[num].linkUrl +
-    '" target="_blank"><img class="headerBanner" src="./banner/' +
+    '" target="_blank"><img class="headerBanner shadow-3" src="./banner/' +
     images[num].imgID +
     '"></a><BR><span class="headerExpl">↑<a href="' +
     images[num].linkUrl +
@@ -942,7 +946,7 @@
                                   keywordtext : ネタバレ検索のワード
     */
     const DataUrl =
-      "https://script.google.com/macros/s/AKfycbwMRogHtg3uU-FmuA7DqwOsI54iuMMmIMTbhC3TKiF3u6N7ET0ZP2AbSsDyQhpYkzoT/exec";
+      "https://script.google.com/macros/s/AKfycbyvWYRTuLbDrDCA0DUpN05byPtezWr4RcTYziAgy_7bK-yDkp_bHmgZJMD-Lul5itR7/exec";
     $.ajax({
         //type: "GET",
         type: "GET", //GASのweb公開はクロスドメイン対応なのでgetでもpostでもOK
@@ -951,7 +955,7 @@
         data: {
           and_or: and_or,
           story_csv: story_csv,
-          //netabare: netabare,
+          netabare: netabare,
           chara_csv: chara_csv,
           star: star,
           keywordtext: keywordtext,
@@ -999,16 +1003,20 @@
                 '" style="text-align:center;">条件に合うデータがありません。</td></tr>';
             } else {
               outdata[storyName].forEach((storyLine) => {
-                const searchWord = storyLine[0].split("<BR>");
+                  const captureName = (storyName.search(/イベント|スペシャル|魔法少女|衣装/) !== -1) ?
+                  storyLine[0] : `${storyName} ${storyLine[0]}` ;
+                  //const captureName = `${storyName} ${storyLine[0]}` ;
+
+                const searchWord = captureName.split("<BR>");
                 const searchtag =
-                  '<a href="https://www.google.com/search?q=マギアレコード+' +
+                  '<a href="https://www.google.com/search?q=マギアレコード+ストーリー+' +
                   searchWord[0] +
                   '&tbm=vid" target="_blank">';
 
                 outTable +=
                   '<tr><td class="resultStory">' +
                   searchtag +
-                  storyLine[0] +
+                  captureName +
                   '</a></td><td class="resultGirlTd">';
                 const girlArray = storyLine[1];
                 girlArray.forEach((girlname) => {

@@ -48,6 +48,12 @@ function allShow() {
     });
 }
 
+function girlResetBtnInable(){
+    //魔法少女選択リセットボタンを無効にする。
+    document.getElementById("mgreset").disabled = true;
+    document.getElementById("mgreset2").disabled = true;
+}
+
 //全ての魔法少女ボックスを全て隠す。
 function allHidden() {
     allnames.forEach(girlname => {

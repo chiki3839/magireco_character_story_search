@@ -15,20 +15,20 @@
 <H4 style="margin-bottom: 0;">データ形式</H4>
 <H5 style="margin-bottom: 0;margin-top: 0;">ALLの場合(出力時間がかかります)</H5>
 <div style="font-size: small;">
-["ストーリー名"][行数]["登場ストーリー"or"登場(会話した)人物"or"ネタバレ]([人物の場合は配列番号])<BR>
-・例) ["メイン【第2部】"][0]["ネタバレ"] = "使い魔から誓約書を受け取る。" <BR>
-  　["メイン【第2部】"][3]["登場(会話した)人物"] = [佐鳥かごめ, キュゥべえ]<BR>
+["ストーリー名"][行数][0-2](0:ストーリー名, 1:人物名の配列, 2:ネタバレ)<BR>
+・例) ["メイン【第2部】"][0][2] = "使い魔から誓約書を受け取る。" <BR>
+  　["メイン【第2部】"][3][1] = [佐鳥かごめ, キュゥべえ]<BR>
 </div>
 <H5 style="margin-bottom: 0;">各ストーリーの場合</H5>
 <div style="font-size: small;">
-  [行数]["登場ストーリー"or"登場(会話した)人物"or"ネタバレ]([人物の場合は配列番号])<BR>
-  ・例) [0]["ネタバレ"] = "使い魔から誓約書を受け取る。" <BR>
+  [行数][0-2](0:ストーリー名, 1:人物名の配列, 2:ネタバレ)<BR>
+  ・例) [0][2] = "使い魔から誓約書を受け取る。" <BR>
 </div>
 <BR>
 <a href="./json_open_old.html">旧バージョンはこちら</a>
 <BR><BR>
 
-ALL(JSON直リンクします)<BR>
+ALL(Googleドライブのファイルを開きます)<BR>
 <a href="https://drive.google.com/file/d/1kFoEYZ6nJrYQAxGQVwN-SyLg-aPKkH6q/view?usp=sharing">
   https://drive.google.com/file/d/1kFoEYZ6nJrYQAxGQVwN-SyLg-aPKkH6q/view?usp=sharing</a><BR><BR>
 
