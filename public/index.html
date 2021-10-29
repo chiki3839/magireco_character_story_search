@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <script src="./myfile/jquery.blockUI.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 </head>
 <!-- ヘッダ終わり============================================================================================= -->
 <body>
@@ -38,6 +38,7 @@
 
 <p><span class="returnlink"><a href="./gachasim.html">ガチャシミュレータ</a></span>
   &nbsp;<span class="returnlink"><a href="./call.html">マギレコキャラ呼びかけ検索</a></span>
+  &nbsp;<span class="returnlink"><a href="./cnt.html">同席ランキング</a></span>
   &nbsp;<span class="returnlink"><a href="https://app.the-timeline.jp/2PACX-1vTYF8Mj66tnTEhK2jPwzJzwKWJgtC0Y2-PQGIUwVbkO9csvt1IofUzv0LO0X_bjVpVgKCDyel4_jEry?start=20190302202436&end=20220821151125">
       マギレコサービス年表</a></span></p>
 
@@ -304,6 +305,7 @@
     <label class="girlbox umeOtherColor" data-kana="ほーりーありな"><input type="checkbox" class="MagicalChk" name="chara" id="ホーリーアリナ" value="ホーリーアリナ"><br>ホーリー<br>アリナ</label>
     <label class="girlbox umeOtherColor" data-kana="れなちゃん あいどる"><input type="checkbox" class="MagicalChk" name="chara" id="レナちゃん(アイドルver)" value="レナちゃん(アイドルver)"><br>レナちゃん<br>(アイドルver)</label>
     <label class="girlbox umeOtherColor" data-kana="とがめ ももこ しすたー"><input type="checkbox" class="MagicalChk" name="chara" id="十咎ももこ(シスターver)" value="十咎ももこ(シスターver)"><br>十咎ももこ<br>(シスターver)</label>
+    <label class="girlbox umeOtherColor" data-kana="かりん ありな はろうぃん"><input type="checkbox" class="MagicalChk" name="chara" id="かりん・アリナ(ハロウィンver)" value="かりん・アリナ(ハロウィンver)"><br>かりん・アリナ<BR>(ハロウィンver)</label>
     <label class="girlbox umeOtherColor" data-kana="いずみ かなぎ ゔぁんぱいあ"><input type="checkbox" class="MagicalChk" name="chara" id="和泉十七夜(ヴァンパイアver)" value="和泉十七夜(ヴァンパイアver)"><br>和泉十七夜<br>(ヴァンパイアver)</label>
     <label class="girlbox umeOtherColor" data-kana="やくも みたま はれぎ"><input type="checkbox" class="MagicalChk" name="chara" id="八雲みたま(晴着ver)" value="八雲みたま(晴着ver)"><br>八雲みたま<br>(晴着ver)</label>
     <label class="girlbox umeOtherColor" data-kana="あまねしまい みずぎ"><input type="checkbox" class="MagicalChk" name="chara" id="天音姉妹(水着ver)" value="天音姉妹(水着ver)"><br>天音姉妹<br>(水着ver)</label>
@@ -946,7 +948,7 @@
                                   keywordtext : ネタバレ検索のワード
     */
     const DataUrl =
-      "https://script.google.com/macros/s/AKfycbyvWYRTuLbDrDCA0DUpN05byPtezWr4RcTYziAgy_7bK-yDkp_bHmgZJMD-Lul5itR7/exec";
+      "https://script.google.com/macros/s/AKfycbw79XILsV3n3gRk03gzYOD_eDLK9Yoi8191AsR6WjAOTUBENYEjQazFdK97n0Xz8SI2/exec";
     $.ajax({
         //type: "GET",
         type: "GET", //GASのweb公開はクロスドメイン対応なのでgetでもpostでもOK

@@ -1,4 +1,6 @@
 ﻿/* 個別キャラ設定 */
+.magicalgirl input[value="かりん・アリナ(ハロウィンver)"]{
+    background: url(../img/png/かりん・アリナ\(ハロウィンver\).png); background-size: 60px 60px; }
 .magicalgirl input[value="神那ニコ"]{
     background: url(../img/png/神那ニコ.png); background-size: 60px 60px; }
 .magicalgirl input[value="浅海サキ"]{
@@ -57,7 +59,9 @@ background: url(../img/png/十咎ももこ\(シスターver\).png); background-s
 background: url(../img/png/和泉十七夜\(ヴァンパイアver\).png); background-size: 60px 60px; }
 .magicalgirl input[value="イザボー(魔女ver)"]{
 background: url(../img/png/イザボー\(魔女ver\).png); background-size: 60px 60px; }
-.magicalgirl input[value="やちよ・みふゆ(始まりver)"]{
+.magicalgirl input[value="イザボー"]{
+    background: url(../img/png/イザボー.png); background-size: 60px 60px; }
+    .magicalgirl input[value="やちよ・みふゆ(始まりver)"]{
 background: url(../img/png/やちよ・みふゆ\(始まりver\).png); background-size: 60px 60px; }
 .magicalgirl input[value="三輪みつね"]{
 background: url(../img/png/三輪みつね.png); background-size: 60px 60px; }

@@ -1,24 +1,28 @@
 //Ajaxの送受信を行う。HTTP GETをハンドリングする
+//GASのwebはクロスドメインでGETでもPOSTでもOK。機能的にgetを使う。
 function doGet(e) {
-  //Googleドライブ内のJSONデータのID
-  var JSONfileID = "1kFoEYZ6nJrYQAxGQVwN-SyLg-aPKkH6q";
+  //console.time("前処理"); 
+
+  //Googleドライブ内のJSONデータ(Ajax用ストーリー検索データ.JSON)のID
+  const JSONfileID = "1kFoEYZ6nJrYQAxGQVwN-SyLg-aPKkH6q";
 
 
   //入力された各種パラメータを取得する。
   var      and_or = e.parameter.and_or;
   var    storyAry = e.parameter.story_csv.split(',');
-  //var    netabare = e.parameter.netabare;
+  var    netabare = e.parameter.netabare;
   var    charaAry = e.parameter.chara_csv.split(',');
   var        star = e.parameter.star;
   var keywordtext = e.parameter.keywordtext;
 
+
 /*
   var and_or = "AND";
-  var storyAry = "アニメ".split(',');
-//  var netabare = "false";
-  var charaAry = "".split(',');
+  var storyAry = "イベント,魔法少女".split(',');
+  var netabare = "true";
+  var charaAry = "遊佐葉月,静海このは".split(',');
   var star     = "false";
-  var keywordtext = "電車";
+  var keywordtext = "";
 */
 
   if(!keywordtext){ keywordtext = "";} //keywordtextが異常値の場合、念の為空文字に変更。
@@ -31,16 +35,29 @@ function doGet(e) {
   
   //★印チェックされたときの処理。ver違いが実装された時に変更する。//////////////////////////////////////
   if(star === "true"){
+    if(charaAry.indexOf("かりん・アリナ(ハロウィンver)") != -1){
+      charaAry.push("御園かりん");
+      charaAry.push("アリナ・グレイ");
+      addGirl +=2;
+    }
+    if(charaAry.indexOf("かずみ") != -1){
+      charaAry.push("和紗ミチル");
+      charaAry.push("昴かずみ");
+      addGirl +=2;
+    }
     if(charaAry.indexOf("環いろは") != -1){
       charaAry.push("環いろは(水着ver)");
       charaAry.push("いろはちゃん");
       charaAry.push("いろは・やちよ(決戦ver)");
-      addGirl += 3;
+      charaAry.push("いろは・うい(巫女ver)");
+      charaAry.push("まどか・いろは");
+      addGirl += 5;
     }
     if(charaAry.indexOf("七海やちよ") != -1){
       charaAry.push("やちよ・みふゆ(始まりver)");
       charaAry.push("いろは・やちよ(決戦ver)");
-      addGirl +=2;
+      charaAry.push("七海やちよ(七夕ver)");
+      addGirl +=3;
     }
     if(charaAry.indexOf("由比鶴乃") != -1){
       charaAry.push("ウワサの鶴乃");
@@ -52,9 +69,25 @@ function doGet(e) {
       charaAry.push("鶴乃・フェリシア(宅配ver)");
       addGirl +=2;
     }
+    if(charaAry.indexOf("二葉さな") != -1){
+      charaAry.push("ウワサのさな");
+      addGirl +=1;
+    }
+    if(charaAry.indexOf("環うい") != -1){
+      charaAry.push("いろは・うい(巫女ver)");
+      addGirl +=1;
+    }
     if(charaAry.indexOf("梓みふゆ") != -1){
       charaAry.push("やちよ・みふゆ(始まりver)");
       addGirl +=1;
+    }
+    if(charaAry.indexOf("里見灯花") != -1){
+    charaAry.push("灯花・ねむ(聖夜ver)");
+    addGirl +=1;
+    }
+    if(charaAry.indexOf("柊ねむ") != -1){
+    charaAry.push("灯花・ねむ(聖夜ver)");
+    addGirl +=1;
     }
     if(charaAry.indexOf("アリナ・グレイ") != -1){
       charaAry.push("ホーリーアリナ");
@@ -88,7 +121,8 @@ function doGet(e) {
       charaAry.push("アルティメットまどか");
       charaAry.push("まどか先輩");
       charaAry.push("究極まどか先輩");
-      addGirl +=4;
+      charaAry.push("まどか・いろは");
+      addGirl +=5;
     }
     if(charaAry.indexOf("暁美ほむら") != -1){
       charaAry.push("暁美ほむら(眼鏡ver)");
@@ -97,7 +131,8 @@ function doGet(e) {
     }
     if(charaAry.indexOf("美樹さやか") != -1){
       charaAry.push("美樹さやか(晴着ver)");
-      addGirl +=1;
+      charaAry.push("美樹さやか(波乗りver)");
+      addGirl +=2;
     }
     if(charaAry.indexOf("巴マミ") != -1){
       charaAry.push("ホーリーマミ");
@@ -132,24 +167,23 @@ function doGet(e) {
       charaAry.push("万年桜のウワサ(水着ver)");
       addGirl +=1;
     }
+    if(charaAry.indexOf("静海このは") != -1){
+      charaAry.push("このは・葉月");
+      addGirl +=1;
+    }
+    if(charaAry.indexOf("遊佐葉月") != -1){
+      charaAry.push("このは・葉月");
+      addGirl +=1;
+    }
     if(charaAry.indexOf("タルト") != -1){
       charaAry.push("タルト(ver.Final)");
       addGirl +=1;
     }
-    if(charaAry.indexOf("里見灯花") != -1){
-    charaAry.push("灯花・ねむ(聖夜ver)");
-    addGirl +=1;
-    }
-    if(charaAry.indexOf("柊ねむ") != -1){
-    charaAry.push("灯花・ねむ(聖夜ver)");
-    addGirl +=1;
-    }
-    if(charaAry.indexOf("二葉さな") != -1){
-    charaAry.push("ウワサのさな");
-    addGirl +=1;
-    }
   }
   //★キャラクタここまで////////////////////////////////
+  //console.timeEnd("前処理");
+
+  //console.time("JSONread");
 
   //全ヒット数をカウントする
   var allCnt = 0;
@@ -158,6 +192,10 @@ function doGet(e) {
 
   //Googleドライブにおいているデータファイルをオブジェクトに変換
   var dataObj = JSON.parse(DriveApp.getFileById(JSONfileID).getBlob().getDataAsString());
+
+  //console.timeEnd("JSONread");
+  //console.time("loop");
+
 
   /* 
      1. ネタバレワード検索なし(今までと同じ)
@@ -170,8 +208,13 @@ function doGet(e) {
     storyAry.forEach(storyName =>{
       //ストーリーの一行ごとにサーチ
       outData[storyName] = dataObj[storyName].filter(storyLine =>{
-        return mgirlflg( storyLine[1], charaAry, and_or, addGirl);
+        return mgirlflg( charaAry, storyLine[1], and_or, addGirl);
       });
+      if(netabare === "false"){ //もしネタバレなしの場合は3列目を削除
+        outData[storyName].forEach((line, index) => {
+          outData[storyName][index].pop();
+        });
+      }
     });
 
   }else if(!charaAry[0]){ //ネタバレ検索ワードあり。魔法少女選択なし
@@ -189,12 +232,14 @@ function doGet(e) {
       //ストーリーの一行ごとにサーチ
       outData[storyName] = dataObj[storyName].filter(storyLine =>{
         return (wordmuchflg(wordtextAry, storyLine[2]) &&
-         mgirlflg( storyLine[1], charaAry, and_or, addGirl));
+         mgirlflg( charaAry, storyLine[1], and_or, addGirl));
       });
     });
   }
+  //console.timeEnd("loop");
+  //console.time("output");
 
-  console.log(JSON.stringify(outData));
+  //console.log(JSON.stringify(outData));
   //データ作成完了。Ajaxの返信準備
   //返信するデータテキスト
   var responseText;
@@ -206,6 +251,8 @@ function doGet(e) {
   out.setMimeType(ContentService.MimeType.JSON);
   //JSONテキストをセットする
   out.setContent(responseText);
+
+  //console.timeEnd("output");
   return out;
 }
 
@@ -218,17 +265,27 @@ function wordmuchflg(wordtextAry, storydata){
 }
 
 //検索魔法少女配列とデータの魔法少女配列と条件を入力し、true/falseを返す。
-function mgirlflg( dataAry, charaAry, and_or, addGirl){
-  //ストーリーの魔法少女と検索対象の魔法少女がマッチした数をカウント
-  var _ = Underscore.load();
-  var storyCharaCnt = _.intersection(dataAry, charaAry).length;
+function mgirlflg( charaAry, dataAry, and_or, addGirl){
 
+  //ストーリーの魔法少女と検索対象の魔法少女がマッチした数をカウント
+  let storyCharaCnt = 0;
+  for( charaName of charaAry){
+    if(dataAry.includes(charaName)){storyCharaCnt++;}
+  }
   //魔法少女選択の条件にhitするかチェック
-  var charamuchflg = false;
-  if(storyCharaCnt === 0){return charamuchflg}
-  else if(and_or === "AND" && charaAry.length - addGirl === storyCharaCnt){charamuchflg = true;}
-  else if(and_or === "OR" && storyCharaCnt > 0){charamuchflg = true;}
-  else if(and_or === "EXCLUSIVE" && storyCharaCnt === 1){charamuchflg = true;}
-  else if(and_or === "ONLY" && dataAry.length === storyCharaCnt && charaAry.length - addGirl === storyCharaCnt){charamuchflg = true;}
-  return charamuchflg;
+  if(storyCharaCnt === 0){return false;}
+  else if(and_or === "AND" && charaAry.length - addGirl <= storyCharaCnt){return true;}
+  else if(and_or === "OR" && storyCharaCnt > 0){return true;}
+  else if(and_or === "EXCLUSIVE" && storyCharaCnt === 1){return true;}
+  else if(and_or === "ONLY"){
+    let pairCnt = 0; //データ一行に出てきたペア個数をカウント
+    for(charadata of dataAry){if(charadata.indexOf("・") > -1){pairCnt++}}
+    if(dataAry.length + pairCnt === storyCharaCnt && charaAry.length - addGirl <= storyCharaCnt){return true;}
+    else{return false;}
+  }
+  else {return false;}
+}
+
+//POSTでも通信できるけどつかわない
+function doPost(e) {
 }
