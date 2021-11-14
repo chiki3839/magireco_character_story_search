@@ -1,6 +1,12 @@
 ﻿/* 個別キャラ設定 */
 .magicalgirl input[value="かりん・アリナ(ハロウィンver)"]{
     background: url(../img/webp/かりん・アリナ\(ハロウィンver\).webp); background-size: 60px 60px; }
+.magicalgirl input[value="灯花の父"]{
+    background: url(../img/webp/灯花の父.webp); background-size: 60px 60px; }
+.magicalgirl input[value="瀬奈みこと"]{
+    background: url(../img/webp/瀬奈みこと.webp); background-size: 60px 60px; }
+.magicalgirl input[value="ジュゥべえ"]{
+    background: url(../img/webp/ジュゥべえ.webp); background-size: 60px 60px; }
 .magicalgirl input[value="神那ニコ"]{
     background: url(../img/webp/神那ニコ.webp); background-size: 60px 60px; }
 .magicalgirl input[value="浅海サキ"]{
