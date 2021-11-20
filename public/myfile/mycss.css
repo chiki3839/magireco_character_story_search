@@ -5,20 +5,26 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+#wrapper {
+  /* スマホの横スクロール禁止 */
+  width: 100%;
+  overflow-x: hidden !important;
+}
+
 p {
   margin: 0;
 }
 
-p.top{
-  margin:7px 0 0 0;
+p.top {
+  margin: 7px 0 0 0;
 }
 
-h2.title{
-  margin:0 0 5px 0;
+h2.title {
+  margin: 0 0 5px 0;
 }
 
-fieldset.calloption{
-  padding:0 0 2px 0;
+fieldset.calloption {
+  padding: 0 0 2px 0;
 }
 
 /* iosでinput入力時にアップさせない */
@@ -116,8 +122,9 @@ dl.searchOption dt::before {
 }
 
 dl.searchOption dd.selectBoxSet {
-  margin-left: 0.2em;
+  margin-left: 0.0em;
 }
+
 dl.searchOption dd:not(.selectBoxSet) {
   margin-left: 1em;
 }
@@ -228,11 +235,12 @@ h2.at_resultHeader {
 #at_reset {
   font-size: smaller;
   -webkit-appearance: none;
-  border-radius:5px;
+  border-radius: 5px;
   border: 1px solid rgb(70, 70, 70);
 }
-#at_reset:active{
-  color:gray;
+
+#at_reset:active {
+  color: gray;
 }
 
 
@@ -240,28 +248,30 @@ h2.at_resultHeader {
 
 
 /* 検索ボタンを強調 */
-.searchbtn{
+.searchbtn {
   font-size: larger;
   background-color: #fdd8ea;
-  border : 2px solid #fc6ab1;
+  border: 2px solid #fc6ab1;
   border-radius: 7px;
   -webkit-appearance: none;
 }
-.searchbtn:active{
+
+.searchbtn:active {
   background-color: #fc6ab1;
 }
 
-.resetbtn{
+.resetbtn {
   background-color: #fdebf4;
-  border : 2px solid #88797f;
+  border: 2px solid #88797f;
   border-radius: 5px;
   -webkit-appearance: none;
 }
-.resetbtn:active{
-  background-color: #88797f;
- }
 
- .storytable td {
+.resetbtn:active {
+  background-color: #88797f;
+}
+
+.storytable td {
   padding: 1px 30px 1px 0px;
 }
 
@@ -303,8 +313,9 @@ label.girlbox::after {
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   width: auto;
-  word-break:keep-all; /*ツールチップ内でスペース以外改行しない*/
-  line-height:110%;
+  word-break: keep-all;
+  /*ツールチップ内でスペース以外改行しない*/
+  line-height: 110%;
   z-index: 9999;
   position: absolute;
   opacity: 0;
@@ -422,7 +433,7 @@ ul {
   margin: 3px 0 3px 0;
   -webkit-appearance: none;
   background-color: #e6e6e6;
-  border:1px solid gray;
+  border: 1px solid gray;
   border-radius: 5px;
 }
 
@@ -432,7 +443,7 @@ ul {
   background-color: #ffebef;
   display: block;
   margin: 2px 0 2px 0;
-  border-radius:5px;
+  border-radius: 5px;
   border: 1px solid rgb(70, 70, 70);
 
 }
@@ -448,21 +459,21 @@ ul {
 
 .ndownReset {
   margin: 3px 0 3px 0;
-  pointer-events:none;
-  color:gray;
+  pointer-events: none;
+  color: gray;
   -webkit-appearance: none;
-  border:1px solid gray;
+  border: 1px solid gray;
   border-radius: 5px;
 
 }
 
 .ndownReset_caution {
   margin: 4px 0 4px 1px;
-  pointer-events:auto;
+  pointer-events: auto;
   background-color: rgb(235, 21, 135);
-  color:white;
+  color: white;
   font-weight: bolder;
-  border:1;
+  border: 1;
   -webkit-appearance: none;
 }
 
@@ -690,6 +701,13 @@ tr.イベント {
   text-align: center;
 }
 
+tr.バトルミュージアム {
+  background: hsl(128, 91%, 87%);
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
+
 tr.スペシャル {
   background: #ff60af;
   color: white;
@@ -768,7 +786,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
-  font-size:smaller;
+  font-size: smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 
@@ -782,7 +800,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
-  font-size:smaller;
+  font-size: smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }
@@ -795,7 +813,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
-  font-size:smaller;
+  font-size: smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }
@@ -808,7 +826,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
-  font-size:smaller;
+  font-size: smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }
@@ -821,7 +839,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
-  font-size:smaller;
+  font-size: smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }
@@ -834,7 +852,7 @@ tr.アニメ【2nd】 {
   padding: 14px 10px;
   color: #f85ab6;
   text-align: center;
-  font-size:smaller;
+  font-size: smaller;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
   z-index: 99999;
 }
@@ -848,45 +866,50 @@ H3.seachResult {
 }
 
 /*ガチャ用設定*/
-#gachaCnt{
-color: red;
-font-size:16px;
-font-weight: bolder;
+#gachaCnt {
+  color: red;
+  font-size: 16px;
+  font-weight: bolder;
 }
+
 /*表の限定表示の背景色*/
-table.gachatable{
-  border:0px;
-  border-spacing:3px;
+table.gachatable {
+  border: 0px;
+  border-spacing: 3px;
 }
 
-table.gachatable td{
-  border:0px;
+table.gachatable td {
+  border: 0px;
 }
 
-td.gachaTblBak{
-background-color: rgb(255, 208, 216);
+td.gachaTblBak {
+  background-color: rgb(255, 208, 216);
 }
-td.gachaTblBlank{
+
+td.gachaTblBlank {
   background-color: gray;
 }
 
-td.gachasum{
-background-color: rgb(194, 213, 250);
+td.gachasum {
+  background-color: rgb(194, 213, 250);
 }
 
-td.gachaNormal{
+td.gachaNormal {
   background-color: rgb(255, 255, 217);
 }
 
-tr.gachaboder td{
+tr.gachaboder td {
   padding: 7px;
   background-color: rgb(221, 221, 221);
 }
 
-.shadow-3{-webkit-box-shadow:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -1px rgba(0,0,0,.05)!important;box-shadow:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -1px rgba(0,0,0,.05)!important}
+.shadow-3 {
+  -webkit-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .07), 0 2px 4px -1px rgba(0, 0, 0, .05) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .07), 0 2px 4px -1px rgba(0, 0, 0, .05) !important
+}
 
-.forminput{
-  border-radius:5px;
+.forminput {
+  border-radius: 5px;
   border: 1px solid rgb(70, 70, 70);
-  margin-top:1px;
+  margin-top: 1px;
 }

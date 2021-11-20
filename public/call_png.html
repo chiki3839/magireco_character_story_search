@@ -41,6 +41,7 @@
 </head>
 
 <body>
+<div id="wrapper">
   <H2 class="title">マギレコ魔法少女呼びかけ検索</H2>
 
   <a href="./call.html" target="_blank">軽量版はこちら</a><BR>
@@ -155,6 +156,7 @@
       <label class="girlbox umeColor" data-kana="あやの りか"><input type="checkbox" class="MagicalChk" onchange="chkBoxCng();" ondblclick="mgirlCallNarrow(this)" name="chara" id="綾野梨花" value="綾野梨花"><br>綾野梨花★</label>
       <label class="girlbox umeColor" data-kana="いすず れん"><input type="checkbox" class="MagicalChk" onchange="chkBoxCng();" ondblclick="mgirlCallNarrow(this)" name="chara" id="五十鈴れん" value="五十鈴れん"><br>五十鈴れん★</label>
       <label class="girlbox umeColor" data-kana="さらさ はんな"><input type="checkbox" class="MagicalChk" onchange="chkBoxCng();" ondblclick="mgirlCallNarrow(this)" name="chara" id="更紗帆奈" value="更紗帆奈"><br>更紗帆奈</label>
+      <label class="girlbox umeColor" data-kana="せな みこと"><input type="checkbox" class="MagicalChk" onchange="chkBoxCng();" ondblclick="mgirlCallNarrow(this)" name="chara" id="瀬奈みこと" value="瀬奈みこと"><br>瀬奈みこと</label>
       <label class="girlbox umeColor" data-kana="ちあき りこ"><input type="checkbox" class="MagicalChk" onchange="chkBoxCng();" ondblclick="mgirlCallNarrow(this)" name="chara" id="千秋理子" value="千秋理子"><br>千秋理子</label>
       <label class="girlbox umeColor" id="ash" data-kana="あしゅりー ていらー"><input type="checkbox" class="MagicalChk" onchange="chkBoxCng();" ondblclick="mgirlCallNarrow(this)" name="chara" id="アシュリー・テイラー" value="アシュリー・テイラー"><br>アシュリー・テイラー</label>
       <label class="girlbox umeColor" data-kana="めぐみ もか"><input type="checkbox" class="MagicalChk" onchange="chkBoxCng();" ondblclick="mgirlCallNarrow(this)" name="chara" id="恵萌花" value="恵萌花"><br>恵萌花</label>
@@ -293,6 +295,7 @@
       <label class="at"><input type="checkbox" class="at_attribute" name="at_attribute" onchange="magicalGirlAttributeSearch('call')" value="蛇の宮中学・高等学校">蛇の宮中学・高等学校</label>
 
       <label class="at"><input type="checkbox" class="at_attribute" name="at_attribute" onchange="magicalGirlAttributeSearch('call')" value="宝崎順心学園">宝崎順心学園</label>
+      <label class="at"><input type="checkbox" class="at_attribute" name="at_attribute" onchange="magicalGirlAttributeSearch('call')" value="宝崎市立光塚中等教育学校">宝崎市立光塚中等教育学校</label>
 
       <label class="at"><input type="checkbox" class="at_attribute" name="at_attribute" onchange="magicalGirlAttributeSearch('call')" value="見滝原中学校">見滝原中学校</label>
       <label class="at"><input type="checkbox" class="at_attribute" name="at_attribute" onchange="magicalGirlAttributeSearch('call')" value="白羽女学院">白羽女学院</label>
@@ -427,8 +430,8 @@
     var network = new vis.Network(container, data, options);
 
     //二人称のノードの座標
-    var otherx = document.getElementById('mynetwork').clientWidth / 2;
-    var othery = document.getElementById('mynetwork').clientHeight / 2;
+    var otherx = document.getElementById('mynetwork').clientWidth / 1.8;
+    var othery = document.getElementById('mynetwork').clientHeight / 0.9;
     //console.log(otherx);
 
     //エッジが選択されたときの動作
@@ -696,6 +699,7 @@
       document.getElementById("mgreset2").disabled = true;
     }
   </script>
+</div>
 </body>
 
 </html>
