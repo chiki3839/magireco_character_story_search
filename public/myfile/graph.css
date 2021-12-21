@@ -1,0 +1,44 @@
+.graf-icon{
+  width: 40px;
+  height: 40px;
+  margin: 0px;
+  vertical-align: middle;
+}
+
+.graphtable{
+	width: 90%;
+	border:0px;
+	padding:3px;
+}
+
+.graf-icon-td{
+	width: 40px;
+	border:0px;
+	padding:0px;
+}
+
+.data-name {
+	padding: 0;
+	color: #404040;
+	width: 80px;
+	/* white-space: nowrap; */
+	text-align:right;
+}
+
+.graf-bar-bg {
+	width: 100%;
+	background: #e0e0e0;
+	height:30px;
+}
+
+.graf-bar {
+	background: #faadc4;
+	height:30px;
+}
+
+.graf-bar span{
+	color: #FFF;
+	padding: 0 1px;
+	height:30px;
+	line-height:30px;
+}
