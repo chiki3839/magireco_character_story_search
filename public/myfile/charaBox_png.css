@@ -1,6 +1,21 @@
 ﻿/* 個別キャラ設定 */
+.magicalgirl input[value="佐倉杏子(ドッペルver)"] {
+  background: url(../img/png/佐倉杏子\(ドッペルver\).png);
+  background-size: 60px 60px;
+}
+
+.magicalgirl input[value="七海やちよ(アニメver)"] {
+  background: url(../img/png/七海やちよ\(アニメver\).png);
+  background-size: 60px 60px;
+}
+
+.magicalgirl input[value="時女静香(初日の出ver)"] {
+  background: url(../img/png/時女静香\(初日の出ver\).png);
+  background-size: 60px 60px;
+}
+
 .magicalgirl input[value="那由他・みかげ(クリスマスver)"] {
-  background: url(../img/png/那由他・みかげ\(クリスマスver)\.png);
+  background: url(../img/png/那由他・みかげ\(クリスマスver\).png);
   background-size: 60px 60px;
 }
 

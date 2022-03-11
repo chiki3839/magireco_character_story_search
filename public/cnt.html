@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ゲーム「マギアレコード」の、キャラクタ同士の対面回数をランキング表示するツールを公開しています。">
   <base target="_top">
   <link rel="icon" type="image/x-icon" href="./img/webp/ファビコン.webp">
   <link rel="apple-touch-icon" sizes="180x180" href="./img/webp/apple_fabicon.webp">
@@ -36,8 +37,8 @@
 <body>
   <H2 class="title">マギレコ魔法少女同席回数ランキング</H2>
   <a href="index.html">マギレコキャラクタストーリー検索</a>&ensp;
-      <a href="https://drive.google.com/file/d/1sLTb1mObjbs7gwzfyHvMsGpEvexQLjN9/view?usp=sharing">
-      GML形式データファイル</a>
+  <a href="https://drive.google.com/file/d/1sLTb1mObjbs7gwzfyHvMsGpEvexQLjN9/view?usp=sharing">
+    GML形式データファイル</a>
 
   <p class="top">
     キャラクタを選択すると、同席した魔法少女の回数(話数)をランキング形式で表示します。<BR>
@@ -237,7 +238,7 @@
         // ページトップへスクロール
         $("html, body").animate({
           scrollTop: 0,
-         }, "slow");
+        }, "slow");
         return false;
       });
     });
@@ -286,7 +287,7 @@
     //チェックボックスが変更になったときに動作させる関数
     function chkBoxCng(girlName) {
       //前の結果を消す。
-      if(document.getElementById("graphtable") !== null ){
+      if (document.getElementById("graphtable") !== null) {
         document.getElementById("graphtable").remove();
       }
 
@@ -318,7 +319,10 @@
             document.getElementById("loading").remove();
 
             const data = outdata.map(dataAry => {
-              return { name: dataAry[0], value: dataAry[1] };
+              return {
+                name: dataAry[0],
+                value: dataAry[1]
+              };
             });
             //console.log(data);
             //グラフを表示する。
@@ -337,7 +341,7 @@
               grafTable += `<td><div class="graf-bar-bg"><div class="graf-bar" id="${variable.name}_bar" style="width:${variable.percentage}%"><span>${variable.value}</span></div></div></td>`;
               grafTable += "</tr>";
             }
-            grafTable +="</table>"
+            grafTable += "</table>"
             document.getElementById("container").insertAdjacentHTML('beforeend', grafTable);
           },
           error => { //Ajax通信に失敗したときの処理

@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ゲーム「マギアレコード」のガチャシミュレーターを公開しています。">
   <base target="_top">
   <link rel="icon" type="image/x-icon" href="./img/png/ファビコン.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./img/png/apple_fabicon.png">
@@ -60,7 +61,7 @@
     <button type="button" onclick="gachaTest()">シミュレーションする</button>
   </form><BR>
 
-    <table class="gachatable">
+  <table class="gachatable">
     <caption style="font-size:larger">平均獲得数</caption>
     <tr>
       <td class="gachaTblBak">☆4魔法少女限定<BR><span id="mgirl4gen"> </span>人</td>
@@ -77,7 +78,11 @@
       <td class="gachasum">☆3魔法少女合計<BR><span id="mgirl3sum"></span>人<BR></td>
       <td class="gachasum">☆2魔法少女合計<BR><span id="mgirl2sum"></span>人<BR></td>
     </tr>
-    <tr class="gachaboder"><td></td><td></td><td></td></tr>
+    <tr class="gachaboder">
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
     <tr>
       <td class="gachaTblBak">☆4メモリア限定<BR><span id="memoria4gen"> </span>枚</td>
       <td class="gachaTblBak">☆3メモリア限定<BR><span id="memoria3gen"> </span>枚</td>
@@ -858,7 +863,7 @@
     }
 
     function runGacha(girl4gen_per, girl4_per, girl3gen_per, girl3_per, girl2_per,
-     memoria4gen_per, memoria4_per, memoria3gen_per, memoria3_per, memoria2_per, cnthash) {
+      memoria4gen_per, memoria4_per, memoria3gen_per, memoria3_per, memoria2_per, cnthash) {
       // 確率判定は0-99.99の間で判定する。
       var dice = Math.floor(Math.random() * 9999) / 100;
       //天井だったら☆4魔法少女をカウントしてリターン。
