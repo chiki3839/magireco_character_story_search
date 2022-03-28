@@ -1,4 +1,19 @@
 ﻿/* 個別キャラ設定 */
+.magicalgirl input[value="トルテ"] {
+  background: url(../img/png/トルテ.png);
+  background-size: 60px 60px;
+}
+
+.magicalgirl input[value="ニコラ"] {
+  background: url(../img/webp/ニコラ.webp);
+  background-size: 60px 60px;
+}
+
+.magicalgirl input[value="イザボー"] {
+  background: url(../img/webp/イザボー.webp);
+  background-size: 60px 60px;
+}
+
 .magicalgirl input[value="佐倉杏子(ドッペルver)"] {
   background: url(../img/webp/佐倉杏子\(ドッペルver\).webp);
   background-size: 60px 60px;
